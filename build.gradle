@@ -1,0 +1,41 @@
+buildscript{
+    repositories{
+        mavenCentral()
+        maven{url 'https://javacard.pro/maven'}
+    }
+    dependencies{
+        classpath 'com.klinec:gradle-javacard:1.8.0'
+    }
+}
+plugins {
+    id 'java'
+}
+
+group 'com.josh'
+version '1.0-SNAPSHOT'
+
+apply plugin:'com.klinec.gradle.javacard'
+
+repositories {
+    mavenCentral()
+    maven{url 'https://javacard.pro/maven'}
+}
+
+
+final def jcdk_dir = 'sdks/jc305u3_kit'
+javacard{
+    config{
+        jckit jcdk_dir
+        cap{
+            packageName 'com.josh.vku2f'
+            version '0.1'
+            aid 'A000000647'
+            output 'applet.cap'
+            targetsdk jcdk_dir
+            applet{
+                className 'com.josh.vku2f.CTAP2'
+                aid 'A0000006472F0001'
+            }
+        }
+    }
+}
