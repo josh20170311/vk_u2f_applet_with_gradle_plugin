@@ -1,5 +1,5 @@
 // converted by version  [v3.0.5]
-// on Mon Dec 06 04:55:35 CST 2021
+// on Mon Feb 14 16:15:20 CST 2022
 
 .package com/josh/vku2f {
 	.aid 0xA0:0x0:0x0:0x6:0x47;
@@ -115,43 +115,43 @@
 		// 47
 		instanceFieldRef byte[] PublicKeyCredentialUserEntity/icon;
 		// 48
-		instanceFieldRef StoredCredential[] CredentialArray/creds;
+		instanceFieldRef short CredentialArray/count;
 		// 49
-		instanceFieldRef boolean[] CredentialArray/slotStatus;
+		instanceFieldRef StoredCredential[] CredentialArray/creds;
 		// 50
-		instanceFieldRef short CredentialArray/size;
+		instanceFieldRef boolean[] CredentialArray/slotStatus;
 		// 51
-		instanceFieldRef short CredentialArray/counter;
+		instanceFieldRef short CredentialArray/size;
 		// 52
-		instanceFieldRef byte[] PublicKeyCredentialDescriptor/type;
+		instanceFieldRef short CredentialArray/counter;
 		// 53
-		instanceFieldRef DomString PublicKeyCredentialEntity/name;
+		instanceFieldRef byte[] PublicKeyCredentialDescriptor/type;
 		// 54
-		instanceFieldRef short[] PublicKeyCredentialParams/paramList;
+		instanceFieldRef DomString PublicKeyCredentialEntity/name;
 		// 55
-		instanceFieldRef short PublicKeyCredentialParams/listIndex;
+		instanceFieldRef short[] PublicKeyCredentialParams/paramList;
 		// 56
-		instanceFieldRef DomString PublicKeyCredentialRpEntity/rpId;
+		instanceFieldRef short PublicKeyCredentialParams/listIndex;
 		// 57
-		instanceFieldRef boolean[] PublicKeyCredentialUserEntity/dataPresent;
+		instanceFieldRef DomString PublicKeyCredentialRpEntity/rpId;
 		// 58
-		instanceFieldRef byte[] StoredCredential/sigCounter;
+		instanceFieldRef boolean[] PublicKeyCredentialUserEntity/dataPresent;
 		// 59
-		instanceFieldRef boolean StoredCredential/initialised;
+		instanceFieldRef byte[] StoredCredential/sigCounter;
 		// 60
-		instanceFieldRef boolean StoredCredential/hmacEnabled;
+		instanceFieldRef boolean StoredCredential/initialised;
 		// 61
-		instanceFieldRef byte[] StoredCredential/credRandom;
+		instanceFieldRef boolean StoredCredential/hmacEnabled;
 		// 62
-		instanceFieldRef 1.16 StoredCredential/kp;
+		instanceFieldRef byte[] StoredCredential/credRandom;
 		// 63
-		instanceFieldRef 1.15 StoredES256Credential/sig;
+		instanceFieldRef 1.16 StoredCredential/kp;
 		// 64
-		instanceFieldRef 1.15 StoredPS256Credential/kpSignature;
+		instanceFieldRef 1.15 StoredES256Credential/sig;
 		// 65
-		instanceFieldRef 4.1 StoredRS256Credential/kpSignature;
+		instanceFieldRef 1.15 StoredPS256Credential/kpSignature;
 		// 66
-		staticFieldRef byte[] Utf8Strings/UTF8_RK;
+		instanceFieldRef 4.1 StoredRS256Credential/kpSignature;
 		// 67
 		virtualMethodRef PublicKeyCredentialParams/getAlgorithm()B;
 		// 68
@@ -342,323 +342,325 @@
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
 		// 146
-		staticMethodRef CTAP2/doReset(Ljavacard/framework/APDU;)V;
+		virtualMethodRef CTAP2/getCount(Ljavacard/framework/APDU;)V;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
 		// 147
-		virtualMethodRef CTAP2/returnError(Ljavacard/framework/APDU;B)V;
+		staticMethodRef CTAP2/doReset(Ljavacard/framework/APDU;)V;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
 		// 148
-		virtualMethodRef AttestationKeyPair/isCertSet()Z;
+		virtualMethodRef CTAP2/returnError(Ljavacard/framework/APDU;B)V;
+			.descriptor	Ljavacard/framework/APDU;	2.10;
+
 		// 149
-		virtualMethodRef AttestationKeyPair/getPubkey([BS)S;
+		virtualMethodRef AttestationKeyPair/isCertSet()Z;
 		// 150
-		virtualMethodRef 2.10.7()S;		// setOutgoing()S
+		virtualMethodRef AttestationKeyPair/getPubkey([BS)S;
 		// 151
-		virtualMethodRef 2.10.9(S)V;		// setOutgoingLength(S)V
+		virtualMethodRef 2.10.7()S;		// setOutgoing()S
 		// 152
-		virtualMethodRef 2.10.5([BSS)V;		// sendBytesLong([BSS)V
+		virtualMethodRef 2.10.9(S)V;		// setOutgoingLength(S)V
 		// 153
-		virtualMethodRef AttestationKeyPair/sign([BSS[BS)S;
+		virtualMethodRef 2.10.5([BSS)V;		// sendBytesLong([BSS)V
 		// 154
-		virtualMethodRef AttestationKeyPair/setCert([BSS)V;
+		virtualMethodRef CredentialArray/getCount()S;
 		// 155
-		virtualMethodRef 1.11.1([BSS[BS)S;		// doFinal([BSS[BS)S
+		virtualMethodRef AttestationKeyPair/sign([BSS[BS)S;
 		// 156
-		.classRef 2.15;		// javacard/framework/UserException
+		virtualMethodRef AttestationKeyPair/setCert([BSS)V;
 		// 157
-		virtualMethodRef CBORBase/init([BSS)V;
+		virtualMethodRef 1.11.1([BSS[BS)S;		// doFinal([BSS[BS)S
 		// 158
-		.classRef AuthenticatorMakeCredential;
+		.classRef 2.15;		// javacard/framework/UserException
 		// 159
-		staticMethodRef AuthenticatorMakeCredential/<init>(Lcom/josh/vku2f/CBORDecoder;)V;
+		virtualMethodRef CBORBase/init([BSS)V;
 		// 160
-		virtualMethodRef 2.15.1()S;		// getReason()S
+		.classRef AuthenticatorMakeCredential;
 		// 161
+		staticMethodRef AuthenticatorMakeCredential/<init>(Lcom/josh/vku2f/CBORDecoder;)V;
+		// 162
+		virtualMethodRef 2.15.1()S;		// getReason()S
+		// 163
 		virtualMethodRef CTAP2/returnError(Ljavacard/framework/APDU;S)V;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
-		// 162
-		virtualMethodRef AuthenticatorMakeCredential/getAlgorithm()B;
-		// 163
-		.classRef StoredES256Credential;
 		// 164
-		staticMethodRef StoredES256Credential/<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V;
+		virtualMethodRef AuthenticatorMakeCredential/getAlgorithm()B;
 		// 165
-		.classRef StoredRS256Credential;
+		.classRef StoredES256Credential;
 		// 166
-		staticMethodRef StoredRS256Credential/<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V;
+		staticMethodRef StoredES256Credential/<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V;
 		// 167
-		.classRef StoredPS256Credential;
+		.classRef StoredRS256Credential;
 		// 168
-		staticMethodRef StoredPS256Credential/<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V;
+		staticMethodRef StoredRS256Credential/<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V;
 		// 169
-		virtualMethodRef AuthenticatorMakeCredential/isResident()Z;
+		.classRef StoredPS256Credential;
 		// 170
-		virtualMethodRef AuthenticatorMakeCredential/isExclude()Z;
+		staticMethodRef StoredPS256Credential/<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V;
 		// 171
-		staticMethodRef CTAP2/isPresent([Lcom/josh/vku2f/PublicKeyCredentialDescriptor;)Z;
+		virtualMethodRef AuthenticatorMakeCredential/isResident()Z;
 		// 172
+		virtualMethodRef AuthenticatorMakeCredential/isExclude()Z;
+		// 173
+		staticMethodRef CTAP2/isPresent([Lcom/josh/vku2f/PublicKeyCredentialDescriptor;)Z;
+		// 174
 		staticMethodRef CTAP2/addResident(Ljavacard/framework/APDU;Lcom/josh/vku2f/StoredCredential;)V;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
-		// 173
-		virtualMethodRef CBORBase/init([BSS)V;
-		// 174
-		virtualMethodRef CBOREncoder/startMap(S)S;
 		// 175
-		staticFieldRef byte[] Utf8Strings/UTF8_PACKED;
+		virtualMethodRef CBORBase/init([BSS)V;
 		// 176
-		virtualMethodRef CBOREncoder/encodeTextString([BSS)S;
+		virtualMethodRef CBOREncoder/startMap(S)S;
 		// 177
-		virtualMethodRef StoredCredential/getAttestedLen()S;
+		staticFieldRef byte[] Utf8Strings/UTF8_PACKED;
 		// 178
-		virtualMethodRef CBOREncoder/startByteString(S)S;
+		virtualMethodRef CBOREncoder/encodeTextString([BSS)S;
 		// 179
-		staticFieldRef byte[] Utf8Strings/UTF8_TYPE;
+		virtualMethodRef StoredCredential/getAttestedLen()S;
 		// 180
-		virtualMethodRef PublicKeyCredentialRpEntity/getRp([BS)V;
+		virtualMethodRef CBOREncoder/startByteString(S)S;
 		// 181
-		virtualMethodRef PublicKeyCredentialRpEntity/getRpLen()S;
+		staticFieldRef byte[] Utf8Strings/UTF8_TYPE;
 		// 182
-		virtualMethodRef StoredCredential/readCounter([BS)S;
+		virtualMethodRef PublicKeyCredentialRpEntity/getRp([BS)V;
 		// 183
-		virtualMethodRef StoredCredential/getAttestedData([BS)S;
+		virtualMethodRef PublicKeyCredentialRpEntity/getRpLen()S;
 		// 184
-		virtualMethodRef CBOREncoder/encodeNegativeUInt8(B)S;
+		virtualMethodRef StoredCredential/readCounter([BS)S;
 		// 185
-		staticFieldRef byte[] Utf8Strings/UTF8_SIG;
+		virtualMethodRef StoredCredential/getAttestedData([BS)S;
 		// 186
-		virtualMethodRef AttestationKeyPair/update([BSS)V;
+		virtualMethodRef CBOREncoder/encodeNegativeUInt8(B)S;
 		// 187
-		virtualMethodRef CBOREncoder/encodeByteString([BSS)S;
+		staticFieldRef byte[] Utf8Strings/UTF8_SIG;
 		// 188
-		staticFieldRef byte[] Utf8Strings/UTF8_X5C;
+		virtualMethodRef AttestationKeyPair/update([BSS)V;
 		// 189
-		virtualMethodRef CBOREncoder/startArray(S)S;
+		virtualMethodRef CBOREncoder/encodeByteString([BSS)S;
 		// 190
+		staticFieldRef byte[] Utf8Strings/UTF8_X5C;
+		// 191
+		virtualMethodRef CBOREncoder/startArray(S)S;
+		// 192
 		virtualMethodRef CTAP2/sendLongChaining(Ljavacard/framework/APDU;S)V;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
-		// 191
-		.classRef AuthenticatorGetAssertion;
-		// 192
-		staticMethodRef AuthenticatorGetAssertion/<init>(Lcom/josh/vku2f/CBORDecoder;)V;
 		// 193
-		staticFieldRef byte[] Utf8Strings/UTF8_UP;
+		.classRef AuthenticatorGetAssertion;
 		// 194
+		staticMethodRef AuthenticatorGetAssertion/<init>(Lcom/josh/vku2f/CBORDecoder;)V;
+		// 195
+		staticFieldRef byte[] Utf8Strings/UTF8_UP;
+		// 196
 		staticMethodRef CTAP2/findCredentials(Ljavacard/framework/APDU;Lcom/josh/vku2f/AuthenticatorGetAssertion;)[Lcom/josh/vku2f/StoredCredential;;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
-		// 195
-		virtualMethodRef CBORDecoder/readBoolean()Z;
-		// 196
-		virtualMethodRef AuthenticatorGetAssertion/getHash([BS)S;
 		// 197
-		staticMethodRef CTAP2/doAssertionCommon(Lcom/josh/vku2f/CBOREncoder;S)V;
+		virtualMethodRef CBORDecoder/readBoolean()Z;
 		// 198
+		virtualMethodRef AuthenticatorGetAssertion/getHash([BS)S;
+		// 199
+		staticMethodRef CTAP2/doAssertionCommon(Lcom/josh/vku2f/CBOREncoder;S)V;
+		// 200
 		staticMethodRef CTAP2/generateDH(Ljavacard/framework/APDU;)V;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
-		// 199
-		virtualMethodRef CredentialArray/addCredential(Lcom/josh/vku2f/StoredCredential;)V;
-		// 200
-		virtualMethodRef CBOREncoder/encodeUInt8(B)S;
 		// 201
-		virtualMethodRef AuthenticatorGetAssertion/hasAllow()Z;
+		virtualMethodRef CredentialArray/addCredential(Lcom/josh/vku2f/StoredCredential;)V;
 		// 202
-		.classRef StoredCredential;
+		virtualMethodRef CBOREncoder/encodeUInt8(B)S;
 		// 203
-		virtualMethodRef CredentialArray/getLength()S;
+		virtualMethodRef AuthenticatorGetAssertion/hasAllow()Z;
 		// 204
-		virtualMethodRef CredentialArray/getCred(S)Lcom/josh/vku2f/StoredCredential;;
+		.classRef StoredCredential;
 		// 205
-		virtualMethodRef PublicKeyCredentialRpEntity/checkId([BSS)Z;
+		virtualMethodRef CredentialArray/getLength()S;
 		// 206
-		staticFieldRef byte[] Utf8Strings/UTF8_UV;
+		virtualMethodRef CredentialArray/getCred(S)Lcom/josh/vku2f/StoredCredential;;
 		// 207
-		virtualMethodRef CBORDecoder/skipEntry()S;
+		virtualMethodRef PublicKeyCredentialRpEntity/checkId([BSS)Z;
 		// 208
-		staticMethodRef 2.8.18()V;		// javacard/framework/JCSystem.requestObjectDeletion()V
+		staticFieldRef byte[] Utf8Strings/UTF8_UV;
 		// 209
-		virtualMethodRef StoredCredential/checkId([BSS)Z;
+		virtualMethodRef CBORDecoder/skipEntry()S;
 		// 210
-		virtualMethodRef 2.10.8(SS)V;		// setOutgoingAndSend(SS)V
+		staticMethodRef 2.8.18()V;		// javacard/framework/JCSystem.requestObjectDeletion()V
 		// 211
+		virtualMethodRef StoredCredential/checkId([BSS)Z;
+		// 212
+		virtualMethodRef 2.10.8(SS)V;		// setOutgoingAndSend(SS)V
+		// 213
 		staticMethodRef 1.15.0(BZ)Ljavacard/security/Signature;;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
 			.descriptor	Ljavacard/security/Signature;	1.15;
 
-		// 212
-		staticFieldRef byte[] Utf8Strings/UTF8_FIDO2;
-		// 213
-		staticFieldRef byte[] CTAP2/aaguid;
 		// 214
-		virtualMethodRef CBOREncoder/encodeBoolean(Z)S;
+		staticFieldRef byte[] Utf8Strings/UTF8_FIDO2;
 		// 215
-		virtualMethodRef CBOREncoder/encodeUInt16(S)S;
+		staticFieldRef byte[] CTAP2/aaguid;
 		// 216
-		staticMethodRef 2.8.1()V;		// javacard/framework/JCSystem.beginTransaction()V
+		virtualMethodRef CBOREncoder/encodeBoolean(Z)S;
 		// 217
-		staticMethodRef 2.8.2()V;		// javacard/framework/JCSystem.commitTransaction()V
+		virtualMethodRef CBOREncoder/encodeUInt16(S)S;
 		// 218
-		virtualMethodRef StoredCredential/performSignature([BSS[BS)S;
+		staticMethodRef 2.8.1()V;		// javacard/framework/JCSystem.beginTransaction()V
 		// 219
-		.classRef 1.16;		// javacard/security/KeyPair
+		staticMethodRef 2.8.2()V;		// javacard/framework/JCSystem.commitTransaction()V
 		// 220
-		.classRef PublicKeyCredentialRpEntity;
+		virtualMethodRef StoredCredential/performSignature([BSS[BS)S;
 		// 221
-		virtualMethodRef StoredCredential/getPresentUser()[Z;
+		.classRef 1.16;		// javacard/security/KeyPair
 		// 222
-		staticMethodRef PublicKeyCredentialRpEntity/<init>()V;
+		.classRef PublicKeyCredentialRpEntity;
 		// 223
+		virtualMethodRef StoredCredential/getPresentUser()[Z;
+		// 224
+		staticMethodRef PublicKeyCredentialRpEntity/<init>()V;
+		// 225
 		virtualMethodRef 1.16.2()Ljavacard/security/PrivateKey;;		// getPrivate()Ljavacard/security/PrivateKey;
 			.descriptor	Ljavacard/security/PrivateKey;	1.2;
 
-		// 224
-		virtualMethodRef PublicKeyCredentialRpEntity/setRp([BS)V;
-		// 225
-		staticFieldRef byte[] Utf8Strings/UTF8_NAME;
 		// 226
-		virtualMethodRef PublicKeyCredentialEntity/setName([BS)V;
+		virtualMethodRef PublicKeyCredentialRpEntity/setRp([BS)V;
 		// 227
-		.classRef PublicKeyCredentialUserEntity;
+		staticFieldRef byte[] Utf8Strings/UTF8_NAME;
 		// 228
-		virtualMethodRef 2.10.6()S;		// setIncomingAndReceive()S
+		virtualMethodRef PublicKeyCredentialEntity/setName([BS)V;
 		// 229
-		virtualMethodRef 2.10.15()S;		// getIncomingLength()S
+		.classRef PublicKeyCredentialUserEntity;
 		// 230
+		virtualMethodRef 2.10.6()S;		// setIncomingAndReceive()S
+		// 231
+		virtualMethodRef 2.10.15()S;		// getIncomingLength()S
+		// 232
 		staticMethodRef CTAP2/isCommandChainingCLA(Ljavacard/framework/APDU;)Z;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
-		// 231
-		virtualMethodRef 2.10.16()S;		// getOffsetCdata()S
-		// 232
-		virtualMethodRef 2.10.11()B;		// getCurrentState()B
 		// 233
-		virtualMethodRef 2.10.3(S)S;		// receiveBytes(S)S
+		virtualMethodRef 2.10.16()S;		// getOffsetCdata()S
 		// 234
-		virtualMethodRef AttestationKeyPair/getCert([BS)S;
+		virtualMethodRef 2.10.11()B;		// getCurrentState()B
 		// 235
-		virtualMethodRef 2.3.3()Z;		// selectingApplet()Z
+		virtualMethodRef 2.10.3(S)S;		// receiveBytes(S)S
 		// 236
-		virtualMethodRef 2.10.12()Z;		// isCommandChainingCLA()Z
+		virtualMethodRef AttestationKeyPair/getCert([BS)S;
 		// 237
-		virtualMethodRef 2.10.14()Z;		// isISOInterindustryCLA()Z
+		virtualMethodRef 2.3.3()Z;		// selectingApplet()Z
 		// 238
-		virtualMethodRef CTAP2/isChaining()Z;
+		virtualMethodRef 2.10.12()Z;		// isCommandChainingCLA()Z
 		// 239
+		virtualMethodRef 2.10.14()Z;		// isISOInterindustryCLA()Z
+		// 240
+		virtualMethodRef CTAP2/isChaining()Z;
+		// 241
 		virtualMethodRef CTAP2/getData(Ljavacard/framework/APDU;)V;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
-		// 240
+		// 242
 		virtualMethodRef CTAP2/handle(Ljavacard/framework/APDU;)V;
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
-		// 241
-		.classRef CTAP2;
-		// 242
-		staticMethodRef CTAP2/<init>()V;
 		// 243
-		virtualMethodRef 2.3.2([BSB)V;		// register([BSB)V
+		.classRef CTAP2;
 		// 244
-		virtualMethodRef 2.3.1()V;		// register()V
+		staticMethodRef CTAP2/<init>()V;
 		// 245
-		staticMethodRef 2.4.0(S)V;		// javacard/framework/CardException.<init>(S)V
+		virtualMethodRef 2.3.2([BSB)V;		// register([BSB)V
 		// 246
-		staticFieldRef CTAP2Exception CTAP2Exception/systemInstance;
+		virtualMethodRef 2.3.1()V;		// register()V
 		// 247
-		virtualMethodRef 2.4.2(S)V;		// setReason(S)V
+		staticMethodRef 2.4.0(S)V;		// javacard/framework/CardException.<init>(S)V
 		// 248
-		staticMethodRef PublicKeyCredentialUserEntity/<init>()V;
+		staticFieldRef CTAP2Exception CTAP2Exception/systemInstance;
 		// 249
+		virtualMethodRef 2.4.2(S)V;		// setReason(S)V
+		// 250
+		staticMethodRef PublicKeyCredentialUserEntity/<init>()V;
+		// 251
 		virtualMethodRef 1.15.3(Ljavacard/security/Key;B)V;		// init(Ljavacard/security/Key;B)V
 			.descriptor	Ljavacard/security/Key;	1.0;
 
-		// 250
-		virtualMethodRef PublicKeyCredentialUserEntity/setId([BSS)V;
-		// 251
-		virtualMethodRef CredentialArray/alreadyExists(Lcom/josh/vku2f/StoredCredential;)S;
 		// 252
-		virtualMethodRef PublicKeyCredentialUserEntity/setName([BS)V;
+		virtualMethodRef PublicKeyCredentialUserEntity/setId([BSS)V;
 		// 253
-		virtualMethodRef PublicKeyCredentialUserEntity/checkId([BSS)Z;
+		virtualMethodRef PublicKeyCredentialUserEntity/setName([BS)V;
 		// 254
-		virtualMethodRef PublicKeyCredentialRpEntity/checkId(Lcom/josh/vku2f/PublicKeyCredentialRpEntity;)Z;
+		virtualMethodRef CredentialArray/alreadyExists(Lcom/josh/vku2f/StoredCredential;)S;
 		// 255
-		virtualMethodRef PublicKeyCredentialUserEntity/checkId(Lcom/josh/vku2f/PublicKeyCredentialUserEntity;)Z;
-		// 256
-		virtualMethodRef DomString/checkEquals([BSS)Z;
-		// 257
-		staticFieldRef byte[] KeyParams/secp256r1p;
-		// 258
-		staticFieldRef byte[] KeyParams/secp256r1A;
-		// 259
-		staticFieldRef byte[] KeyParams/secp256r1B;
-		// 260
-		staticFieldRef byte[] KeyParams/secp256r1G;
-		// 261
-		staticFieldRef byte[] KeyParams/secp256r1R;
-		// 262
 		staticFieldRef byte[] Utf8Strings/UTF8_DISPLAYNAME;
+		// 256
+		virtualMethodRef PublicKeyCredentialUserEntity/checkId([BSS)Z;
+		// 257
+		virtualMethodRef PublicKeyCredentialRpEntity/checkId(Lcom/josh/vku2f/PublicKeyCredentialRpEntity;)Z;
+		// 258
+		virtualMethodRef PublicKeyCredentialUserEntity/checkId(Lcom/josh/vku2f/PublicKeyCredentialUserEntity;)Z;
+		// 259
+		virtualMethodRef DomString/checkEquals([BSS)Z;
+		// 260
+		staticFieldRef byte[] KeyParams/secp256r1p;
+		// 261
+		staticFieldRef byte[] KeyParams/secp256r1A;
+		// 262
+		staticFieldRef byte[] KeyParams/secp256r1B;
 		// 263
-		.classRef DomString;
+		staticFieldRef byte[] KeyParams/secp256r1G;
 		// 264
-		staticMethodRef DomString/<init>([BS)V;
+		staticFieldRef byte[] KeyParams/secp256r1R;
 		// 265
 		virtualMethodRef PublicKeyCredentialUserEntity/setDisplayName([BS)V;
 		// 266
-		staticFieldRef byte[] Utf8Strings/UTF8_ICON;
+		.classRef DomString;
 		// 267
-		virtualMethodRef PublicKeyCredentialUserEntity/setIcon([BS)V;
+		staticMethodRef DomString/<init>([BS)V;
 		// 268
-		staticMethodRef PublicKeyCredentialEntity/<init>()V;
+		staticFieldRef byte[] Utf8Strings/UTF8_ICON;
 		// 269
-		.classRef PublicKeyCredentialParams;
+		virtualMethodRef PublicKeyCredentialUserEntity/setIcon([BS)V;
 		// 270
-		virtualMethodRef DomString/checkEquals(Lcom/josh/vku2f/DomString;)Z;
+		.classRef PublicKeyCredentialParams;
 		// 271
-		staticMethodRef PublicKeyCredentialParams/<init>(S)V;
+		staticMethodRef PublicKeyCredentialEntity/<init>()V;
 		// 272
-		.classRef 0.5;		// java/lang/ArrayIndexOutOfBoundsException
+		staticMethodRef PublicKeyCredentialParams/<init>(S)V;
 		// 273
-		staticFieldRef 1.14 ServerKeyCrypto/rng;
+		virtualMethodRef DomString/checkEquals(Lcom/josh/vku2f/DomString;)Z;
 		// 274
+		virtualMethodRef 1.15.5([BSS[BS)S;		// sign([BSS[BS)S
+		// 275
+		.classRef 0.5;		// java/lang/ArrayIndexOutOfBoundsException
+		// 276
+		staticFieldRef 1.14 ServerKeyCrypto/rng;
+		// 277
 		staticMethodRef 1.14.0(B)Ljavacard/security/RandomData;;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
 			.descriptor	Ljavacard/security/RandomData;	1.14;
 
-		// 275
+		// 278
 		staticFieldRef 1.14 StoredCredential/rng;
-		// 276
+		// 279
 		staticMethodRef ServerKeyCrypto/getRng()Ljavacard/security/RandomData;;
 			.descriptor	Ljavacard/security/RandomData;	1.14;
 
-		// 277
-		virtualMethodRef 1.14.1([BSS)V;		// generateData([BSS)V
-		// 278
-		virtualMethodRef 1.15.5([BSS[BS)S;		// sign([BSS[BS)S
-		// 279
-		staticFieldRef byte[] Utf8Strings/UTF8_ALG;
 		// 280
-		virtualMethodRef CBORDecoder/getMajorType()B;
+		virtualMethodRef 1.14.1([BSS)V;		// generateData([BSS)V
 		// 281
-		virtualMethodRef CBORDecoder/readEncodedInteger([BS)S;
+		staticFieldRef byte[] Utf8Strings/UTF8_ALG;
 		// 282
-		staticMethodRef 2.16.3([BSSB)S;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+		virtualMethodRef CBORDecoder/getMajorType()B;
 		// 283
-		staticMethodRef StoredCredential/<init>()V;
+		virtualMethodRef CBORDecoder/readEncodedInteger([BS)S;
 		// 284
 		virtualMethodRef PublicKeyCredentialParams/addAlgorithm(S)V;
 		// 285
-		virtualMethodRef AuthenticatorMakeCredential/getUser()Lcom/josh/vku2f/PublicKeyCredentialUserEntity;;
+		staticMethodRef 2.16.3([BSSB)S;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
 		// 286
-		virtualMethodRef AuthenticatorMakeCredential/getRp()Lcom/josh/vku2f/PublicKeyCredentialRpEntity;;
+		staticMethodRef StoredCredential/<init>()V;
 		// 287
 		staticMethodRef 2.16.5(BB)S;		// javacard/framework/Util.makeShort(BB)S
 		// 288
-		virtualMethodRef StoredCredential/incrementCounter()V;
+		virtualMethodRef AuthenticatorMakeCredential/getUser()Lcom/josh/vku2f/PublicKeyCredentialUserEntity;;
 		// 289
-		virtualMethodRef StoredCredential/doAttestationCommon([BS)V;
+		virtualMethodRef AuthenticatorMakeCredential/getRp()Lcom/josh/vku2f/PublicKeyCredentialRpEntity;;
 		// 290
 		staticFieldRef byte[] Utf8Strings/UTF8_PUBLIC_KEY;
 		// 291
@@ -666,24 +668,30 @@
 		// 292
 		virtualMethodRef StoredCredential/doAttestationCommon([BS)V;
 		// 293
-		.classRef 1.9;		// javacard/security/RSAPublicKey
+		virtualMethodRef 1.15.6([BSS)V;		// update([BSS)V
 		// 294
+		virtualMethodRef StoredCredential/incrementCounter()V;
+		// 295
+		virtualMethodRef StoredCredential/doAttestationCommon([BS)V;
+		// 296
+		.classRef 1.9;		// javacard/security/RSAPublicKey
+		// 297
 		staticMethodRef 4.1.0(BZ)Ljavacardx/crypto/Cipher;;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
 			.descriptor	Ljavacardx/crypto/Cipher;	4.1;
 
-		// 295
-		virtualMethodRef 1.15.6([BSS)V;		// update([BSS)V
-		// 296
+		// 298
+		staticFieldRef byte[] Utf8Strings/UTF8_RK;
+		// 299
 		virtualMethodRef 4.1.3(Ljavacard/security/Key;B)V;		// init(Ljavacard/security/Key;B)V
 			.descriptor	Ljavacard/security/Key;	1.0;
 
-		// 297
-		virtualMethodRef StoredCredential/incrementCounter()V;
-		// 298
-		virtualMethodRef 4.1.1([BSS[BS)S;		// doFinal([BSS[BS)S
-		// 299
-		virtualMethodRef StoredCredential/doAttestationCommon([BS)V;
 		// 300
+		virtualMethodRef StoredCredential/incrementCounter()V;
+		// 301
+		virtualMethodRef 4.1.1([BSS[BS)S;		// doFinal([BSS[BS)S
+		// 302
+		virtualMethodRef StoredCredential/doAttestationCommon([BS)V;
+		// 303
 		virtualMethodRef CBOREncoder/encodeNegativeUInt16(S)S;
 	}
 
@@ -716,7 +724,7 @@
 				L0:	aload_0;
 					invokespecial 69;		// java/lang/Object.<init>()V
 					aload_0;
-					new 219;		// javacard/security/KeyPair
+					new 221;		// javacard/security/KeyPair
 					dup;
 					sconst_5;
 					sspush 256;
@@ -731,13 +739,13 @@
 					aload_0;
 					bspush 33;
 					sconst_0;
-					invokestatic 211;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+					invokestatic 213;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
 					putfield_a 1;		// reference com/josh/vku2f/AttestationKeyPair.sig
 					getfield_a_this 1;		// reference com/josh/vku2f/AttestationKeyPair.sig
 					getfield_a_this 0;		// reference com/josh/vku2f/AttestationKeyPair.kp
-					invokevirtual 223;		// getPrivate()Ljavacard/security/PrivateKey;
+					invokevirtual 225;		// getPrivate()Ljavacard/security/PrivateKey;
 					sconst_1;
-					invokevirtual 249;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 251;		// init(Ljavacard/security/Key;B)V
 					return;
 		}
 
@@ -751,7 +759,7 @@
 					sload_3;
 					aload 4;
 					sload 5;
-					invokevirtual 278;		// sign([BSS[BS)S
+					invokevirtual 274;		// sign([BSS[BS)S
 					sreturn;
 		}
 
@@ -763,7 +771,7 @@
 					aload_1;
 					sload_2;
 					sload_3;
-					invokevirtual 295;		// update([BSS)V
+					invokevirtual 293;		// update([BSS)V
 					return;
 		}
 
@@ -1039,7 +1047,7 @@
 					goto L24;
 				L21:	aload_3;
 					sconst_0;
-					getstatic_a 179;		// reference com/josh/vku2f/Utf8Strings.UTF8_TYPE
+					getstatic_a 181;		// reference com/josh/vku2f/Utf8Strings.UTF8_TYPE
 					sconst_0;
 					sconst_4;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1093,7 +1101,7 @@
 					pop;
 					aload_3;
 					sconst_0;
-					getstatic_a 193;		// reference com/josh/vku2f/Utf8Strings.UTF8_UP
+					getstatic_a 195;		// reference com/josh/vku2f/Utf8Strings.UTF8_UP
 					sconst_0;
 					sconst_2;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1101,12 +1109,12 @@
 				L29:	getfield_a_this 4;		// reference com/josh/vku2f/AuthenticatorGetAssertion.options
 					sconst_0;
 					aload_1;
-					invokevirtual 195;		// readBoolean()Z
+					invokevirtual 197;		// readBoolean()Z
 					bastore;
 					goto L33;
 				L30:	aload_3;
 					sconst_0;
-					getstatic_a 206;		// reference com/josh/vku2f/Utf8Strings.UTF8_UV
+					getstatic_a 208;		// reference com/josh/vku2f/Utf8Strings.UTF8_UV
 					sconst_0;
 					sconst_2;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1114,11 +1122,11 @@
 				L31:	getfield_a_this 4;		// reference com/josh/vku2f/AuthenticatorGetAssertion.options
 					sconst_1;
 					aload_1;
-					invokevirtual 195;		// readBoolean()Z
+					invokevirtual 197;		// readBoolean()Z
 					bastore;
 					goto L33;
 				L32:	aload_1;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 				L33:	aload_2;
 					sconst_4;
@@ -1129,15 +1137,15 @@
 					sastore;
 					goto L27;
 				L34:	aload_1;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 					goto L38;
 				L35:	aload_1;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 					goto L38;
 				L36:	aload_1;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 					goto L38;
 				L37:	bspush -123;
@@ -1299,9 +1307,9 @@
 					pop;
 					goto_w L92;
 				L14:	aload_0;
-					new 220;		// com/josh/vku2f/PublicKeyCredentialRpEntity
+					new 222;		// com/josh/vku2f/PublicKeyCredentialRpEntity
 					dup;
-					invokespecial 222;		// com/josh/vku2f/PublicKeyCredentialRpEntity.<init>()V
+					invokespecial 224;		// com/josh/vku2f/PublicKeyCredentialRpEntity.<init>()V
 					putfield_a 10;		// reference com/josh/vku2f/AuthenticatorMakeCredential.rp
 					aload_1;
 					sconst_5;
@@ -1337,11 +1345,11 @@
 					getfield_a_this 10;		// reference com/josh/vku2f/AuthenticatorMakeCredential.rp
 					aload_3;
 					sload 10;
-					invokevirtual 224;		// setRp([BS)V
+					invokevirtual 226;		// setRp([BS)V
 					goto L22;
 				L20:	aload_3;
 					sconst_0;
-					getstatic_a 225;		// reference com/josh/vku2f/Utf8Strings.UTF8_NAME
+					getstatic_a 227;		// reference com/josh/vku2f/Utf8Strings.UTF8_NAME
 					sconst_0;
 					sconst_4;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1354,14 +1362,14 @@
 					getfield_a_this 10;		// reference com/josh/vku2f/AuthenticatorMakeCredential.rp
 					aload_3;
 					sload 10;
-					invokevirtual 226;		// setName([BS)V
+					invokevirtual 228;		// setName([BS)V
 				L22:	sinc 9 1;
 					goto L17;
 				L23:	goto_w L92;
 				L24:	aload_0;
-					new 227;		// com/josh/vku2f/PublicKeyCredentialUserEntity
+					new 229;		// com/josh/vku2f/PublicKeyCredentialUserEntity
 					dup;
-					invokespecial 248;		// com/josh/vku2f/PublicKeyCredentialUserEntity.<init>()V
+					invokespecial 250;		// com/josh/vku2f/PublicKeyCredentialUserEntity.<init>()V
 					putfield_a 11;		// reference com/josh/vku2f/AuthenticatorMakeCredential.user
 					aload_1;
 					sconst_5;
@@ -1393,11 +1401,11 @@
 					aload_3;
 					sconst_0;
 					sload 10;
-					invokevirtual 250;		// setId([BSS)V
+					invokevirtual 252;		// setId([BSS)V
 					goto L35;
 				L28:	aload_3;
 					sconst_0;
-					getstatic_a 225;		// reference com/josh/vku2f/Utf8Strings.UTF8_NAME
+					getstatic_a 227;		// reference com/josh/vku2f/Utf8Strings.UTF8_NAME
 					sconst_0;
 					sconst_4;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1410,11 +1418,11 @@
 					getfield_a_this 11;		// reference com/josh/vku2f/AuthenticatorMakeCredential.user
 					aload_3;
 					sload 10;
-					invokevirtual 252;		// setName([BS)V
+					invokevirtual 253;		// setName([BS)V
 					goto L35;
 				L30:	aload_3;
 					sconst_0;
-					getstatic_a 262;		// reference com/josh/vku2f/Utf8Strings.UTF8_DISPLAYNAME
+					getstatic_a 255;		// reference com/josh/vku2f/Utf8Strings.UTF8_DISPLAYNAME
 					sconst_0;
 					bspush 11;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1431,7 +1439,7 @@
 					goto L35;
 				L32:	aload_3;
 					sconst_0;
-					getstatic_a 266;		// reference com/josh/vku2f/Utf8Strings.UTF8_ICON
+					getstatic_a 268;		// reference com/josh/vku2f/Utf8Strings.UTF8_ICON
 					sconst_0;
 					sconst_4;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1444,10 +1452,10 @@
 					getfield_a_this 11;		// reference com/josh/vku2f/AuthenticatorMakeCredential.user
 					aload 4;
 					sload 10;
-					invokevirtual 267;		// setIcon([BS)V
+					invokevirtual 269;		// setIcon([BS)V
 					goto L35;
 				L34:	aload_1;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 				L35:	sinc 9 1;
 					goto_w L25;
@@ -1457,10 +1465,10 @@
 					invokevirtual 115;		// readMajorType(B)S
 					sstore 8;
 					aload_0;
-					new 269;		// com/josh/vku2f/PublicKeyCredentialParams
+					new 270;		// com/josh/vku2f/PublicKeyCredentialParams
 					dup;
 					sload 8;
-					invokespecial 271;		// com/josh/vku2f/PublicKeyCredentialParams.<init>(S)V
+					invokespecial 272;		// com/josh/vku2f/PublicKeyCredentialParams.<init>(S)V
 					putfield_a 12;		// reference com/josh/vku2f/AuthenticatorMakeCredential.params
 					sconst_0;
 					sstore 9;
@@ -1488,18 +1496,18 @@
 					pop;
 					aload_3;
 					sconst_0;
-					getstatic_a 279;		// reference com/josh/vku2f/Utf8Strings.UTF8_ALG
+					getstatic_a 281;		// reference com/josh/vku2f/Utf8Strings.UTF8_ALG
 					sconst_0;
 					sconst_3;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
 					ifne L54;
 				L44:	aload_1;
-					invokevirtual 280;		// getMajorType()B
+					invokevirtual 282;		// getMajorType()B
 					ifne L49;
 				L45:	aload_1;
 					aload 4;
 					sconst_0;
-					invokevirtual 281;		// readEncodedInteger([BS)S
+					invokevirtual 283;		// readEncodedInteger([BS)S
 					sstore 10;
 					sload 10;
 					sconst_1;
@@ -1524,13 +1532,13 @@
 					invokevirtual 284;		// addAlgorithm(S)V
 					goto L58;
 				L49:	aload_1;
-					invokevirtual 280;		// getMajorType()B
+					invokevirtual 282;		// getMajorType()B
 					sconst_1;
 					if_scmpne L58;
 				L50:	aload_1;
 					aload 4;
 					sconst_0;
-					invokevirtual 281;		// readEncodedInteger([BS)S
+					invokevirtual 283;		// readEncodedInteger([BS)S
 					sstore 10;
 					sload 10;
 					sconst_1;
@@ -1560,7 +1568,7 @@
 					goto L58;
 				L54:	aload_3;
 					sconst_0;
-					getstatic_a 179;		// reference com/josh/vku2f/Utf8Strings.UTF8_TYPE
+					getstatic_a 181;		// reference com/josh/vku2f/Utf8Strings.UTF8_TYPE
 					sconst_0;
 					sconst_4;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1643,7 +1651,7 @@
 					goto L72;
 				L69:	aload_3;
 					sconst_0;
-					getstatic_a 179;		// reference com/josh/vku2f/Utf8Strings.UTF8_TYPE
+					getstatic_a 181;		// reference com/josh/vku2f/Utf8Strings.UTF8_TYPE
 					sconst_0;
 					sconst_4;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1663,7 +1671,7 @@
 					goto L62;
 				L74:	goto_w L92;
 				L75:	aload_1;
-					invokevirtual 280;		// getMajorType()B
+					invokevirtual 282;		// getMajorType()B
 					sconst_5;
 					if_scmpeq L77;
 				L76:	bspush 17;
@@ -1685,7 +1693,7 @@
 					pop;
 					aload_3;
 					sconst_0;
-					getstatic_a 206;		// reference com/josh/vku2f/Utf8Strings.UTF8_UV
+					getstatic_a 208;		// reference com/josh/vku2f/Utf8Strings.UTF8_UV
 					sconst_0;
 					sconst_2;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1693,23 +1701,23 @@
 				L80:	getfield_a_this 8;		// reference com/josh/vku2f/AuthenticatorMakeCredential.options
 					sconst_1;
 					aload_1;
-					invokevirtual 195;		// readBoolean()Z
+					invokevirtual 197;		// readBoolean()Z
 					bastore;
 					goto L86;
 				L81:	aload_3;
 					sconst_0;
-					getstatic_a 66;		// reference com/josh/vku2f/Utf8Strings.UTF8_RK
+					getstatic_a 298;		// reference com/josh/vku2f/Utf8Strings.UTF8_RK
 					sconst_0;
 					sconst_2;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
 					ifne L83;
 				L82:	aload_1;
-					invokevirtual 195;		// readBoolean()Z
+					invokevirtual 197;		// readBoolean()Z
 					pop;
 					goto L86;
 				L83:	aload_3;
 					sconst_0;
-					getstatic_a 193;		// reference com/josh/vku2f/Utf8Strings.UTF8_UP
+					getstatic_a 195;		// reference com/josh/vku2f/Utf8Strings.UTF8_UP
 					sconst_0;
 					sconst_2;
 					invokestatic 134;		// javacard/framework/Util.arrayCompare([BS[BSS)B
@@ -1718,24 +1726,24 @@
 					invokestatic 131;		// javacard/framework/UserException.throwIt(S)V
 					goto L87;
 				L85:	aload_1;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 				L86:	sinc 9 1;
 					goto L78;
 				L87:	goto L92;
 				L88:	aload_1;
-					invokevirtual 280;		// getMajorType()B
+					invokevirtual 282;		// getMajorType()B
 					sconst_5;
 					if_scmpeq L90;
 				L89:	bspush 17;
 					invokestatic 131;		// javacard/framework/UserException.throwIt(S)V
 					goto L92;
 				L90:	aload_1;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 					goto L92;
 				L91:	aload_1;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 				L92:	sinc 6 1;
 					goto_w L11;
@@ -2132,7 +2140,7 @@
 				L0:	sconst_1;
 					sstore_1;
 					aload_0;
-					invokevirtual 280;		// getMajorType()B
+					invokevirtual 282;		// getMajorType()B
 					stableswitch L10 0 7 L1 L1 L4 L4 L6 L5 L10 L10;
 				L1:	aload_0;
 					invokevirtual 78;		// getIntegerSize()B
@@ -2170,7 +2178,7 @@
 					sload_1;
 					if_scmpge L9;
 				L8:	aload_0;
-					invokevirtual 207;		// skipEntry()S
+					invokevirtual 209;		// skipEntry()S
 					pop;
 					sinc 3 1;
 					goto L7;
@@ -2186,7 +2194,7 @@
 
 				L0:	sload_1;
 					aload_0;
-					invokevirtual 280;		// getMajorType()B
+					invokevirtual 282;		// getMajorType()B
 					if_scmpeq L2;
 				L1:	bspush 17;
 					invokestatic 131;		// javacard/framework/UserException.throwIt(S)V
@@ -2400,7 +2408,7 @@
 			.locals 1;
 
 				L0:	aload_0;
-					invokevirtual 280;		// getMajorType()B
+					invokevirtual 282;		// getMajorType()B
 					sconst_2;
 					if_scmpeq L2;
 				L1:	bspush 17;
@@ -2423,7 +2431,7 @@
 			.locals 1;
 
 				L0:	aload_0;
-					invokevirtual 280;		// getMajorType()B
+					invokevirtual 282;		// getMajorType()B
 					sconst_3;
 					if_scmpeq L2;
 				L1:	bspush 17;
@@ -2962,6 +2970,7 @@
 			public static final byte FIDO2_VENDOR_ATTEST_GETCERT = 74;		// B
 			public static final byte FIDO2_DESELECT = 18;		// B
 			public static final byte[] aaguid 0 = {-1,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0};		// [B
+			private static final byte FIDO2_VENDOR_GET_COUNT = 69;		// B
 			private static final byte ISO_INS_GET_DATA = -64;		// B
 			private static final byte FIDO2_INS_NFCCTAP_MSG = 16;		// B
 		}
@@ -2978,6 +2987,7 @@
 			handle(Ljavacard/framework/APDU;)V;
 			persoComplete(Ljavacard/framework/APDU;)V;
 			getAttestPublic(Ljavacard/framework/APDU;)V;
+			getCount(Ljavacard/framework/APDU;)V;
 			attestSignRaw(Ljavacard/framework/APDU;S)V;
 			attestSetCert(Ljavacard/framework/APDU;S)V;
 			authMakeCredential(Ljavacard/framework/APDU;S)V;
@@ -3101,7 +3111,7 @@
 					checkcast 0 129;		// T_CLASSORINTERFACE javacard/security/ECPrivateKey
 					astore_2;
 					aload_0;
-					new 219;		// javacard/security/KeyPair
+					new 221;		// javacard/security/KeyPair
 					dup;
 					aload_1;
 					aload_2;
@@ -3149,65 +3159,69 @@
 				L2:	getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
 					baload;
-					slookupswitch L13 10 1 L3 2 L4 4 L5 7 L12 8 L6 65 L7 66 L8 67 L9 68 L10 74 L11;
+					slookupswitch L14 11 1 L3 2 L4 4 L5 7 L13 8 L6 65 L7 66 L8 67 L9 68 L10 69 L12 74 L11;
 				L3:	aload_0;
 					aload_1;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_3;
 					saload;
 					invokevirtual 137;		// authMakeCredential(Ljavacard/framework/APDU;S)V
-					goto L14;
+					goto L15;
 				L4:	aload_0;
 					aload_1;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_3;
 					saload;
 					invokevirtual 138;		// authGetAssertion(Ljavacard/framework/APDU;S)V
-					goto L14;
+					goto L15;
 				L5:	aload_0;
 					aload_1;
 					invokevirtual 139;		// authGetInfo(Ljavacard/framework/APDU;)V
-					goto L14;
+					goto L15;
 				L6:	aload_0;
 					aload_1;
 					aload_2;
 					invokespecial 140;		// com/josh/vku2f/CTAP2.authGetNextAssertion(Ljavacard/framework/APDU;[B)V
-					goto L14;
+					goto L15;
 				L7:	aload_0;
 					aload_1;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_3;
 					saload;
 					invokevirtual 141;		// attestSignRaw(Ljavacard/framework/APDU;S)V
-					goto L14;
+					goto L15;
 				L8:	aload_0;
 					aload_1;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_3;
 					saload;
 					invokevirtual 142;		// attestSetCert(Ljavacard/framework/APDU;S)V
-					goto L14;
+					goto L15;
 				L9:	aload_0;
 					aload_1;
 					invokevirtual 143;		// persoComplete(Ljavacard/framework/APDU;)V
-					goto L14;
+					goto L15;
 				L10:	aload_0;
 					aload_1;
 					invokevirtual 144;		// getAttestPublic(Ljavacard/framework/APDU;)V
-					goto L14;
+					goto L15;
 				L11:	aload_0;
 					aload_1;
 					invokespecial 145;		// com/josh/vku2f/CTAP2.getCert(Ljavacard/framework/APDU;)V
-					goto L14;
+					goto L15;
 				L12:	aload_0;
 					aload_1;
-					invokespecial 146;		// com/josh/vku2f/CTAP2.doReset(Ljavacard/framework/APDU;)V
-					goto L14;
+					invokevirtual 146;		// getCount(Ljavacard/framework/APDU;)V
+					goto L15;
 				L13:	aload_0;
 					aload_1;
+					invokespecial 147;		// com/josh/vku2f/CTAP2.doReset(Ljavacard/framework/APDU;)V
+					goto L15;
+				L14:	aload_0;
+					aload_1;
 					sconst_1;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
-				L14:	return;
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
+				L15:	return;
 		}
 
 		.method public persoComplete(Ljavacard/framework/APDU;)V 9 {
@@ -3217,7 +3231,7 @@
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
 				L0:	getfield_a_this 23;		// reference com/josh/vku2f/CTAP2.attestation
-					invokevirtual 148;		// isCertSet()Z
+					invokevirtual 149;		// isCertSet()Z
 					ifeq L3;
 				L1:	getfield_b_this 25;		// boolean com/josh/vku2f/CTAP2.persoComplete
 					ifne L3;
@@ -3226,12 +3240,12 @@
 					aload_0;
 					aload_1;
 					sconst_0;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					goto L4;
 				L3:	aload_0;
 					aload_1;
 					sconst_1;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 				L4:	return;
 		}
 
@@ -3246,7 +3260,7 @@
 				L1:	aload_0;
 					aload_1;
 					sconst_1;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					return;
 				L2:	getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
@@ -3257,29 +3271,57 @@
 					getfield_a_this 23;		// reference com/josh/vku2f/CTAP2.attestation
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
-					invokevirtual 149;		// getPubkey([BS)S
+					invokevirtual 150;		// getPubkey([BS)S
 					sconst_1;
 					sadd;
 					sastore;
 					aload_1;
-					invokevirtual 150;		// setOutgoing()S
+					invokevirtual 151;		// setOutgoing()S
 					pop;
 					aload_1;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_0;
 					saload;
-					invokevirtual 151;		// setOutgoingLength(S)V
+					invokevirtual 152;		// setOutgoingLength(S)V
 					aload_1;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_0;
 					saload;
-					invokevirtual 152;		// sendBytesLong([BSS)V
+					invokevirtual 153;		// sendBytesLong([BSS)V
 					return;
 		}
 
-		.method public attestSignRaw(Ljavacard/framework/APDU;S)V 11 {
+		.method public getCount(Ljavacard/framework/APDU;)V 11 {
+			.stack 4;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	2.10;
+
+				L0:	getfield_a_this 21;		// reference com/josh/vku2f/CTAP2.discoverableCreds
+					invokevirtual 154;		// getCount()S
+					sstore_2;
+					aload_1;
+					invokevirtual 151;		// setOutgoing()S
+					pop;
+					aload_1;
+					sconst_2;
+					invokevirtual 152;		// setOutgoingLength(S)V
+					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
+					sconst_0;
+					sload_2;
+					invokestatic 98;		// javacard/framework/Util.setShort([BSS)S
+					pop;
+					aload_1;
+					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
+					sconst_0;
+					sconst_2;
+					invokevirtual 153;		// sendBytesLong([BSS)V
+					return;
+		}
+
+		.method public attestSignRaw(Ljavacard/framework/APDU;S)V 12 {
 			.stack 8;
 			.locals 0;
 
@@ -3290,7 +3332,7 @@
 				L1:	aload_0;
 					aload_1;
 					sconst_1;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					return;
 				L2:	getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
@@ -3315,10 +3357,10 @@
 					saload;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
-					invokevirtual 153;		// sign([BSS[BS)S
+					invokevirtual 155;		// sign([BSS[BS)S
 					sastore;
 					aload_1;
-					invokevirtual 150;		// setOutgoing()S
+					invokevirtual 151;		// setOutgoing()S
 					pop;
 					aload_1;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
@@ -3326,7 +3368,7 @@
 					saload;
 					sconst_1;
 					sadd;
-					invokevirtual 151;		// setOutgoingLength(S)V
+					invokevirtual 152;		// setOutgoingLength(S)V
 					aload_1;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
@@ -3335,11 +3377,11 @@
 					saload;
 					sconst_1;
 					sadd;
-					invokevirtual 152;		// sendBytesLong([BSS)V
+					invokevirtual 153;		// sendBytesLong([BSS)V
 					return;
 		}
 
-		.method public attestSetCert(Ljavacard/framework/APDU;S)V 12 {
+		.method public attestSetCert(Ljavacard/framework/APDU;S)V 13 {
 			.stack 6;
 			.locals 2;
 
@@ -3350,7 +3392,7 @@
 				L1:	aload_0;
 					aload_1;
 					sconst_1;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					return;
 				L2:	getfield_a_this 23;		// reference com/josh/vku2f/CTAP2.attestation
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
@@ -3358,7 +3400,7 @@
 					sload_2;
 					sconst_1;
 					ssub;
-					invokevirtual 154;		// setCert([BSS)V
+					invokevirtual 156;		// setCert([BSS)V
 					sconst_4;
 					sconst_0;
 					invokestatic 116;		// javacard/security/MessageDigest.getInstance(BZ)Ljavacard/security/MessageDigest;
@@ -3371,7 +3413,7 @@
 					getfield_s 3;		// short com/josh/vku2f/AttestationKeyPair.x509len
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_3;
-					invokevirtual 155;		// doFinal([BSS[BS)S
+					invokevirtual 157;		// doFinal([BSS[BS)S
 					sconst_3;
 					sadd;
 					sstore 4;
@@ -3386,20 +3428,20 @@
 					invokestatic 98;		// javacard/framework/Util.setShort([BSS)S
 					pop;
 					aload_1;
-					invokevirtual 150;		// setOutgoing()S
+					invokevirtual 151;		// setOutgoing()S
 					pop;
 					aload_1;
 					sload 4;
-					invokevirtual 151;		// setOutgoingLength(S)V
+					invokevirtual 152;		// setOutgoingLength(S)V
 					aload_1;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
 					sload 4;
-					invokevirtual 152;		// sendBytesLong([BSS)V
+					invokevirtual 153;		// sendBytesLong([BSS)V
 					return;
 		}
 
-		.method public authMakeCredential(Ljavacard/framework/APDU;S)V 13 {
+		.method public authMakeCredential(Ljavacard/framework/APDU;S)V 14 {
 			.stack 10;
 			.locals 1;
 
@@ -3409,70 +3451,70 @@
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
 					sload_2;
-					invokevirtual 157;		// init([BSS)V
+					invokevirtual 159;		// init([BSS)V
 				L1:	aload_0;
-					new 158;		// com/josh/vku2f/AuthenticatorMakeCredential
+					new 160;		// com/josh/vku2f/AuthenticatorMakeCredential
 					dup;
 					getfield_a_this 19;		// reference com/josh/vku2f/CTAP2.cborDecoder
-					invokespecial 159;		// com/josh/vku2f/AuthenticatorMakeCredential.<init>(Lcom/josh/vku2f/CBORDecoder;)V
+					invokespecial 161;		// com/josh/vku2f/AuthenticatorMakeCredential.<init>(Lcom/josh/vku2f/CBORDecoder;)V
 					putfield_a 33;		// reference com/josh/vku2f/CTAP2.cred
 				L2:	goto L4;
 				L3:	astore_3;
 					aload_0;
 					aload_1;
 					aload_3;
-					invokevirtual 160;		// getReason()S
-					invokevirtual 161;		// returnError(Ljavacard/framework/APDU;S)V
+					invokevirtual 162;		// getReason()S
+					invokevirtual 163;		// returnError(Ljavacard/framework/APDU;S)V
 					return;
 				L4:	getfield_a_this 33;		// reference com/josh/vku2f/CTAP2.cred
-					invokevirtual 162;		// getAlgorithm()B
+					invokevirtual 164;		// getAlgorithm()B
 					slookupswitch L8 3 33 L5 40 L6 44 L7;
 				L5:	aload_0;
-					new 163;		// com/josh/vku2f/StoredES256Credential
+					new 165;		// com/josh/vku2f/StoredES256Credential
 					dup;
 					getfield_a_this 33;		// reference com/josh/vku2f/CTAP2.cred
-					invokespecial 164;		// com/josh/vku2f/StoredES256Credential.<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V
+					invokespecial 166;		// com/josh/vku2f/StoredES256Credential.<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V
 					putfield_a 32;		// reference com/josh/vku2f/CTAP2.tempCred
 					goto L9;
 				L6:	aload_0;
-					new 165;		// com/josh/vku2f/StoredRS256Credential
+					new 167;		// com/josh/vku2f/StoredRS256Credential
 					dup;
 					getfield_a_this 33;		// reference com/josh/vku2f/CTAP2.cred
-					invokespecial 166;		// com/josh/vku2f/StoredRS256Credential.<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V
+					invokespecial 168;		// com/josh/vku2f/StoredRS256Credential.<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V
 					putfield_a 32;		// reference com/josh/vku2f/CTAP2.tempCred
 					goto L9;
 				L7:	aload_0;
-					new 167;		// com/josh/vku2f/StoredPS256Credential
+					new 169;		// com/josh/vku2f/StoredPS256Credential
 					dup;
 					getfield_a_this 33;		// reference com/josh/vku2f/CTAP2.cred
-					invokespecial 168;		// com/josh/vku2f/StoredPS256Credential.<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V
+					invokespecial 170;		// com/josh/vku2f/StoredPS256Credential.<init>(Lcom/josh/vku2f/AuthenticatorMakeCredential;)V
 					putfield_a 32;		// reference com/josh/vku2f/CTAP2.tempCred
 					goto L9;
 				L8:	aload_0;
 					aload_1;
 					bspush 38;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					return;
 				L9:	getfield_a_this 33;		// reference com/josh/vku2f/CTAP2.cred
-					invokevirtual 169;		// isResident()Z
+					invokevirtual 171;		// isResident()Z
 					ifeq_w L14;
 				L10:	getfield_a_this 33;		// reference com/josh/vku2f/CTAP2.cred
-					invokevirtual 170;		// isExclude()Z
+					invokevirtual 172;		// isExclude()Z
 					ifeq L13;
 				L11:	aload_0;
 					getfield_a_this 33;		// reference com/josh/vku2f/CTAP2.cred
 					getfield_a 13;		// reference com/josh/vku2f/AuthenticatorMakeCredential.exclude
-					invokespecial 171;		// com/josh/vku2f/CTAP2.isPresent([Lcom/josh/vku2f/PublicKeyCredentialDescriptor;)Z
+					invokespecial 173;		// com/josh/vku2f/CTAP2.isPresent([Lcom/josh/vku2f/PublicKeyCredentialDescriptor;)Z
 					ifeq L13;
 				L12:	aload_0;
 					aload_1;
 					bspush 25;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					return;
 				L13:	aload_0;
 					aload_1;
 					getfield_a_this 32;		// reference com/josh/vku2f/CTAP2.tempCred
-					invokespecial 172;		// com/josh/vku2f/CTAP2.addResident(Ljavacard/framework/APDU;Lcom/josh/vku2f/StoredCredential;)V
+					invokespecial 174;		// com/josh/vku2f/CTAP2.addResident(Ljavacard/framework/APDU;Lcom/josh/vku2f/StoredCredential;)V
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
 					sconst_0;
@@ -3481,22 +3523,22 @@
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
 					sspush 1199;
-					invokevirtual 173;		// init([BSS)V
+					invokevirtual 175;		// init([BSS)V
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_0;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_3;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					sastore;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
 					invokevirtual 91;		// writeRawByte(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 175;		// reference com/josh/vku2f/Utf8Strings.UTF8_PACKED
+					getstatic_a 177;		// reference com/josh/vku2f/Utf8Strings.UTF8_PACKED
 					sconst_0;
 					bspush 6;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_2;
@@ -3507,9 +3549,9 @@
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					bspush 37;
 					getfield_a_this 32;		// reference com/josh/vku2f/CTAP2.tempCred
-					invokevirtual 177;		// getAttestedLen()S
+					invokevirtual 179;		// getAttestedLen()S
 					sadd;
-					invokevirtual 178;		// startByteString(S)S
+					invokevirtual 180;		// startByteString(S)S
 					sastore;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 7;
@@ -3521,7 +3563,7 @@
 					getfield_a 34;		// reference com/josh/vku2f/StoredCredential.rp
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					sconst_0;
-					invokevirtual 180;		// getRp([BS)V
+					invokevirtual 182;		// getRp([BS)V
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_0;
 					dup2;
@@ -3531,12 +3573,12 @@
 					sconst_0;
 					getfield_a_this 32;		// reference com/josh/vku2f/CTAP2.tempCred
 					getfield_a 34;		// reference com/josh/vku2f/StoredCredential.rp
-					invokevirtual 181;		// getRpLen()S
+					invokevirtual 183;		// getRpLen()S
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_0;
 					saload;
-					invokevirtual 155;		// doFinal([BSS[BS)S
+					invokevirtual 157;		// doFinal([BSS[BS)S
 					sadd;
 					sastore;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
@@ -3559,7 +3601,7 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_0;
 					saload;
-					invokevirtual 182;		// readCounter([BS)S
+					invokevirtual 184;		// readCounter([BS)S
 					sadd;
 					sastore;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
@@ -3571,7 +3613,7 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_0;
 					saload;
-					invokevirtual 183;		// getAttestedData([BS)S
+					invokevirtual 185;		// getAttestedData([BS)S
 					sadd;
 					sastore;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
@@ -3580,23 +3622,23 @@
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_3;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 279;		// reference com/josh/vku2f/Utf8Strings.UTF8_ALG
+					getstatic_a 281;		// reference com/josh/vku2f/Utf8Strings.UTF8_ALG
 					sconst_0;
 					sconst_3;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					bspush 6;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 185;		// reference com/josh/vku2f/Utf8Strings.UTF8_SIG
+					getstatic_a 187;		// reference com/josh/vku2f/Utf8Strings.UTF8_SIG
 					sconst_0;
 					sconst_3;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 23;		// reference com/josh/vku2f/CTAP2.attestation
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
@@ -3604,10 +3646,10 @@
 					bspush 7;
 					saload;
 					getfield_a_this 32;		// reference com/josh/vku2f/CTAP2.tempCred
-					invokevirtual 177;		// getAttestedLen()S
+					invokevirtual 179;		// getAttestedLen()S
 					bspush 37;
 					sadd;
-					invokevirtual 186;		// update([BSS)V
+					invokevirtual 188;		// update([BSS)V
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_4;
 					getfield_a_this 23;		// reference com/josh/vku2f/CTAP2.attestation
@@ -3619,7 +3661,7 @@
 					arraylength;
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					sconst_0;
-					invokevirtual 153;		// sign([BSS[BS)S
+					invokevirtual 155;		// sign([BSS[BS)S
 					sastore;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
@@ -3627,17 +3669,17 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_4;
 					saload;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 188;		// reference com/josh/vku2f/Utf8Strings.UTF8_X5C
+					getstatic_a 190;		// reference com/josh/vku2f/Utf8Strings.UTF8_X5C
 					sconst_0;
 					sconst_3;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 189;		// startArray(S)S
+					invokevirtual 191;		// startArray(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 23;		// reference com/josh/vku2f/CTAP2.attestation
@@ -3645,26 +3687,26 @@
 					sconst_0;
 					getfield_a_this 23;		// reference com/josh/vku2f/CTAP2.attestation
 					getfield_s 3;		// short com/josh/vku2f/AttestationKeyPair.x509len
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					aload_0;
 					aload_1;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					invokevirtual 96;		// getCurrentOffset()S
-					invokevirtual 190;		// sendLongChaining(Ljavacard/framework/APDU;S)V
+					invokevirtual 192;		// sendLongChaining(Ljavacard/framework/APDU;S)V
 					goto L15;
 				L14:	aload_0;
 					aload_1;
 					bspush 43;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 				L15:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L1 L2 L3 156;
+				L1 L2 L3 158;
 			}
 		}
 
-		.method public authGetAssertion(Ljavacard/framework/APDU;S)V 14 {
+		.method public authGetAssertion(Ljavacard/framework/APDU;S)V 15 {
 			.stack 6;
 			.locals 1;
 
@@ -3678,26 +3720,26 @@
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
 					sload_2;
-					invokevirtual 157;		// init([BSS)V
+					invokevirtual 159;		// init([BSS)V
 				L1:	aload_0;
-					new 191;		// com/josh/vku2f/AuthenticatorGetAssertion
+					new 193;		// com/josh/vku2f/AuthenticatorGetAssertion
 					dup;
 					getfield_a_this 19;		// reference com/josh/vku2f/CTAP2.cborDecoder
-					invokespecial 192;		// com/josh/vku2f/AuthenticatorGetAssertion.<init>(Lcom/josh/vku2f/CBORDecoder;)V
+					invokespecial 194;		// com/josh/vku2f/AuthenticatorGetAssertion.<init>(Lcom/josh/vku2f/CBORDecoder;)V
 					putfield_a 35;		// reference com/josh/vku2f/CTAP2.assertion
 				L2:	goto L4;
 				L3:	astore_3;
 					aload_0;
 					aload_1;
 					aload_3;
-					invokevirtual 160;		// getReason()S
-					invokevirtual 161;		// returnError(Ljavacard/framework/APDU;S)V
+					invokevirtual 162;		// getReason()S
+					invokevirtual 163;		// returnError(Ljavacard/framework/APDU;S)V
 					return;
 				L4:	aload_0;
 					aload_0;
 					aload_1;
 					getfield_a_this 35;		// reference com/josh/vku2f/CTAP2.assertion
-					invokespecial 194;		// com/josh/vku2f/CTAP2.findCredentials(Ljavacard/framework/APDU;Lcom/josh/vku2f/AuthenticatorGetAssertion;)[Lcom/josh/vku2f/StoredCredential;
+					invokespecial 196;		// com/josh/vku2f/CTAP2.findCredentials(Ljavacard/framework/APDU;Lcom/josh/vku2f/AuthenticatorGetAssertion;)[Lcom/josh/vku2f/StoredCredential;
 					putfield_a 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
 					arraylength;
@@ -3709,7 +3751,7 @@
 				L6:	aload_0;
 					aload_1;
 					bspush 46;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					return;
 				L7:	getfield_a_this 22;		// reference com/josh/vku2f/CTAP2.sha
 					getfield_a_this 35;		// reference com/josh/vku2f/CTAP2.assertion
@@ -3720,7 +3762,7 @@
 					arraylength;
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					sconst_0;
-					invokevirtual 155;		// doFinal([BSS[BS)S
+					invokevirtual 157;		// doFinal([BSS[BS)S
 					pop;
 					getfield_a_this 35;		// reference com/josh/vku2f/CTAP2.assertion
 					getfield_a 4;		// reference com/josh/vku2f/AuthenticatorGetAssertion.options
@@ -3741,12 +3783,12 @@
 					aaload;
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					bspush 33;
-					invokevirtual 182;		// readCounter([BS)S
+					invokevirtual 184;		// readCounter([BS)S
 					pop;
 					getfield_a_this 35;		// reference com/josh/vku2f/CTAP2.assertion
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					bspush 37;
-					invokevirtual 196;		// getHash([BS)S
+					invokevirtual 198;		// getHash([BS)S
 					pop;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
@@ -3756,7 +3798,7 @@
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
 					sspush 1199;
-					invokevirtual 173;		// init([BSS)V
+					invokevirtual 175;		// init([BSS)V
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
 					arraylength;
 					sconst_1;
@@ -3764,12 +3806,12 @@
 				L11:	aload_0;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_5;
-					invokespecial 197;		// com/josh/vku2f/CTAP2.doAssertionCommon(Lcom/josh/vku2f/CBOREncoder;S)V
+					invokespecial 199;		// com/josh/vku2f/CTAP2.doAssertionCommon(Lcom/josh/vku2f/CBOREncoder;S)V
 					goto L13;
 				L12:	aload_0;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_4;
-					invokespecial 197;		// com/josh/vku2f/CTAP2.doAssertionCommon(Lcom/josh/vku2f/CBOREncoder;S)V
+					invokespecial 199;		// com/josh/vku2f/CTAP2.doAssertionCommon(Lcom/josh/vku2f/CBOREncoder;S)V
 				L13:	getfield_a_this 24;		// reference com/josh/vku2f/CTAP2.nextAssertion
 					sconst_0;
 					sconst_1;
@@ -3778,11 +3820,11 @@
 					aload_1;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					invokevirtual 96;		// getCurrentOffset()S
-					invokevirtual 190;		// sendLongChaining(Ljavacard/framework/APDU;S)V
+					invokevirtual 192;		// sendLongChaining(Ljavacard/framework/APDU;S)V
 					return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L1 L2 L3 156;
+				L1 L2 L3 158;
 			}
 		}
 
@@ -3811,7 +3853,7 @@
 					arraylength;
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					sconst_0;
-					invokevirtual 155;		// doFinal([BSS[BS)S
+					invokevirtual 157;		// doFinal([BSS[BS)S
 					pop;
 					getfield_a_this 35;		// reference com/josh/vku2f/CTAP2.assertion
 					getfield_a 4;		// reference com/josh/vku2f/AuthenticatorGetAssertion.options
@@ -3834,12 +3876,12 @@
 					aaload;
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					bspush 33;
-					invokevirtual 182;		// readCounter([BS)S
+					invokevirtual 184;		// readCounter([BS)S
 					pop;
 					getfield_a_this 35;		// reference com/josh/vku2f/CTAP2.assertion
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					bspush 37;
-					invokevirtual 196;		// getHash([BS)S
+					invokevirtual 198;		// getHash([BS)S
 					pop;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
@@ -3849,11 +3891,11 @@
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
 					sspush 1199;
-					invokevirtual 173;		// init([BSS)V
+					invokevirtual 175;		// init([BSS)V
 					aload_0;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_4;
-					invokespecial 197;		// com/josh/vku2f/CTAP2.doAssertionCommon(Lcom/josh/vku2f/CBOREncoder;S)V
+					invokespecial 199;		// com/josh/vku2f/CTAP2.doAssertionCommon(Lcom/josh/vku2f/CBOREncoder;S)V
 					getfield_a_this 24;		// reference com/josh/vku2f/CTAP2.nextAssertion
 					sconst_0;
 					dup2;
@@ -3865,11 +3907,11 @@
 					aload_1;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					invokevirtual 96;		// getCurrentOffset()S
-					invokevirtual 190;		// sendLongChaining(Ljavacard/framework/APDU;S)V
+					invokevirtual 192;		// sendLongChaining(Ljavacard/framework/APDU;S)V
 				L6:	return;
 		}
 
-		.method public clientPin(Ljavacard/framework/APDU;S)V 15 {
+		.method public clientPin(Ljavacard/framework/APDU;S)V 16 {
 			.stack 4;
 			.locals 1;
 
@@ -3879,7 +3921,7 @@
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
 					sload_2;
-					invokevirtual 157;		// init([BSS)V
+					invokevirtual 159;		// init([BSS)V
 					getfield_a_this 19;		// reference com/josh/vku2f/CTAP2.cborDecoder
 					sconst_5;
 					invokevirtual 115;		// readMajorType(B)S
@@ -3910,7 +3952,7 @@
 					slookupswitch L11 1 2 L10;
 				L10:	aload_0;
 					aload_1;
-					invokespecial 198;		// com/josh/vku2f/CTAP2.generateDH(Ljavacard/framework/APDU;)V
+					invokespecial 200;		// com/josh/vku2f/CTAP2.generateDH(Ljavacard/framework/APDU;)V
 					goto L13;
 				L11:	bspush 43;
 					invokestatic 131;		// javacard/framework/UserException.throwIt(S)V
@@ -3920,15 +3962,15 @@
 					aload_0;
 					aload_1;
 					aload_3;
-					invokevirtual 160;		// getReason()S
-					invokevirtual 161;		// returnError(Ljavacard/framework/APDU;S)V
+					invokevirtual 162;		// getReason()S
+					invokevirtual 163;		// returnError(Ljavacard/framework/APDU;S)V
 				L15:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L0 L2 L14 156;
-				L3 L5 L14 156;
-				L6 L8 L14 156;
-				L9 L12 L14 156;
+				L0 L2 L14 158;
+				L3 L5 L14 158;
+				L6 L8 L14 158;
+				L9 L12 L14 158;
 			}
 		}
 
@@ -3940,18 +3982,18 @@
 
 				L0:	getfield_a_this 21;		// reference com/josh/vku2f/CTAP2.discoverableCreds
 					aload_2;
-					invokevirtual 199;		// addCredential(Lcom/josh/vku2f/StoredCredential;)V
+					invokevirtual 201;		// addCredential(Lcom/josh/vku2f/StoredCredential;)V
 				L1:	goto L3;
 				L2:	astore_3;
 					aload_0;
 					aload_1;
 					aload_3;
-					invokevirtual 160;		// getReason()S
-					invokevirtual 161;		// returnError(Ljavacard/framework/APDU;S)V
+					invokevirtual 162;		// getReason()S
+					invokevirtual 163;		// returnError(Ljavacard/framework/APDU;S)V
 				L3:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L0 L1 L2 156;
+				L0 L1 L2 158;
 			}
 		}
 
@@ -3995,68 +4037,68 @@
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
 					sspush 1199;
-					invokevirtual 173;		// init([BSS)V
+					invokevirtual 175;		// init([BSS)V
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_5;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_2;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_3;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					bspush 6;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_0;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					aload_2;
 					sconst_1;
 					bspush 32;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_2;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					aload_2;
 					bspush 33;
 					bspush 32;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					aload_0;
 					aload_1;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					invokevirtual 96;		// getCurrentOffset()S
-					invokevirtual 190;		// sendLongChaining(Ljavacard/framework/APDU;S)V
+					invokevirtual 192;		// sendLongChaining(Ljavacard/framework/APDU;S)V
 					return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
@@ -4071,12 +4113,12 @@
 			.descriptor	Ljavacard/framework/APDU;	2.10;
 
 				L0:	aload_2;
-					invokevirtual 201;		// hasAllow()Z
+					invokevirtual 203;		// hasAllow()Z
 					ifeq_w L13;
 				L1:	aload_2;
 					getfield_a 7;		// reference com/josh/vku2f/AuthenticatorGetAssertion.allow
 					arraylength;
-					anewarray 202;		// com/josh/vku2f/StoredCredential
+					anewarray 204;		// com/josh/vku2f/StoredCredential
 					astore_3;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 6;
@@ -4085,7 +4127,7 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 7;
 					getfield_a_this 21;		// reference com/josh/vku2f/CTAP2.discoverableCreds
-					invokevirtual 203;		// getLength()S
+					invokevirtual 205;		// getLength()S
 					sconst_1;
 					ssub;
 					sastore;
@@ -4097,7 +4139,7 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 7;
 					saload;
-					invokevirtual 204;		// getCred(S)Lcom/josh/vku2f/StoredCredential;
+					invokevirtual 206;		// getCred(S)Lcom/josh/vku2f/StoredCredential;
 					astore 4;
 					aload 4;
 					ifnull L12;
@@ -4109,7 +4151,7 @@
 					aload_2;
 					getfield_a 5;		// reference com/josh/vku2f/AuthenticatorGetAssertion.rpId
 					arraylength;
-					invokevirtual 205;		// checkId([BSS)Z
+					invokevirtual 207;		// checkId([BSS)Z
 					ifeq L12;
 				L5:	getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_5;
@@ -4179,8 +4221,8 @@
 					sastore;
 					goto_w L2;
 				L13:	getfield_a_this 21;		// reference com/josh/vku2f/CTAP2.discoverableCreds
-					invokevirtual 203;		// getLength()S
-					anewarray 202;		// com/josh/vku2f/StoredCredential
+					invokevirtual 205;		// getLength()S
+					anewarray 204;		// com/josh/vku2f/StoredCredential
 					astore_3;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 6;
@@ -4189,7 +4231,7 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 7;
 					getfield_a_this 21;		// reference com/josh/vku2f/CTAP2.discoverableCreds
-					invokevirtual 203;		// getLength()S
+					invokevirtual 205;		// getLength()S
 					sconst_1;
 					ssub;
 					sastore;
@@ -4201,7 +4243,7 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 7;
 					saload;
-					invokevirtual 204;		// getCred(S)Lcom/josh/vku2f/StoredCredential;
+					invokevirtual 206;		// getCred(S)Lcom/josh/vku2f/StoredCredential;
 					astore 4;
 					aload 4;
 					ifnull L18;
@@ -4213,7 +4255,7 @@
 					aload_2;
 					getfield_a 5;		// reference com/josh/vku2f/AuthenticatorGetAssertion.rpId
 					arraylength;
-					invokevirtual 205;		// checkId([BSS)Z
+					invokevirtual 207;		// checkId([BSS)Z
 					ifeq L18;
 				L17:	aload_3;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
@@ -4237,7 +4279,7 @@
 				L19:	getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 6;
 					saload;
-					anewarray 202;		// com/josh/vku2f/StoredCredential
+					anewarray 204;		// com/josh/vku2f/StoredCredential
 					astore 5;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 7;
@@ -4268,7 +4310,7 @@
 					sadd;
 					sastore;
 					goto L20;
-				L22:	invokestatic 208;		// javacard/framework/JCSystem.requestObjectDeletion()V
+				L22:	invokestatic 210;		// javacard/framework/JCSystem.requestObjectDeletion()V
 					aload 5;
 					areturn;
 		}
@@ -4285,13 +4327,13 @@
 					bspush 7;
 					saload;
 					getfield_a_this 21;		// reference com/josh/vku2f/CTAP2.discoverableCreds
-					invokevirtual 203;		// getLength()S
+					invokevirtual 205;		// getLength()S
 					if_scmpge L10;
 				L2:	getfield_a_this 21;		// reference com/josh/vku2f/CTAP2.discoverableCreds
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					bspush 7;
 					saload;
-					invokevirtual 204;		// getCred(S)Lcom/josh/vku2f/StoredCredential;
+					invokevirtual 206;		// getCred(S)Lcom/josh/vku2f/StoredCredential;
 					astore_2;
 					aload_2;
 					ifnonnull L4;
@@ -4321,7 +4363,7 @@
 					aaload;
 					getfield_a 37;		// reference com/josh/vku2f/PublicKeyCredentialDescriptor.id
 					arraylength;
-					invokevirtual 209;		// checkId([BSS)Z
+					invokevirtual 211;		// checkId([BSS)Z
 					ifeq L8;
 				L7:	sconst_1;
 					sreturn;
@@ -4357,15 +4399,15 @@
 					sconst_5;
 					invokespecial 114;		// com/josh/vku2f/CredentialArray.<init>(S)V
 					putfield_a 21;		// reference com/josh/vku2f/CTAP2.discoverableCreds
-					invokestatic 208;		// javacard/framework/JCSystem.requestObjectDeletion()V
+					invokestatic 210;		// javacard/framework/JCSystem.requestObjectDeletion()V
 					aload_0;
 					aload_1;
 					sconst_0;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					return;
 		}
 
-		.method public returnError(Ljavacard/framework/APDU;B)V 16 {
+		.method public returnError(Ljavacard/framework/APDU;B)V 17 {
 			.stack 3;
 			.locals 1;
 
@@ -4381,11 +4423,11 @@
 					aload_1;
 					sconst_0;
 					sconst_1;
-					invokevirtual 210;		// setOutgoingAndSend(SS)V
+					invokevirtual 212;		// setOutgoingAndSend(SS)V
 					return;
 		}
 
-		.method public returnError(Ljavacard/framework/APDU;S)V 17 {
+		.method public returnError(Ljavacard/framework/APDU;S)V 18 {
 			.stack 3;
 			.locals 1;
 
@@ -4402,11 +4444,11 @@
 					aload_1;
 					sconst_1;
 					sconst_1;
-					invokevirtual 210;		// setOutgoingAndSend(SS)V
+					invokevirtual 212;		// setOutgoingAndSend(SS)V
 					return;
 		}
 
-		.method public authGetInfo(Ljavacard/framework/APDU;)V 18 {
+		.method public authGetInfo(Ljavacard/framework/APDU;)V 19 {
 			.stack 5;
 			.locals 0;
 
@@ -4422,82 +4464,82 @@
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
 					sspush 1199;
-					invokevirtual 173;		// init([BSS)V
+					invokevirtual 175;		// init([BSS)V
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_4;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 189;		// startArray(S)S
+					invokevirtual 191;		// startArray(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 212;		// reference com/josh/vku2f/Utf8Strings.UTF8_FIDO2
+					getstatic_a 214;		// reference com/josh/vku2f/Utf8Strings.UTF8_FIDO2
 					sconst_0;
 					bspush 8;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_3;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 213;		// reference com/josh/vku2f/CTAP2.aaguid
+					getstatic_a 215;		// reference com/josh/vku2f/CTAP2.aaguid
 					sconst_0;
 					bspush 16;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_4;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_3;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 66;		// reference com/josh/vku2f/Utf8Strings.UTF8_RK
+					getstatic_a 298;		// reference com/josh/vku2f/Utf8Strings.UTF8_RK
 					sconst_0;
 					sconst_2;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 214;		// encodeBoolean(Z)S
+					invokevirtual 216;		// encodeBoolean(Z)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 193;		// reference com/josh/vku2f/Utf8Strings.UTF8_UP
+					getstatic_a 195;		// reference com/josh/vku2f/Utf8Strings.UTF8_UP
 					sconst_0;
 					sconst_2;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 214;		// encodeBoolean(Z)S
+					invokevirtual 216;		// encodeBoolean(Z)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 206;		// reference com/josh/vku2f/Utf8Strings.UTF8_UV
+					getstatic_a 208;		// reference com/josh/vku2f/Utf8Strings.UTF8_UV
 					sconst_0;
 					sconst_2;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 214;		// encodeBoolean(Z)S
+					invokevirtual 216;		// encodeBoolean(Z)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_5;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sspush 1200;
-					invokevirtual 215;		// encodeUInt16(S)S
+					invokevirtual 217;		// encodeUInt16(S)S
 					pop;
-					invokestatic 216;		// javacard/framework/JCSystem.beginTransaction()V
+					invokestatic 218;		// javacard/framework/JCSystem.beginTransaction()V
 					aload_0;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					invokevirtual 96;		// getCurrentOffset()S
@@ -4511,7 +4553,7 @@
 					invokevirtual 96;		// getCurrentOffset()S
 					invokestatic 104;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
-					invokestatic 217;		// javacard/framework/JCSystem.commitTransaction()V
+					invokestatic 219;		// javacard/framework/JCSystem.commitTransaction()V
 				L2:	getfield_a_this 39;		// reference com/josh/vku2f/CTAP2.info
 					sconst_0;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
@@ -4524,7 +4566,7 @@
 					aload_1;
 					getfield_a_this 39;		// reference com/josh/vku2f/CTAP2.info
 					arraylength;
-					invokevirtual 190;		// sendLongChaining(Ljavacard/framework/APDU;S)V
+					invokevirtual 192;		// sendLongChaining(Ljavacard/framework/APDU;S)V
 					return;
 		}
 
@@ -4537,26 +4579,26 @@
 					if_scmpne L2;
 				L1:	aload_1;
 					sconst_4;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					goto L3;
 				L2:	aload_1;
 					sconst_5;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 				L3:	aload_1;
 					sconst_1;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					aload_1;
 					sconst_2;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getstatic_a 132;		// reference com/josh/vku2f/Utf8Strings.UTF8_ID
 					sconst_0;
 					sconst_2;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
@@ -4573,33 +4615,33 @@
 					aaload;
 					getfield_a 38;		// reference com/josh/vku2f/StoredCredential.id
 					arraylength;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 179;		// reference com/josh/vku2f/Utf8Strings.UTF8_TYPE
+					getstatic_a 181;		// reference com/josh/vku2f/Utf8Strings.UTF8_TYPE
 					sconst_0;
 					sconst_4;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getstatic_a 290;		// reference com/josh/vku2f/Utf8Strings.UTF8_PUBLIC_KEY
 					sconst_0;
 					bspush 10;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_2;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					sconst_0;
 					bspush 37;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_3;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_3;
@@ -4613,7 +4655,7 @@
 					bspush 69;
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
 					bspush 69;
-					invokevirtual 218;		// performSignature([BSS[BS)S
+					invokevirtual 220;		// performSignature([BSS[BS)S
 					sastore;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 17;		// reference com/josh/vku2f/CTAP2.scratch
@@ -4621,11 +4663,11 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_3;
 					saload;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_4;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 35;		// reference com/josh/vku2f/CTAP2.assertion
 					getfield_a 4;		// reference com/josh/vku2f/AuthenticatorGetAssertion.options
@@ -4640,24 +4682,24 @@
 					aaload;
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					getfield_b 41;		// byte com/josh/vku2f/PublicKeyCredentialUserEntity.numData
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
 					getfield_a_this 24;		// reference com/josh/vku2f/CTAP2.nextAssertion
 					sconst_0;
 					saload;
 					aaload;
-					invokevirtual 221;		// getPresentUser()[Z
+					invokevirtual 223;		// getPresentUser()[Z
 					astore_3;
 					aload_3;
 					sconst_2;
 					baload;
 					ifeq L6;
 				L5:	getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 262;		// reference com/josh/vku2f/Utf8Strings.UTF8_DISPLAYNAME
+					getstatic_a 255;		// reference com/josh/vku2f/Utf8Strings.UTF8_DISPLAYNAME
 					sconst_0;
 					bspush 11;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
@@ -4677,7 +4719,7 @@
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					getfield_a 42;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.displayName
 					getfield_s 44;		// short com/josh/vku2f/DomString.len
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 				L6:	aload_3;
 					sconst_1;
@@ -4687,7 +4729,7 @@
 					getstatic_a 132;		// reference com/josh/vku2f/Utf8Strings.UTF8_ID
 					sconst_0;
 					sconst_2;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
@@ -4706,17 +4748,17 @@
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					getfield_a 45;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.id
 					arraylength;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 				L8:	aload_3;
 					sconst_0;
 					baload;
 					ifeq L10;
 				L9:	getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 225;		// reference com/josh/vku2f/Utf8Strings.UTF8_NAME
+					getstatic_a 227;		// reference com/josh/vku2f/Utf8Strings.UTF8_NAME
 					sconst_0;
 					sconst_4;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
@@ -4736,17 +4778,17 @@
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					getfield_a 46;		// reference com/josh/vku2f/PublicKeyCredentialEntity.name
 					getfield_s 44;		// short com/josh/vku2f/DomString.len
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 				L10:	aload_3;
 					sconst_3;
 					baload;
 					ifeq L12;
 				L11:	getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
-					getstatic_a 266;		// reference com/josh/vku2f/Utf8Strings.UTF8_ICON
+					getstatic_a 268;		// reference com/josh/vku2f/Utf8Strings.UTF8_ICON
 					sconst_0;
 					sconst_4;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
@@ -4765,18 +4807,18 @@
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					getfield_a 47;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.icon
 					arraylength;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 				L12:	goto L14;
 				L13:	getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_1;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getstatic_a 132;		// reference com/josh/vku2f/Utf8Strings.UTF8_ID
 					sconst_0;
 					sconst_2;
-					invokevirtual 176;		// encodeTextString([BSS)S
+					invokevirtual 178;		// encodeTextString([BSS)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
@@ -4795,20 +4837,20 @@
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					getfield_a 45;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.id
 					arraylength;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 				L14:	sload_2;
 					sconst_5;
 					if_scmpne L16;
 				L15:	getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					sconst_5;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					getfield_a_this 20;		// reference com/josh/vku2f/CTAP2.cborEncoder
 					getfield_a_this 36;		// reference com/josh/vku2f/CTAP2.assertionCreds
 					arraylength;
 					s2b;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 				L16:	return;
 		}
@@ -4847,12 +4889,12 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_4;
 					aload_1;
-					invokevirtual 228;		// setIncomingAndReceive()S
+					invokevirtual 230;		// setIncomingAndReceive()S
 					sastore;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_3;
 					aload_1;
-					invokevirtual 229;		// getIncomingLength()S
+					invokevirtual 231;		// getIncomingLength()S
 					sastore;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_3;
@@ -4862,11 +4904,11 @@
 				L1:	aload_0;
 					aload_1;
 					bspush 57;
-					invokevirtual 147;		// returnError(Ljavacard/framework/APDU;B)V
+					invokevirtual 148;		// returnError(Ljavacard/framework/APDU;B)V
 					sconst_0;
 					sreturn;
 				L2:	aload_1;
-					invokestatic 230;		// com/josh/vku2f/CTAP2.isCommandChainingCLA(Ljavacard/framework/APDU;)Z
+					invokestatic 232;		// com/josh/vku2f/CTAP2.isCommandChainingCLA(Ljavacard/framework/APDU;)Z
 					ifeq L6;
 				L3:	getfield_a_this 26;		// reference com/josh/vku2f/CTAP2.isChaining
 					sconst_0;
@@ -4890,7 +4932,7 @@
 					sconst_0;
 					aload_2;
 					aload_1;
-					invokevirtual 231;		// getOffsetCdata()S
+					invokevirtual 233;		// getOffsetCdata()S
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					getfield_a_this 27;		// reference com/josh/vku2f/CTAP2.chainRam
 					sconst_0;
@@ -4916,7 +4958,7 @@
 					sconst_0;
 					aload_2;
 					aload_1;
-					invokevirtual 231;		// getOffsetCdata()S
+					invokevirtual 233;		// getOffsetCdata()S
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					getfield_a_this 27;		// reference com/josh/vku2f/CTAP2.chainRam
 					sconst_0;
@@ -4947,18 +4989,18 @@
 					sconst_0;
 					aload_2;
 					aload_1;
-					invokevirtual 231;		// getOffsetCdata()S
+					invokevirtual 233;		// getOffsetCdata()S
 					baload;
 					bastore;
 					sconst_1;
 					sreturn;
 				L10:	aload_1;
-					invokevirtual 232;		// getCurrentState()B
+					invokevirtual 234;		// getCurrentState()B
 					sconst_2;
 					if_scmpne L12;
 				L11:	aload_2;
 					aload_1;
-					invokevirtual 231;		// getOffsetCdata()S
+					invokevirtual 233;		// getOffsetCdata()S
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
@@ -4988,7 +5030,7 @@
 					sconst_4;
 					aload_2;
 					aload_1;
-					invokevirtual 231;		// getOffsetCdata()S
+					invokevirtual 233;		// getOffsetCdata()S
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_4;
@@ -5011,8 +5053,8 @@
 					sconst_5;
 					aload_1;
 					aload_1;
-					invokevirtual 231;		// getOffsetCdata()S
-					invokevirtual 233;		// receiveBytes(S)S
+					invokevirtual 233;		// getOffsetCdata()S
+					invokevirtual 235;		// receiveBytes(S)S
 					sastore;
 					goto L13;
 				L15:	getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
@@ -5021,7 +5063,7 @@
 					sreturn;
 		}
 
-		.method public getData(Ljavacard/framework/APDU;)V 19 {
+		.method public getData(Ljavacard/framework/APDU;)V 20 {
 			.stack 6;
 			.locals 1;
 
@@ -5054,7 +5096,7 @@
 					aload_1;
 					sconst_0;
 					sspush 256;
-					invokevirtual 210;		// setOutgoingAndSend(SS)V
+					invokevirtual 212;		// setOutgoingAndSend(SS)V
 					getfield_a_this 28;		// reference com/josh/vku2f/CTAP2.outChainRam
 					sconst_1;
 					dup2;
@@ -5097,7 +5139,7 @@
 					getfield_a_this 28;		// reference com/josh/vku2f/CTAP2.outChainRam
 					sconst_0;
 					saload;
-					invokevirtual 210;		// setOutgoingAndSend(SS)V
+					invokevirtual 212;		// setOutgoingAndSend(SS)V
 					getfield_a_this 29;		// reference com/josh/vku2f/CTAP2.isOutChaining
 					sconst_0;
 					sconst_0;
@@ -5115,7 +5157,7 @@
 				L6:	return;
 		}
 
-		.method public sendLongChaining(Ljavacard/framework/APDU;S)V 20 {
+		.method public sendLongChaining(Ljavacard/framework/APDU;S)V 21 {
 			.stack 5;
 			.locals 1;
 
@@ -5147,7 +5189,7 @@
 					aload_1;
 					sconst_0;
 					sspush 256;
-					invokevirtual 210;		// setOutgoingAndSend(SS)V
+					invokevirtual 212;		// setOutgoingAndSend(SS)V
 					getfield_a_this 28;		// reference com/josh/vku2f/CTAP2.outChainRam
 					sconst_1;
 					sspush 256;
@@ -5173,22 +5215,22 @@
 					sconst_0;
 					bastore;
 					aload_1;
-					invokevirtual 150;		// setOutgoing()S
+					invokevirtual 151;		// setOutgoing()S
 					pop;
 					aload_1;
 					sload_2;
-					invokevirtual 151;		// setOutgoingLength(S)V
+					invokevirtual 152;		// setOutgoingLength(S)V
 					aload_1;
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_0;
 					sload_2;
-					invokevirtual 152;		// sendBytesLong([BSS)V
+					invokevirtual 153;		// sendBytesLong([BSS)V
 					sspush -28672;
 					invokestatic 74;		// javacard/framework/ISOException.throwIt(S)V
 				L6:	return;
 		}
 
-		.method public isChaining()Z 21 {
+		.method public isChaining()Z 22 {
 			.stack 2;
 			.locals 0;
 
@@ -5213,7 +5255,7 @@
 					getfield_a_this 23;		// reference com/josh/vku2f/CTAP2.attestation
 					getfield_a_this 16;		// reference com/josh/vku2f/CTAP2.inBuf
 					sconst_1;
-					invokevirtual 234;		// getCert([BS)S
+					invokevirtual 236;		// getCert([BS)S
 					sconst_1;
 					sadd;
 					sastore;
@@ -5222,7 +5264,7 @@
 					getfield_a_this 18;		// reference com/josh/vku2f/CTAP2.vars
 					sconst_0;
 					saload;
-					invokevirtual 190;		// sendLongChaining(Ljavacard/framework/APDU;S)V
+					invokevirtual 192;		// sendLongChaining(Ljavacard/framework/APDU;S)V
 					return;
 		}
 
@@ -5236,48 +5278,48 @@
 					invokevirtual 133;		// getBuffer()[B
 					astore_2;
 					aload_0;
-					invokevirtual 235;		// selectingApplet()Z
+					invokevirtual 237;		// selectingApplet()Z
 					ifeq L2;
-				L1:	getstatic_a 212;		// reference com/josh/vku2f/Utf8Strings.UTF8_FIDO2
+				L1:	getstatic_a 214;		// reference com/josh/vku2f/Utf8Strings.UTF8_FIDO2
 					sconst_0;
 					aload_2;
 					sconst_0;
-					getstatic_a 212;		// reference com/josh/vku2f/Utf8Strings.UTF8_FIDO2
+					getstatic_a 214;		// reference com/josh/vku2f/Utf8Strings.UTF8_FIDO2
 					arraylength;
 					invokestatic 86;		// javacard/framework/Util.arrayCopyNonAtomic([BS[BSS)S
 					pop;
 					aload_1;
 					sconst_0;
-					getstatic_a 212;		// reference com/josh/vku2f/Utf8Strings.UTF8_FIDO2
+					getstatic_a 214;		// reference com/josh/vku2f/Utf8Strings.UTF8_FIDO2
 					arraylength;
-					invokevirtual 210;		// setOutgoingAndSend(SS)V
+					invokevirtual 212;		// setOutgoingAndSend(SS)V
 					return;
 				L2:	aload_1;
-					invokevirtual 236;		// isCommandChainingCLA()Z
+					invokevirtual 238;		// isCommandChainingCLA()Z
 					ifne L5;
 				L3:	aload_1;
-					invokevirtual 237;		// isISOInterindustryCLA()Z
+					invokevirtual 239;		// isISOInterindustryCLA()Z
 					ifeq L5;
 				L4:	sspush 28160;
 					invokestatic 74;		// javacard/framework/ISOException.throwIt(S)V
-				L5:	invokestatic 208;		// javacard/framework/JCSystem.requestObjectDeletion()V
+				L5:	invokestatic 210;		// javacard/framework/JCSystem.requestObjectDeletion()V
 					aload_2;
 					sconst_1;
 					baload;
 					slookupswitch L11 3 -64 L6 16 L9 18 L10;
 				L6:	aload_0;
-					invokevirtual 238;		// isChaining()Z
+					invokevirtual 240;		// isChaining()Z
 					ifeq L8;
 				L7:	aload_0;
 					aload_1;
-					invokevirtual 239;		// getData(Ljavacard/framework/APDU;)V
+					invokevirtual 241;		// getData(Ljavacard/framework/APDU;)V
 					goto L12;
 				L8:	sspush 27013;
 					invokestatic 74;		// javacard/framework/ISOException.throwIt(S)V
 					goto L12;
 				L9:	aload_0;
 					aload_1;
-					invokevirtual 240;		// handle(Ljavacard/framework/APDU;)V
+					invokevirtual 242;		// handle(Ljavacard/framework/APDU;)V
 					goto L12;
 				L10:	sspush -28672;
 					invokestatic 74;		// javacard/framework/ISOException.throwIt(S)V
@@ -5309,9 +5351,9 @@
 					sadd;
 					sadd;
 					sstore_3;
-					new 241;		// com/josh/vku2f/CTAP2
+					new 243;		// com/josh/vku2f/CTAP2
 					dup;
-					invokespecial 242;		// com/josh/vku2f/CTAP2.<init>()V
+					invokespecial 244;		// com/josh/vku2f/CTAP2.<init>()V
 					astore 4;
 				L1:	aload 4;
 					aload_0;
@@ -5321,11 +5363,11 @@
 					aload_0;
 					sload_1;
 					baload;
-					invokevirtual 243;		// register([BSB)V
+					invokevirtual 245;		// register([BSB)V
 				L2:	goto L4;
 				L3:	astore 5;
 					aload 4;
-					invokevirtual 244;		// register()V
+					invokevirtual 246;		// register()V
 				L4:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
@@ -5356,11 +5398,11 @@
 
 				L0:	aload_0;
 					sload_1;
-					invokespecial 245;		// javacard/framework/CardException.<init>(S)V
-					getstatic_a 246;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
+					invokespecial 247;		// javacard/framework/CardException.<init>(S)V
+					getstatic_a 248;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
 					ifnonnull L2;
 				L1:	aload_0;
-					putstatic_a 246;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
+					putstatic_a 248;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
 				L2:	return;
 		}
 
@@ -5368,10 +5410,10 @@
 			.stack 2;
 			.locals 0;
 
-				L0:	getstatic_a 246;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
+				L0:	getstatic_a 248;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
 					sload_0;
-					invokevirtual 247;		// setReason(S)V
-					getstatic_a 246;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
+					invokevirtual 249;		// setReason(S)V
+					getstatic_a 248;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
 					athrow;
 		}
 
@@ -5379,10 +5421,10 @@
 			.stack 2;
 			.locals 0;
 
-				L0:	getstatic_a 246;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
+				L0:	getstatic_a 248;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
 					sload_0;
-					invokevirtual 247;		// setReason(S)V
-					getstatic_a 246;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
+					invokevirtual 249;		// setReason(S)V
+					getstatic_a 248;		// reference com/josh/vku2f/CTAP2Exception.systemInstance
 					athrow;
 		}
 
@@ -5395,6 +5437,7 @@
 			private boolean[] slotStatus 1;		// [Z
 			private short size 2;		// S
 			private short counter 3;		// S
+			private short count 4;		// S
 		}
 
 		.publicMethodTable 1 {
@@ -5403,6 +5446,7 @@
 			getCredential([BSS[BSS)Lcom/josh/vku2f/StoredCredential;;
 			alreadyExists(Lcom/josh/vku2f/StoredCredential;)S;
 			getLength()S;
+			getCount()S;
 			getCred(S)Lcom/josh/vku2f/StoredCredential;;
 		}
 
@@ -5415,16 +5459,18 @@
 
 				L0:	aload_0;
 					invokespecial 69;		// java/lang/Object.<init>()V
+					sconst_0;
+					putfield_s_this 48;		// short com/josh/vku2f/CredentialArray.count
 					aload_0;
 					sload_1;
-					anewarray 202;		// com/josh/vku2f/StoredCredential
-					putfield_a 48;		// reference com/josh/vku2f/CredentialArray.creds
+					anewarray 204;		// com/josh/vku2f/StoredCredential
+					putfield_a 49;		// reference com/josh/vku2f/CredentialArray.creds
 					aload_0;
 					sload_1;
 					newarray 10;
-					putfield_a 49;		// reference com/josh/vku2f/CredentialArray.slotStatus
+					putfield_a 50;		// reference com/josh/vku2f/CredentialArray.slotStatus
 					sload_1;
-					putfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					putfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					return;
 		}
 
@@ -5434,16 +5480,21 @@
 
 				L0:	aload_0;
 					aload_1;
-					invokevirtual 251;		// alreadyExists(Lcom/josh/vku2f/StoredCredential;)S
+					invokevirtual 254;		// alreadyExists(Lcom/josh/vku2f/StoredCredential;)S
 					sstore_2;
-					getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
+					getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
 					sload_2;
 					aload_1;
 					aastore;
-					getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.slotStatus
+					getfield_a_this 50;		// reference com/josh/vku2f/CredentialArray.slotStatus
 					sload_2;
 					sconst_1;
 					bastore;
+					aload_0;
+					sload_2;
+					sconst_1;
+					sadd;
+					putfield_s 48;		// short com/josh/vku2f/CredentialArray.count
 				L1:	goto L3;
 				L2:	astore_2;
 					bspush 40;
@@ -5460,42 +5511,42 @@
 			.locals 0;
 
 				L0:	sconst_0;
-					putfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-				L1:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-					getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					putfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+				L1:	getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					if_scmpge L7;
-				L2:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.slotStatus
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L2:	getfield_a_this 50;		// reference com/josh/vku2f/CredentialArray.slotStatus
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					baload;
 					ifeq L6;
-				L3:	getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L3:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aaload;
 					getfield_a 34;		// reference com/josh/vku2f/StoredCredential.rp
 					aload_1;
 					sload_2;
 					sload_3;
-					invokevirtual 205;		// checkId([BSS)Z
+					invokevirtual 207;		// checkId([BSS)Z
 					ifeq L6;
-				L4:	getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L4:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aaload;
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					aload 4;
 					sload 5;
 					sload 6;
-					invokevirtual 253;		// checkId([BSS)Z
+					invokevirtual 256;		// checkId([BSS)Z
 					ifeq L6;
-				L5:	getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L5:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aaload;
 					areturn;
 				L6:	aload_0;
 					dup;
-					getfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					sconst_1;
 					sadd;
-					putfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					putfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					goto L1;
 				L7:	aconst_null;
 					areturn;
@@ -5506,131 +5557,131 @@
 			.locals 2;
 
 				L0:	sconst_0;
-					putfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-				L1:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-					getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					putfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+				L1:	getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					if_scmpge L7;
-				L2:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.slotStatus
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L2:	getfield_a_this 50;		// reference com/josh/vku2f/CredentialArray.slotStatus
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					baload;
 					ifeq L6;
-				L3:	getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L3:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aaload;
 					getfield_a 34;		// reference com/josh/vku2f/StoredCredential.rp
 					aload_1;
 					getfield_a 34;		// reference com/josh/vku2f/StoredCredential.rp
-					invokevirtual 254;		// checkId(Lcom/josh/vku2f/PublicKeyCredentialRpEntity;)Z
+					invokevirtual 257;		// checkId(Lcom/josh/vku2f/PublicKeyCredentialRpEntity;)Z
 					ifeq L6;
-				L4:	getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L4:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aaload;
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					aload_1;
 					getfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
-					invokevirtual 255;		// checkId(Lcom/josh/vku2f/PublicKeyCredentialUserEntity;)Z
+					invokevirtual 258;		// checkId(Lcom/josh/vku2f/PublicKeyCredentialUserEntity;)Z
 					ifeq L6;
-				L5:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L5:	getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					sreturn;
 				L6:	aload_0;
 					dup;
-					getfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					sconst_1;
 					sadd;
-					putfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					putfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					goto L1;
 				L7:	sconst_0;
-					putfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-				L8:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-					getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					putfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+				L8:	getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					if_scmpge L12;
-				L9:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.slotStatus
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L9:	getfield_a_this 50;		// reference com/josh/vku2f/CredentialArray.slotStatus
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					baload;
 					ifne L11;
-				L10:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L10:	getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					sreturn;
 				L11:	aload_0;
 					dup;
-					getfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					sconst_1;
 					sadd;
-					putfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					putfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					goto L8;
-				L12:	getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
-					anewarray 202;		// com/josh/vku2f/StoredCredential
+				L12:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
+					anewarray 204;		// com/josh/vku2f/StoredCredential
 					astore_2;
-					getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					newarray 10;
 					astore_3;
 					sconst_0;
-					putfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-				L13:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-					getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					putfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+				L13:	getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					if_scmpge L15;
 				L14:	aload_2;
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-					getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aaload;
 					aastore;
 					aload_3;
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-					getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.slotStatus
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_a_this 50;		// reference com/josh/vku2f/CredentialArray.slotStatus
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					baload;
 					bastore;
 					aload_0;
 					dup;
-					getfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					sconst_1;
 					sadd;
-					putfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					putfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					goto L13;
 				L15:	aload_0;
-					getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					sconst_2;
 					smul;
-					anewarray 202;		// com/josh/vku2f/StoredCredential
-					putfield_a 48;		// reference com/josh/vku2f/CredentialArray.creds
+					anewarray 204;		// com/josh/vku2f/StoredCredential
+					putfield_a 49;		// reference com/josh/vku2f/CredentialArray.creds
 					aload_0;
-					getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					sconst_2;
 					smul;
 					newarray 10;
-					putfield_a 49;		// reference com/josh/vku2f/CredentialArray.slotStatus
+					putfield_a 50;		// reference com/josh/vku2f/CredentialArray.slotStatus
 					sconst_0;
-					putfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-				L16:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
-					getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+					putfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+				L16:	getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					if_scmpge L18;
-				L17:	getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+				L17:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aload_2;
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aaload;
 					aastore;
-					getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.slotStatus
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_a_this 50;		// reference com/josh/vku2f/CredentialArray.slotStatus
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					aload_3;
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					baload;
 					bastore;
 					aload_0;
 					dup;
-					getfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					getfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					sconst_1;
 					sadd;
-					putfield_s 51;		// short com/josh/vku2f/CredentialArray.counter
+					putfield_s 52;		// short com/josh/vku2f/CredentialArray.counter
 					goto L16;
 				L18:	aload_0;
 					dup;
-					getfield_s 50;		// short com/josh/vku2f/CredentialArray.size
+					getfield_s 51;		// short com/josh/vku2f/CredentialArray.size
 					sconst_2;
 					smul;
-					putfield_s 50;		// short com/josh/vku2f/CredentialArray.size
-					invokestatic 208;		// javacard/framework/JCSystem.requestObjectDeletion()V
-					getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.counter
+					putfield_s 51;		// short com/josh/vku2f/CredentialArray.size
+					invokestatic 210;		// javacard/framework/JCSystem.requestObjectDeletion()V
+					getfield_s_this 52;		// short com/josh/vku2f/CredentialArray.counter
 					sconst_1;
 					sadd;
 					sreturn;
@@ -5640,15 +5691,23 @@
 			.stack 1;
 			.locals 0;
 
-				L0:	getfield_s_this 50;		// short com/josh/vku2f/CredentialArray.size
+				L0:	getfield_s_this 51;		// short com/josh/vku2f/CredentialArray.size
 					sreturn;
 		}
 
-		.method public getCred(S)Lcom/josh/vku2f/StoredCredential; 5 {
+		.method public getCount()S 5 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 48;		// short com/josh/vku2f/CredentialArray.count
+					sreturn;
+		}
+
+		.method public getCred(S)Lcom/josh/vku2f/StoredCredential; 6 {
 			.stack 2;
 			.locals 0;
 
-				L0:	getfield_a_this 48;		// reference com/josh/vku2f/CredentialArray.creds
+				L0:	getfield_a_this 49;		// reference com/josh/vku2f/CredentialArray.creds
 					sload_1;
 					aaload;
 					areturn;
@@ -5734,7 +5793,7 @@
 					getfield_a_this 43;		// reference com/josh/vku2f/DomString.str
 					sconst_0;
 					getfield_s_this 44;		// short com/josh/vku2f/DomString.len
-					invokevirtual 256;		// checkEquals([BSS)Z
+					invokevirtual 259;		// checkEquals([BSS)Z
 					sreturn;
 		}
 
@@ -5997,27 +6056,27 @@
 			.descriptor	Ljavacard/security/ECKey;	1.17;
 
 				L0:	aload_0;
-					getstatic_a 257;		// reference com/josh/vku2f/KeyParams.secp256r1p
+					getstatic_a 260;		// reference com/josh/vku2f/KeyParams.secp256r1p
 					sconst_0;
 					bspush 32;
 					invokeinterface 4 122 0;		// javacard/security/ECKey
 					aload_0;
-					getstatic_a 258;		// reference com/josh/vku2f/KeyParams.secp256r1A
+					getstatic_a 261;		// reference com/josh/vku2f/KeyParams.secp256r1A
 					sconst_0;
 					bspush 32;
 					invokeinterface 4 122 3;		// javacard/security/ECKey
 					aload_0;
-					getstatic_a 259;		// reference com/josh/vku2f/KeyParams.secp256r1B
+					getstatic_a 262;		// reference com/josh/vku2f/KeyParams.secp256r1B
 					sconst_0;
 					bspush 32;
 					invokeinterface 4 122 4;		// javacard/security/ECKey
 					aload_0;
-					getstatic_a 260;		// reference com/josh/vku2f/KeyParams.secp256r1G
+					getstatic_a 263;		// reference com/josh/vku2f/KeyParams.secp256r1G
 					sconst_0;
 					bspush 65;
 					invokeinterface 4 122 5;		// javacard/security/ECKey
 					aload_0;
-					getstatic_a 261;		// reference com/josh/vku2f/KeyParams.secp256r1R
+					getstatic_a 264;		// reference com/josh/vku2f/KeyParams.secp256r1R
 					sconst_0;
 					bspush 32;
 					invokeinterface 4 122 6;		// javacard/security/ECKey
@@ -6053,12 +6112,12 @@
 					getstatic_a 290;		// reference com/josh/vku2f/Utf8Strings.UTF8_PUBLIC_KEY
 					arraylength;
 					newarray 11;
-					putfield_a 52;		// reference com/josh/vku2f/PublicKeyCredentialDescriptor.type
+					putfield_a 53;		// reference com/josh/vku2f/PublicKeyCredentialDescriptor.type
 					getstatic_a 290;		// reference com/josh/vku2f/Utf8Strings.UTF8_PUBLIC_KEY
 					sconst_0;
-					getfield_a_this 52;		// reference com/josh/vku2f/PublicKeyCredentialDescriptor.type
+					getfield_a_this 53;		// reference com/josh/vku2f/PublicKeyCredentialDescriptor.type
 					sconst_0;
-					getfield_a_this 52;		// reference com/josh/vku2f/PublicKeyCredentialDescriptor.type
+					getfield_a_this 53;		// reference com/josh/vku2f/PublicKeyCredentialDescriptor.type
 					arraylength;
 					invokestatic 104;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
@@ -6107,12 +6166,12 @@
 			.locals 0;
 
 				L0:	aload_0;
-					new 263;		// com/josh/vku2f/DomString
+					new 266;		// com/josh/vku2f/DomString
 					dup;
 					aload_1;
 					sload_2;
-					invokespecial 264;		// com/josh/vku2f/DomString.<init>([BS)V
-					putfield_a 53;		// reference com/josh/vku2f/PublicKeyCredentialEntity.name
+					invokespecial 267;		// com/josh/vku2f/DomString.<init>([BS)V
+					putfield_a 54;		// reference com/josh/vku2f/PublicKeyCredentialEntity.name
 					return;
 		}
 
@@ -6146,9 +6205,9 @@
 					aload_0;
 					sload_1;
 					newarray 12;
-					putfield_a 54;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
+					putfield_a 55;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
 					sconst_0;
-					putfield_s_this 55;		// short com/josh/vku2f/PublicKeyCredentialParams.listIndex
+					putfield_s_this 56;		// short com/josh/vku2f/PublicKeyCredentialParams.listIndex
 					return;
 		}
 
@@ -6156,14 +6215,14 @@
 			.stack 5;
 			.locals 0;
 
-				L0:	getfield_a_this 54;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
+				L0:	getfield_a_this 55;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
 					aload_0;
 					dup;
-					getfield_s 55;		// short com/josh/vku2f/PublicKeyCredentialParams.listIndex
+					getfield_s 56;		// short com/josh/vku2f/PublicKeyCredentialParams.listIndex
 					dup_x 18;
 					sconst_1;
 					sadd;
-					putfield_s 55;		// short com/josh/vku2f/PublicKeyCredentialParams.listIndex
+					putfield_s 56;		// short com/josh/vku2f/PublicKeyCredentialParams.listIndex
 					sload_1;
 					sastore;
 					return;
@@ -6176,23 +6235,23 @@
 				L0:	sconst_0;
 					sstore_1;
 				L1:	sload_1;
-					getfield_s_this 55;		// short com/josh/vku2f/PublicKeyCredentialParams.listIndex
+					getfield_s_this 56;		// short com/josh/vku2f/PublicKeyCredentialParams.listIndex
 					if_scmpge L9;
-				L2:	getfield_a_this 54;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
+				L2:	getfield_a_this 55;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
 					sload_1;
 					saload;
 					bspush -7;
 					if_scmpne L4;
 				L3:	bspush 33;
 					sreturn;
-				L4:	getfield_a_this 54;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
+				L4:	getfield_a_this 55;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
 					sload_1;
 					saload;
 					sspush -257;
 					if_scmpne L6;
 				L5:	bspush 40;
 					sreturn;
-				L6:	getfield_a_this 54;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
+				L6:	getfield_a_this 55;		// reference com/josh/vku2f/PublicKeyCredentialParams.paramList
 					sload_1;
 					saload;
 					bspush -37;
@@ -6231,7 +6290,7 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 268;		// com/josh/vku2f/PublicKeyCredentialEntity.<init>()V
+					invokespecial 271;		// com/josh/vku2f/PublicKeyCredentialEntity.<init>()V
 					return;
 		}
 
@@ -6240,12 +6299,12 @@
 			.locals 0;
 
 				L0:	aload_0;
-					new 263;		// com/josh/vku2f/DomString
+					new 266;		// com/josh/vku2f/DomString
 					dup;
 					aload_1;
 					sload_2;
-					invokespecial 264;		// com/josh/vku2f/DomString.<init>([BS)V
-					putfield_a 56;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
+					invokespecial 267;		// com/josh/vku2f/DomString.<init>([BS)V
+					putfield_a 57;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
 					return;
 		}
 
@@ -6253,11 +6312,11 @@
 			.stack 4;
 			.locals 0;
 
-				L0:	getfield_a_this 56;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
+				L0:	getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
 					aload_1;
 					sload_2;
 					sload_3;
-					invokevirtual 256;		// checkEquals([BSS)Z
+					invokevirtual 259;		// checkEquals([BSS)Z
 					sreturn;
 		}
 
@@ -6265,10 +6324,10 @@
 			.stack 2;
 			.locals 0;
 
-				L0:	getfield_a_this 56;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
+				L0:	getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
 					aload_1;
-					getfield_a 56;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
-					invokevirtual 270;		// checkEquals(Lcom/josh/vku2f/DomString;)Z
+					getfield_a 57;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
+					invokevirtual 273;		// checkEquals(Lcom/josh/vku2f/DomString;)Z
 					sreturn;
 		}
 
@@ -6276,12 +6335,12 @@
 			.stack 5;
 			.locals 0;
 
-				L0:	getfield_a_this 56;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
+				L0:	getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
 					getfield_a 43;		// reference com/josh/vku2f/DomString.str
 					sconst_0;
 					aload_1;
 					sload_2;
-					getfield_a_this 56;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
+					getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
 					getfield_s 44;		// short com/josh/vku2f/DomString.len
 					invokestatic 104;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
@@ -6292,7 +6351,7 @@
 			.stack 1;
 			.locals 0;
 
-				L0:	getfield_a_this 56;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
+				L0:	getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialRpEntity.rpId
 					getfield_s 44;		// short com/josh/vku2f/DomString.len
 					sreturn;
 		}
@@ -6327,11 +6386,11 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 268;		// com/josh/vku2f/PublicKeyCredentialEntity.<init>()V
+					invokespecial 271;		// com/josh/vku2f/PublicKeyCredentialEntity.<init>()V
 					aload_0;
 					sconst_4;
 					newarray 10;
-					putfield_a 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+					putfield_a 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_0;
 					putfield_b_this 41;		// byte com/josh/vku2f/PublicKeyCredentialUserEntity.numData
 					return;
@@ -6352,11 +6411,11 @@
 					sload_3;
 					invokestatic 104;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
-					getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+					getfield_a_this 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_1;
 					baload;
 					ifne L2;
-				L1:	getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+				L1:	getfield_a_this 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_1;
 					sconst_1;
 					bastore;
@@ -6385,11 +6444,11 @@
 					sload_2;
 					invokestatic 104;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
-					getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+					getfield_a_this 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_3;
 					baload;
 					ifne L2;
-				L1:	getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+				L1:	getfield_a_this 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_3;
 					sconst_1;
 					bastore;
@@ -6407,7 +6466,7 @@
 				L4:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L0 L2 L3 272;
+				L0 L2 L3 275;
 			}
 		}
 
@@ -6416,17 +6475,17 @@
 			.locals 0;
 
 				L0:	aload_0;
-					new 263;		// com/josh/vku2f/DomString
+					new 266;		// com/josh/vku2f/DomString
 					dup;
 					aload_1;
 					sload_2;
-					invokespecial 264;		// com/josh/vku2f/DomString.<init>([BS)V
+					invokespecial 267;		// com/josh/vku2f/DomString.<init>([BS)V
 					putfield_a 42;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.displayName
-					getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+					getfield_a_this 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_2;
 					baload;
 					ifne L2;
-				L1:	getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+				L1:	getfield_a_this 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_2;
 					sconst_1;
 					bastore;
@@ -6468,17 +6527,17 @@
 			.locals 0;
 
 				L0:	aload_0;
-					new 263;		// com/josh/vku2f/DomString
+					new 266;		// com/josh/vku2f/DomString
 					dup;
 					aload_1;
 					sload_2;
-					invokespecial 264;		// com/josh/vku2f/DomString.<init>([BS)V
-					putfield_a 53;		// reference com/josh/vku2f/PublicKeyCredentialEntity.name
-					getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+					invokespecial 267;		// com/josh/vku2f/DomString.<init>([BS)V
+					putfield_a 54;		// reference com/josh/vku2f/PublicKeyCredentialEntity.name
+					getfield_a_this 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_0;
 					baload;
 					ifne L2;
-				L1:	getfield_a_this 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+				L1:	getfield_a_this 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					sconst_0;
 					sconst_1;
 					bastore;
@@ -6501,7 +6560,7 @@
 					sconst_0;
 					getfield_a_this 45;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.id
 					arraylength;
-					invokevirtual 253;		// checkId([BSS)Z
+					invokevirtual 256;		// checkId([BSS)Z
 					sreturn;
 		}
 
@@ -6535,12 +6594,12 @@
 
 			.descriptor	Ljavacard/security/RandomData;	1.14;
 
-				L0:	getstatic_a 273;		// reference com/josh/vku2f/ServerKeyCrypto.rng
+				L0:	getstatic_a 276;		// reference com/josh/vku2f/ServerKeyCrypto.rng
 					ifnonnull L2;
 				L1:	sconst_2;
-					invokestatic 274;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
-					putstatic_a 273;		// reference com/josh/vku2f/ServerKeyCrypto.rng
-				L2:	getstatic_a 273;		// reference com/josh/vku2f/ServerKeyCrypto.rng
+					invokestatic 277;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
+					putstatic_a 276;		// reference com/josh/vku2f/ServerKeyCrypto.rng
+				L2:	getstatic_a 276;		// reference com/josh/vku2f/ServerKeyCrypto.rng
 					areturn;
 		}
 
@@ -6583,27 +6642,27 @@
 
 				L0:	aload_0;
 					invokespecial 69;		// java/lang/Object.<init>()V
-					getstatic_a 275;		// reference com/josh/vku2f/StoredCredential.rng
+					getstatic_a 278;		// reference com/josh/vku2f/StoredCredential.rng
 					ifnonnull L2;
-				L1:	invokestatic 276;		// com/josh/vku2f/ServerKeyCrypto.getRng()Ljavacard/security/RandomData;
-					putstatic_a 275;		// reference com/josh/vku2f/StoredCredential.rng
+				L1:	invokestatic 279;		// com/josh/vku2f/ServerKeyCrypto.getRng()Ljavacard/security/RandomData;
+					putstatic_a 278;		// reference com/josh/vku2f/StoredCredential.rng
 				L2:	aload_0;
 					bspush 16;
 					newarray 11;
 					putfield_a 38;		// reference com/josh/vku2f/StoredCredential.id
-					getstatic_a 275;		// reference com/josh/vku2f/StoredCredential.rng
+					getstatic_a 278;		// reference com/josh/vku2f/StoredCredential.rng
 					getfield_a_this 38;		// reference com/josh/vku2f/StoredCredential.id
 					sconst_0;
 					bspush 16;
-					invokevirtual 277;		// generateData([BSS)V
+					invokevirtual 280;		// generateData([BSS)V
 					aload_0;
 					sconst_4;
 					newarray 11;
-					putfield_a 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+					putfield_a 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sconst_0;
-					putfield_b_this 59;		// boolean com/josh/vku2f/StoredCredential.initialised
+					putfield_b_this 60;		// boolean com/josh/vku2f/StoredCredential.initialised
 					sconst_0;
-					putfield_b_this 60;		// boolean com/josh/vku2f/StoredCredential.hmacEnabled
+					putfield_b_this 61;		// boolean com/josh/vku2f/StoredCredential.hmacEnabled
 					return;
 		}
 
@@ -6622,14 +6681,14 @@
 				L0:	aload_0;
 					bspush 32;
 					newarray 11;
-					putfield_a 61;		// reference com/josh/vku2f/StoredCredential.credRandom
-					getstatic_a 275;		// reference com/josh/vku2f/StoredCredential.rng
-					getfield_a_this 61;		// reference com/josh/vku2f/StoredCredential.credRandom
+					putfield_a 62;		// reference com/josh/vku2f/StoredCredential.credRandom
+					getstatic_a 278;		// reference com/josh/vku2f/StoredCredential.rng
+					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.credRandom
 					sconst_0;
 					bspush 32;
-					invokevirtual 277;		// generateData([BSS)V
+					invokevirtual 280;		// generateData([BSS)V
 					sconst_1;
-					putfield_b_this 60;		// boolean com/josh/vku2f/StoredCredential.hmacEnabled
+					putfield_b_this 61;		// boolean com/josh/vku2f/StoredCredential.hmacEnabled
 					sconst_1;
 					sreturn;
 		}
@@ -6661,7 +6720,7 @@
 			.locals 0;
 
 				L0:	getfield_a_this 40;		// reference com/josh/vku2f/StoredCredential.user
-					getfield_a 57;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
+					getfield_a 58;		// reference com/josh/vku2f/PublicKeyCredentialUserEntity.dataPresent
 					areturn;
 		}
 
@@ -6669,18 +6728,18 @@
 			.stack 4;
 			.locals 1;
 
-				L0:	invokestatic 216;		// javacard/framework/JCSystem.beginTransaction()V
+				L0:	invokestatic 218;		// javacard/framework/JCSystem.beginTransaction()V
 					sconst_3;
 					sstore_1;
 				L1:	sload_1;
 					sconst_1;
 					if_scmple L5;
-				L2:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L2:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sload_1;
 					baload;
 					sspush 255;
 					if_scmpne L4;
-				L3:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L3:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sload_1;
 					sconst_1;
 					ssub;
@@ -6690,43 +6749,43 @@
 					sadd;
 					s2b;
 					bastore;
-					getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+					getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sload_1;
 					sconst_0;
 					bastore;
-					invokestatic 217;		// javacard/framework/JCSystem.commitTransaction()V
+					invokestatic 219;		// javacard/framework/JCSystem.commitTransaction()V
 					return;
 				L4:	sinc 1 -1;
 					goto L1;
-				L5:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L5:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sconst_0;
 					baload;
 					sspush 255;
 					if_scmpne L10;
-				L6:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L6:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sconst_1;
 					baload;
 					sspush 255;
 					if_scmpne L10;
-				L7:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L7:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sconst_2;
 					baload;
 					sspush 255;
 					if_scmpne L10;
-				L8:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L8:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sconst_3;
 					baload;
 					sspush 255;
 					if_scmpne L10;
-				L9:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L9:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sconst_0;
 					sconst_4;
 					sconst_0;
-					invokestatic 282;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					invokestatic 285;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
 					pop;
-					invokestatic 217;		// javacard/framework/JCSystem.commitTransaction()V
+					invokestatic 219;		// javacard/framework/JCSystem.commitTransaction()V
 					return;
-				L10:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L10:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sconst_3;
 					dup2;
 					baload;
@@ -6734,7 +6793,7 @@
 					sadd;
 					s2b;
 					bastore;
-					invokestatic 217;		// javacard/framework/JCSystem.commitTransaction()V
+					invokestatic 219;		// javacard/framework/JCSystem.commitTransaction()V
 					return;
 		}
 
@@ -6742,7 +6801,7 @@
 			.stack 5;
 			.locals 0;
 
-				L0:	getfield_a_this 58;		// reference com/josh/vku2f/StoredCredential.sigCounter
+				L0:	getfield_a_this 59;		// reference com/josh/vku2f/StoredCredential.sigCounter
 					sconst_0;
 					aload_1;
 					sload_2;
@@ -6757,7 +6816,7 @@
 			.stack 5;
 			.locals 0;
 
-				L0:	getstatic_a 213;		// reference com/josh/vku2f/CTAP2.aaguid
+				L0:	getstatic_a 215;		// reference com/josh/vku2f/CTAP2.aaguid
 					sconst_0;
 					aload_1;
 					sload_2;
@@ -6827,38 +6886,38 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 283;		// com/josh/vku2f/StoredCredential.<init>()V
+					invokespecial 286;		// com/josh/vku2f/StoredCredential.<init>()V
 					aload_0;
-					new 219;		// javacard/security/KeyPair
+					new 221;		// javacard/security/KeyPair
 					dup;
 					sconst_5;
 					sspush 256;
 					invokespecial 68;		// javacard/security/KeyPair.<init>(BS)V
-					putfield_a 62;		// reference com/josh/vku2f/StoredCredential.kp
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+					putfield_a 63;		// reference com/josh/vku2f/StoredCredential.kp
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 112;		// getPublic()Ljavacard/security/PublicKey;
 					checkcast 0 122;		// T_CLASSORINTERFACE javacard/security/ECKey
 					invokestatic 125;		// com/josh/vku2f/KeyParams.sec256r1params(Ljavacard/security/ECKey;)V
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 127;		// genKeyPair()V
 					aload_0;
 					aload_1;
-					invokevirtual 285;		// getUser()Lcom/josh/vku2f/PublicKeyCredentialUserEntity;
+					invokevirtual 288;		// getUser()Lcom/josh/vku2f/PublicKeyCredentialUserEntity;
 					putfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					aload_0;
 					aload_1;
-					invokevirtual 286;		// getRp()Lcom/josh/vku2f/PublicKeyCredentialRpEntity;
+					invokevirtual 289;		// getRp()Lcom/josh/vku2f/PublicKeyCredentialRpEntity;
 					putfield_a 34;		// reference com/josh/vku2f/StoredCredential.rp
 					aload_0;
 					bspush 33;
 					sconst_0;
-					invokestatic 211;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
-					putfield_a 63;		// reference com/josh/vku2f/StoredES256Credential.sig
-					getfield_a_this 63;		// reference com/josh/vku2f/StoredES256Credential.sig
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
-					invokevirtual 223;		// getPrivate()Ljavacard/security/PrivateKey;
+					invokestatic 213;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+					putfield_a 64;		// reference com/josh/vku2f/StoredES256Credential.sig
+					getfield_a_this 64;		// reference com/josh/vku2f/StoredES256Credential.sig
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
+					invokevirtual 225;		// getPrivate()Ljavacard/security/PrivateKey;
 					sconst_1;
-					invokevirtual 249;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 251;		// init(Ljavacard/security/Key;B)V
 					return;
 		}
 
@@ -6867,14 +6926,14 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokevirtual 288;		// incrementCounter()V
-					getfield_a_this 63;		// reference com/josh/vku2f/StoredES256Credential.sig
+					invokevirtual 291;		// incrementCounter()V
+					getfield_a_this 64;		// reference com/josh/vku2f/StoredES256Credential.sig
 					aload_1;
 					sload_2;
 					sload_3;
 					aload 4;
 					sload 5;
-					invokevirtual 278;		// sign([BSS[BS)S
+					invokevirtual 274;		// sign([BSS[BS)S
 					sreturn;
 		}
 
@@ -6903,7 +6962,7 @@
 					bspush 65;
 					newarray 11;
 					astore 4;
-				L4:	getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+				L4:	getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 112;		// getPublic()Ljavacard/security/PublicKey;
 					checkcast 0 105;		// T_CLASSORINTERFACE javacard/security/ECPublicKey
 					aload 4;
@@ -6913,17 +6972,17 @@
 					aload_0;
 					aload_1;
 					sload_2;
-					invokevirtual 289;		// doAttestationCommon([BS)V
+					invokevirtual 292;		// doAttestationCommon([BS)V
 					aload_3;
 					aload_1;
 					sload_2;
 					bspush 34;
 					sadd;
 					sspush 1000;
-					invokevirtual 173;		// init([BSS)V
+					invokevirtual 175;		// init([BSS)V
 					aload_3;
 					sconst_5;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					aload_3;
 					sconst_1;
@@ -6931,7 +6990,7 @@
 					pop;
 					aload_3;
 					sconst_2;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_3;
@@ -6939,39 +6998,39 @@
 					pop;
 					aload_3;
 					bspush 6;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_0;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_1;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_1;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					aload 4;
 					sconst_1;
 					bspush 32;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					aload_3;
 					sconst_2;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					aload 4;
 					bspush 33;
 					bspush 32;
-					invokevirtual 187;		// encodeByteString([BSS)S
+					invokevirtual 189;		// encodeByteString([BSS)S
 					pop;
 					aconst_null;
 					astore 4;
-					invokestatic 208;		// javacard/framework/JCSystem.requestObjectDeletion()V
+					invokestatic 210;		// javacard/framework/JCSystem.requestObjectDeletion()V
 					bspush 111;
 					sreturn;
 			.exceptionTable {
@@ -7010,34 +7069,34 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 283;		// com/josh/vku2f/StoredCredential.<init>()V
+					invokespecial 286;		// com/josh/vku2f/StoredCredential.<init>()V
 					aload_0;
-					new 219;		// javacard/security/KeyPair
+					new 221;		// javacard/security/KeyPair
 					dup;
 					sconst_2;
 					sspush 2048;
 					invokespecial 68;		// javacard/security/KeyPair.<init>(BS)V
-					putfield_a 62;		// reference com/josh/vku2f/StoredCredential.kp
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+					putfield_a 63;		// reference com/josh/vku2f/StoredCredential.kp
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 127;		// genKeyPair()V
 					aload_0;
 					aload_1;
-					invokevirtual 285;		// getUser()Lcom/josh/vku2f/PublicKeyCredentialUserEntity;
+					invokevirtual 288;		// getUser()Lcom/josh/vku2f/PublicKeyCredentialUserEntity;
 					putfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					aload_0;
 					aload_1;
-					invokevirtual 286;		// getRp()Lcom/josh/vku2f/PublicKeyCredentialRpEntity;
+					invokevirtual 289;		// getRp()Lcom/josh/vku2f/PublicKeyCredentialRpEntity;
 					putfield_a 34;		// reference com/josh/vku2f/StoredCredential.rp
 					aload_0;
 					bspush 44;
 					sconst_0;
-					invokestatic 211;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
-					putfield_a 64;		// reference com/josh/vku2f/StoredPS256Credential.kpSignature
-					getfield_a_this 64;		// reference com/josh/vku2f/StoredPS256Credential.kpSignature
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
-					invokevirtual 223;		// getPrivate()Ljavacard/security/PrivateKey;
+					invokestatic 213;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+					putfield_a 65;		// reference com/josh/vku2f/StoredPS256Credential.kpSignature
+					getfield_a_this 65;		// reference com/josh/vku2f/StoredPS256Credential.kpSignature
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
+					invokevirtual 225;		// getPrivate()Ljavacard/security/PrivateKey;
 					sconst_1;
-					invokevirtual 249;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 251;		// init(Ljavacard/security/Key;B)V
 					return;
 		}
 
@@ -7046,14 +7105,14 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokevirtual 291;		// incrementCounter()V
-					getfield_a_this 64;		// reference com/josh/vku2f/StoredPS256Credential.kpSignature
+					invokevirtual 294;		// incrementCounter()V
+					getfield_a_this 65;		// reference com/josh/vku2f/StoredPS256Credential.kpSignature
 					aload_1;
 					sload_2;
 					sload_3;
 					aload 4;
 					sload 5;
-					invokevirtual 278;		// sign([BSS[BS)S
+					invokevirtual 274;		// sign([BSS[BS)S
 					sreturn;
 		}
 
@@ -7076,17 +7135,17 @@
 					aload_0;
 					aload_1;
 					sload_2;
-					invokevirtual 292;		// doAttestationCommon([BS)V
+					invokevirtual 295;		// doAttestationCommon([BS)V
 					aload_3;
 					aload_1;
 					sload_2;
 					bspush 34;
 					sadd;
 					sspush 1000;
-					invokevirtual 173;		// init([BSS)V
+					invokevirtual 175;		// init([BSS)V
 					aload_3;
 					sconst_4;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					aload_3;
 					sconst_1;
@@ -7094,7 +7153,7 @@
 					pop;
 					aload_3;
 					sconst_3;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_3;
@@ -7102,37 +7161,37 @@
 					pop;
 					aload_3;
 					bspush 36;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_0;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					sspush 256;
-					invokevirtual 178;		// startByteString(S)S
+					invokevirtual 180;		// startByteString(S)S
 					sstore 4;
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 112;		// getPublic()Ljavacard/security/PublicKey;
-					checkcast 0 293;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					checkcast 0 296;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
 					aload_1;
 					sload 4;
-					invokeinterface 3 293 5;		// javacard/security/RSAPublicKey
+					invokeinterface 3 296 5;		// javacard/security/RSAPublicKey
 					pop;
 					aload_3;
 					sconst_1;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_3;
-					invokevirtual 178;		// startByteString(S)S
+					invokevirtual 180;		// startByteString(S)S
 					sstore 4;
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 112;		// getPublic()Ljavacard/security/PublicKey;
-					checkcast 0 293;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					checkcast 0 296;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
 					aload_1;
 					sload 4;
-					invokeinterface 3 293 4;		// javacard/security/RSAPublicKey
+					invokeinterface 3 296 4;		// javacard/security/RSAPublicKey
 					pop;
 					sspush 305;
 					sreturn;
@@ -7168,34 +7227,34 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 283;		// com/josh/vku2f/StoredCredential.<init>()V
+					invokespecial 286;		// com/josh/vku2f/StoredCredential.<init>()V
 					aload_0;
-					new 219;		// javacard/security/KeyPair
+					new 221;		// javacard/security/KeyPair
 					dup;
 					sconst_2;
 					sspush 2048;
 					invokespecial 68;		// javacard/security/KeyPair.<init>(BS)V
-					putfield_a 62;		// reference com/josh/vku2f/StoredCredential.kp
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+					putfield_a 63;		// reference com/josh/vku2f/StoredCredential.kp
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 127;		// genKeyPair()V
 					aload_0;
 					aload_1;
-					invokevirtual 285;		// getUser()Lcom/josh/vku2f/PublicKeyCredentialUserEntity;
+					invokevirtual 288;		// getUser()Lcom/josh/vku2f/PublicKeyCredentialUserEntity;
 					putfield_a 40;		// reference com/josh/vku2f/StoredCredential.user
 					aload_0;
 					aload_1;
-					invokevirtual 286;		// getRp()Lcom/josh/vku2f/PublicKeyCredentialRpEntity;
+					invokevirtual 289;		// getRp()Lcom/josh/vku2f/PublicKeyCredentialRpEntity;
 					putfield_a 34;		// reference com/josh/vku2f/StoredCredential.rp
 					aload_0;
 					bspush 10;
 					sconst_0;
-					invokestatic 294;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
-					putfield_a 65;		// reference com/josh/vku2f/StoredRS256Credential.kpSignature
-					getfield_a_this 65;		// reference com/josh/vku2f/StoredRS256Credential.kpSignature
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
-					invokevirtual 223;		// getPrivate()Ljavacard/security/PrivateKey;
+					invokestatic 297;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+					putfield_a 66;		// reference com/josh/vku2f/StoredRS256Credential.kpSignature
+					getfield_a_this 66;		// reference com/josh/vku2f/StoredRS256Credential.kpSignature
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
+					invokevirtual 225;		// getPrivate()Ljavacard/security/PrivateKey;
 					sconst_2;
-					invokevirtual 296;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 299;		// init(Ljavacard/security/Key;B)V
 					return;
 		}
 
@@ -7204,14 +7263,14 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokevirtual 297;		// incrementCounter()V
-					getfield_a_this 65;		// reference com/josh/vku2f/StoredRS256Credential.kpSignature
+					invokevirtual 300;		// incrementCounter()V
+					getfield_a_this 66;		// reference com/josh/vku2f/StoredRS256Credential.kpSignature
 					aload_1;
 					sload_2;
 					sload_3;
 					aload 4;
 					sload 5;
-					invokevirtual 298;		// doFinal([BSS[BS)S
+					invokevirtual 301;		// doFinal([BSS[BS)S
 					sreturn;
 		}
 
@@ -7234,17 +7293,17 @@
 					aload_0;
 					aload_1;
 					sload_2;
-					invokevirtual 299;		// doAttestationCommon([BS)V
+					invokevirtual 302;		// doAttestationCommon([BS)V
 					aload_3;
 					aload_1;
 					sload_2;
 					bspush 34;
 					sadd;
 					sspush 1000;
-					invokevirtual 173;		// init([BSS)V
+					invokevirtual 175;		// init([BSS)V
 					aload_3;
 					sconst_4;
-					invokevirtual 174;		// startMap(S)S
+					invokevirtual 176;		// startMap(S)S
 					pop;
 					aload_3;
 					sconst_1;
@@ -7252,7 +7311,7 @@
 					pop;
 					aload_3;
 					sconst_3;
-					invokevirtual 200;		// encodeUInt8(B)S
+					invokevirtual 202;		// encodeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_3;
@@ -7260,37 +7319,37 @@
 					pop;
 					aload_3;
 					sspush 256;
-					invokevirtual 300;		// encodeNegativeUInt16(S)S
+					invokevirtual 303;		// encodeNegativeUInt16(S)S
 					pop;
 					aload_3;
 					sconst_0;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					sspush 256;
-					invokevirtual 178;		// startByteString(S)S
+					invokevirtual 180;		// startByteString(S)S
 					sstore 4;
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 112;		// getPublic()Ljavacard/security/PublicKey;
-					checkcast 0 293;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					checkcast 0 296;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
 					aload_1;
 					sload 4;
-					invokeinterface 3 293 5;		// javacard/security/RSAPublicKey
+					invokeinterface 3 296 5;		// javacard/security/RSAPublicKey
 					pop;
 					aload_3;
 					sconst_1;
-					invokevirtual 184;		// encodeNegativeUInt8(B)S
+					invokevirtual 186;		// encodeNegativeUInt8(B)S
 					pop;
 					aload_3;
 					sconst_3;
-					invokevirtual 178;		// startByteString(S)S
+					invokevirtual 180;		// startByteString(S)S
 					sstore 4;
-					getfield_a_this 62;		// reference com/josh/vku2f/StoredCredential.kp
+					getfield_a_this 63;		// reference com/josh/vku2f/StoredCredential.kp
 					invokevirtual 112;		// getPublic()Ljavacard/security/PublicKey;
-					checkcast 0 293;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
+					checkcast 0 296;		// T_CLASSORINTERFACE javacard/security/RSAPublicKey
 					aload_1;
 					sload 4;
-					invokeinterface 3 293 4;		// javacard/security/RSAPublicKey
+					invokeinterface 3 296 4;		// javacard/security/RSAPublicKey
 					pop;
 					sspush 306;
 					sreturn;

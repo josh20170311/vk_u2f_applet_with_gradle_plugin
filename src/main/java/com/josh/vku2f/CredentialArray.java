@@ -27,6 +27,7 @@ public class CredentialArray {
     private boolean[] slotStatus;
     private short size;
     private short counter;
+    private short count = 0;//the number of creds in the array
 
     /**
      * Constructor for a CredentialArray.
@@ -46,6 +47,7 @@ public class CredentialArray {
             short slot = alreadyExists(in);
             creds[slot] = in;
             slotStatus[slot] = true;
+            count = (short)(slot + 1);
         } catch (Exception e) {
             UserException.throwIt(CTAP2.CTAP2_ERR_KEY_STORE_FULL);
         }
@@ -116,6 +118,10 @@ public class CredentialArray {
      */
     public short getLength() {
         return size;
+    }
+
+    public short getCount(){
+        return count;
     }
     /**
      * Returns the credential at position, or null if none.

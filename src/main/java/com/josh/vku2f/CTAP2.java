@@ -35,6 +35,7 @@ import javacardx.apdu.ExtendedLength;
 
 public class CTAP2 extends Applet implements ExtendedLength {
 
+    private static final byte FIDO2_VENDOR_GET_COUNT = (byte)0x45;
     private CBORDecoder cborDecoder;
     private CBOREncoder cborEncoder;
 
@@ -190,22 +191,25 @@ public class CTAP2 extends Applet implements ExtendedLength {
             case FIDO2_AUTHENTICATOR_GET_NEXT_ASSERTION:
                 authGetNextAssertion(apdu, buffer);
                 break;
-            case FIDO2_VENDOR_ATTEST_SIGN:
+            case FIDO2_VENDOR_ATTEST_SIGN: //0x41
                 attestSignRaw(apdu, vars[3]);
                 break;
-            case FIDO2_VENDOR_ATTEST_LOADCERT:
+            case FIDO2_VENDOR_ATTEST_LOADCERT: //0x42
                 attestSetCert(apdu, vars[3]);
                 break;
-            case FIDO2_VENDOR_PERSO_COMPLETE:
+            case FIDO2_VENDOR_PERSO_COMPLETE: //0x43
                 persoComplete(apdu);
                 break;
-            case FIDO2_VENDOR_ATTEST_GETPUB:
+            case FIDO2_VENDOR_ATTEST_GETPUB: //0x44
                 getAttestPublic(apdu);
                 break;
-            case FIDO2_VENDOR_ATTEST_GETCERT:
+            case FIDO2_VENDOR_ATTEST_GETCERT: //0x4a
                 getCert(apdu);
                 break;
-            case FIDO2_AUTHENTICATOR_RESET:
+            case FIDO2_VENDOR_GET_COUNT: //0x45
+                getCount(apdu);
+                break;
+            case FIDO2_AUTHENTICATOR_RESET: //0x07
                 // Need to finish doing this, we can, i mean, but I don't like it
                 doReset(apdu);
                 break;
@@ -242,6 +246,15 @@ public class CTAP2 extends Applet implements ExtendedLength {
         apdu.setOutgoing();
         apdu.setOutgoingLength(vars[0]);
         apdu.sendBytesLong(inBuf, (short) 0, vars[0]);
+    }
+
+    /** get counter's value */
+    public void getCount(APDU apdu){
+        short count = discoverableCreds.getCount();
+        apdu.setOutgoing();
+        apdu.setOutgoingLength((short)2);
+        Util.setShort(inBuf,(short)0, count);
+        apdu.sendBytesLong(inBuf,(short)0,(short)2);
     }
 
     /**
@@ -1024,7 +1037,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
                     ISOException.throwIt(ISO7816.SW_CONDITIONS_NOT_SATISFIED);
                 }
                 break;
-            case FIDO2_INS_NFCCTAP_MSG:
+            case FIDO2_INS_NFCCTAP_MSG: // 0x10
                 handle(apdu);
                 break;
             case FIDO2_DESELECT:
