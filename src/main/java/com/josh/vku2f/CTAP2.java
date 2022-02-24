@@ -44,7 +44,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
     private short[] vars;
     private CredentialArray discoverableCreds;
     private MessageDigest sha;
-    private AttestationKeyPair attestation;
+    private AttestationKeyPair attestationKeyPair;
     private byte[] info;
     private StoredCredential[] assertionCreds;
     private short[] nextAssertion;
@@ -150,7 +150,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
         cborEncoder = new CBOREncoder();
         discoverableCreds = new CredentialArray((short) 5);
         sha = MessageDigest.getInstance(MessageDigest.ALG_SHA_256, false);
-        attestation = new AttestationKeyPair();
+        attestationKeyPair = new AttestationKeyPair();
         nextAssertion = JCSystem.makeTransientShortArray((short) 1, JCSystem.CLEAR_ON_RESET);
         persoComplete = false;
         isChaining = JCSystem.makeTransientBooleanArray((short) 2, JCSystem.CLEAR_ON_DESELECT);
@@ -220,7 +220,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
     }
 
     public void persoComplete(APDU apdu) {
-        if (attestation.isCertSet() && !persoComplete) {
+        if (attestationKeyPair.isCertSet() && !persoComplete) {
             persoComplete = true;
             returnError(apdu, CTAP1_ERR_SUCCESS);
         } else {
@@ -242,7 +242,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
             return;
         }
         inBuf[0] = 0x00;
-        vars[0] = (short) (attestation.getPubkey(inBuf, (short) 1) + 1);
+        vars[0] = (short) (attestationKeyPair.getPubkey(inBuf, (short) 1) + 1);
         apdu.setOutgoing();
         apdu.setOutgoingLength(vars[0]);
         apdu.sendBytesLong(inBuf, (short) 0, vars[0]);
@@ -272,7 +272,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
         }
         Util.arrayCopy(inBuf, (short) 1, scratch, (short) 0, (short) (bufLen - 1));
         inBuf[0] = 0x00;
-        vars[2] = attestation.sign(scratch, (short) 0, vars[1], inBuf, (short) 1);
+        vars[2] = attestationKeyPair.sign(scratch, (short) 0, vars[1], inBuf, (short) 1);
         apdu.setOutgoing();
         apdu.setOutgoingLength((short) (vars[2] + 1));
         apdu.sendBytesLong(inBuf, (short) 0, (short) (vars[2] + 1));
@@ -284,11 +284,11 @@ public class CTAP2 extends Applet implements ExtendedLength {
             return;
         }
         // We don't actually use any CBOR here, simplify copying
-        attestation.setCert(inBuf, (short) 1, (short) (bufLen - 1));
+        attestationKeyPair.setCert(inBuf, (short) 1, (short) (bufLen - 1));
         MessageDigest dig = MessageDigest.getInstance(MessageDigest.ALG_SHA_256, false);
-        short len = (short) (dig.doFinal(attestation.x509cert, (short) 0, attestation.x509len, inBuf, (short) 3) + 3);
+        short len = (short) (dig.doFinal(attestationKeyPair.x509cert, (short) 0, attestationKeyPair.x509len, inBuf, (short) 3) + 3);
         inBuf[0] = 0x00;
-        Util.setShort(inBuf, (short) 1, attestation.x509len);
+        Util.setShort(inBuf, (short) 1, attestationKeyPair.x509len);
         apdu.setOutgoing();
         apdu.setOutgoingLength(len);
         apdu.sendBytesLong(inBuf, (short) 0, len);
@@ -378,16 +378,16 @@ public class CTAP2 extends Applet implements ExtendedLength {
             // We sign over the client data hash and the attested data.
             // AuthenticatorData is first. We noted down where it begins and know how long
             // it is.
-            attestation.update(inBuf, vars[7], (short) (tempCred.getAttestedLen() + 37));
+            attestationKeyPair.update(inBuf, vars[7], (short) (tempCred.getAttestedLen() + 37));
             // The client data hash is next, which we use to finish off the signature.
-            vars[4] = attestation.sign(cred.dataHash, (short) 0, (short) cred.dataHash.length, scratch, (short) 0);
+            vars[4] = attestationKeyPair.sign(cred.dataHash, (short) 0, (short) cred.dataHash.length, scratch, (short) 0);
             // Create the byte string for the signature
             cborEncoder.encodeByteString(scratch, (short) 0, vars[4]);
             // Set the x509 cert now
             cborEncoder.encodeTextString(Utf8Strings.UTF8_X5C, (short) 0, (short) 3);
             // Supposedly we need an array here
             cborEncoder.startArray((short) 1);
-            cborEncoder.encodeByteString(attestation.x509cert, (short) 0, attestation.x509len);
+            cborEncoder.encodeByteString(attestationKeyPair.x509cert, (short) 0, attestationKeyPair.x509len);
             // We're actually done, send this out
             sendLongChaining(apdu, cborEncoder.getCurrentOffset());
 
@@ -1012,7 +1012,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
 
     private void getCert(APDU apdu) {
         inBuf[0] = 0x00;
-        vars[0] = (short) (attestation.getCert(inBuf, (short) 1) + 1);
+        vars[0] = (short) (attestationKeyPair.getCert(inBuf, (short) 1) + 1);
         sendLongChaining(apdu, vars[0]);
     }
 

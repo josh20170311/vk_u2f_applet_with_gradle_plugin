@@ -25,6 +25,7 @@ repositories {
 final def jcdk_dir = 'sdks/jc305u3_kit'
 javacard{
     config{
+        debugGpPro true
         jckit jcdk_dir
         cap{
             packageName 'com.josh.vku2f'
@@ -37,5 +38,37 @@ javacard{
                 aid 'A0000006472F0001'
             }
         }
+    }
+
+    scripts{
+        script{
+            name "select applet"
+            apdu "00a4040008a0000006472f0001"
+        }
+        script{
+            name "getFidoInfo"
+            apdu "801000000104"
+        }
+        script{
+            name "getPublicKey"
+            apdu "801000000144"
+        }
+        script{
+            name "getCertificate"
+            apdu "80100000014A"
+        }
+        task{
+            name "getFidoInfo"
+            scripts "select applet", "getFidoInfo"
+        }
+        task{
+            name "getPublicKey"
+            scripts "select applet", "getPublicKey"
+        }
+        task{
+            name "getCertificate"
+            scripts "select applet", "getCertificate"
+        }
+
     }
 }
