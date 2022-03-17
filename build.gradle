@@ -69,6 +69,5 @@ javacard{
             name "getCertificate"
             scripts "select applet", "getCertificate"
         }
-
     }
 }

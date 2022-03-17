@@ -21,10 +21,10 @@ import javacard.security.RandomData;
 /**
  * Provide a way to handle static RNGs.
  */
-public class ServerKeyCrypto {
+public class Random {
     private static RandomData rng;
 
-    public static RandomData getRng() {
+    public static RandomData getInstance() {
         if(rng == null) {
             rng = RandomData.getInstance(RandomData.ALG_SECURE_RANDOM);
         }

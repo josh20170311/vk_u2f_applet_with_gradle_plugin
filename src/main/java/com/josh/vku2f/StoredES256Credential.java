@@ -29,13 +29,13 @@ public class StoredES256Credential extends StoredCredential {
 
     public StoredES256Credential(AuthenticatorMakeCredential inputData) {
         // Generate a new ES256 credential
-        kp = new KeyPair(KeyPair.ALG_EC_FP, KeyBuilder.LENGTH_EC_FP_256);
-        KeyParams.sec256r1params((ECKey) kp.getPublic());
-        kp.genKeyPair();
-        user = inputData.getUser();
-        rp = inputData.getRp();
+        keyPair = new KeyPair(KeyPair.ALG_EC_FP, KeyBuilder.LENGTH_EC_FP_256);
+        KeyParams.sec256r1params((ECKey) keyPair.getPublic());
+        keyPair.genKeyPair();
+        userEntity = inputData.getUser();
+        rpEntity = inputData.getRp();
         sig = Signature.getInstance(Signature.ALG_ECDSA_SHA_256, false);
-        sig.init(kp.getPrivate(), Signature.MODE_SIGN);
+        sig.init(keyPair.getPrivate(), Signature.MODE_SIGN);
     }
 
 
@@ -65,7 +65,7 @@ public class StoredES256Credential extends StoredCredential {
             w = new byte[65];
         }
 
-        ((ECPublicKey) kp.getPublic()).getW(w, (short) 0);
+        ((ECPublicKey) keyPair.getPublic()).getW(w, (short) 0);
         // Form the common params
         doAttestationCommon(buf, off);
         enc.init(buf, (short) (off + 34), (short) 1000);

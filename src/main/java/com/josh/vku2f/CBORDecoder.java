@@ -22,7 +22,7 @@ import javacard.framework.ISO7816;
 import javacard.framework.ISOException;
 import javacard.framework.UserException;
 import javacard.framework.Util;
-
+import static com.josh.vku2f.CTAP2ErrorCode.*;
 public class CBORDecoder extends CBORBase {
 
     /**
@@ -101,7 +101,7 @@ public class CBORDecoder extends CBORBase {
      */
     public short readMajorType(byte majorType) throws UserException {
         if (majorType != getMajorType()) {
-            UserException.throwIt(CTAP2.CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
+            UserException.throwIt(CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
             return 0;
         }
         return readLength();
@@ -210,7 +210,7 @@ public class CBORDecoder extends CBORBase {
      */
     public short readByteString(byte[] outBuffer, short outOffset) throws UserException {
         if(getMajorType() != TYPE_BYTE_STRING) {
-            UserException.throwIt(CTAP2.CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
+            UserException.throwIt(CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
             return 0;
         }
         short length = readLength();
@@ -228,7 +228,7 @@ public class CBORDecoder extends CBORBase {
      */
     public short readTextString(byte[] outBuffer, short outOffset) throws UserException {
         if(getMajorType() != TYPE_TEXT_STRING) {
-            UserException.throwIt(CTAP2.CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
+            UserException.throwIt(CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
             return 0;
         }
         short length = readLength();

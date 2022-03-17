@@ -26,12 +26,12 @@ public class StoredRS256Credential extends StoredCredential {
 
     public StoredRS256Credential(AuthenticatorMakeCredential inputData) {
         // Generate a new RS256 credential
-        kp = new KeyPair(KeyPair.ALG_RSA_CRT, KeyBuilder.LENGTH_RSA_2048);
-        kp.genKeyPair();
-        user = inputData.getUser();
-        rp = inputData.getRp();
+        keyPair = new KeyPair(KeyPair.ALG_RSA_CRT, KeyBuilder.LENGTH_RSA_2048);
+        keyPair.genKeyPair();
+        userEntity = inputData.getUser();
+        rpEntity = inputData.getRp();
         kpSignature = Cipher.getInstance(Cipher.ALG_RSA_PKCS1, false);
-        kpSignature.init(kp.getPrivate(), Cipher.MODE_ENCRYPT);
+        kpSignature.init(keyPair.getPrivate(), Cipher.MODE_ENCRYPT);
     }
 
 
@@ -66,12 +66,12 @@ public class StoredRS256Credential extends StoredCredential {
         enc.encodeNegativeUInt8((byte) 0x00);
         // Write the modulus
         short start = enc.startByteString((short) 256);
-        ((RSAPublicKey) kp.getPublic()).getModulus(buf, start);
+        ((RSAPublicKey) keyPair.getPublic()).getModulus(buf, start);
         // Exponent tag
         enc.encodeNegativeUInt8((byte) 0x01);
         // Write the exponent
         start = enc.startByteString((short) 3);
-        ((RSAPublicKey) kp.getPublic()).getExponent(buf, start);
+        ((RSAPublicKey) keyPair.getPublic()).getExponent(buf, start);
         return 306;
     }
 

@@ -19,6 +19,7 @@ package com.josh.vku2f;
 import javacard.framework.JCSystem;
 import javacard.framework.UserException;
 import javacard.framework.Util;
+import static com.josh.vku2f.CTAP2ErrorCode.*;
 
 public class AuthenticatorMakeCredential {
     public byte[] dataHash;
@@ -33,7 +34,7 @@ public class AuthenticatorMakeCredential {
      * Parses a CBOR structure to create an AuthenticatorMakeCredential object
      * 
      * @param decoder the initialised decoder on the CBOR structure
-     * @param vars    a short array to store variables in
+     * @ param vars    a short array to store variables in
      */
     public AuthenticatorMakeCredential(CBORDecoder decoder) throws UserException {
         short[] vars;
@@ -81,7 +82,7 @@ public class AuthenticatorMakeCredential {
                     len2 = decoder.readMajorType(CBORBase.TYPE_MAP);
                     // If less than 2, error
                     if (len2 < (short) 2) {
-                        UserException.throwIt(CTAP2.CTAP2_ERR_INVALID_CBOR);
+                        UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
                     }
                     // Read the map iteratively
                     for (short j = 0; j < len2; j++) {
@@ -163,7 +164,7 @@ public class AuthenticatorMakeCredential {
                         // Read the map length - should be 2
                         short len3 = decoder.readMajorType(CBORBase.TYPE_MAP);
                         if(len3 != 2) {
-                            UserException.throwIt(CTAP2.CTAP2_ERR_INVALID_CBOR);
+                            UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
                         }
                         // Iterate over the map
                         for (short k = 0; k < (short) 2; k++) {
@@ -197,10 +198,10 @@ public class AuthenticatorMakeCredential {
                                 // Check it
                                 decoder.readTextString(scratch1, (short) 0);
                                 if(Util.arrayCompare(scratch1, (short) 0, Utf8Strings.UTF8_PUBLIC_KEY, (short) 0, (short) 10) != (byte) 0) {
-                                    UserException.throwIt(CTAP2.CTAP2_ERR_UNSUPPORTED_ALGORITHM);
+                                    UserException.throwIt(CTAP2_ERR_UNSUPPORTED_ALGORITHM);
                                 }
                             } else {
-                                UserException.throwIt(CTAP2.CTAP2_ERR_INVALID_CBOR);
+                                UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
                             }
                         }
                         // Done
@@ -216,7 +217,7 @@ public class AuthenticatorMakeCredential {
                         // Read the map. It has 2 things in it.
                         short len3 = decoder.readMajorType(CBORBase.TYPE_MAP);
                         if (len3 != 2) {
-                            UserException.throwIt(CTAP2.CTAP2_ERR_INVALID_CBOR);
+                            UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
                         }
                         // Parse it, properly
                         for(short k = 0; k < (short) 2; k++) {
@@ -231,7 +232,7 @@ public class AuthenticatorMakeCredential {
                                 // It doesn't matter what it is, just check it's string and exists.
                             } else {
                                 // If it's not these two, throw an error
-                                UserException.throwIt(CTAP2.CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
+                                UserException.throwIt(CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
                                 break;
                             }
                         }
@@ -243,7 +244,7 @@ public class AuthenticatorMakeCredential {
                     // Parse the two rk and uv objects
                     // Read the map
                     if(decoder.getMajorType() != CBORBase.TYPE_MAP) {
-                        UserException.throwIt(CTAP2.CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
+                        UserException.throwIt(CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
                         break;
                     }
                     len2 = decoder.readMajorType(CBORBase.TYPE_MAP);
@@ -261,7 +262,7 @@ public class AuthenticatorMakeCredential {
                             decoder.readBoolean();
                         } else if (Util.arrayCompare(scratch1, (short) 0, Utf8Strings.UTF8_UP, (short) 0, (short) 2) == (short) 0) {
                             // Error out
-                            UserException.throwIt(CTAP2.CTAP2_ERR_INVALID_OPTION);
+                            UserException.throwIt(CTAP2_ERR_INVALID_OPTION);
                             break;
                         } else {
                             // Skip it
@@ -275,7 +276,7 @@ public class AuthenticatorMakeCredential {
                     // We don't support any yet
                     // So check it's a map and skip
                     if(decoder.getMajorType() != CBORBase.TYPE_MAP) {
-                        UserException.throwIt(CTAP2.CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
+                        UserException.throwIt(CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
                         break;
                     }
                     decoder.skipEntry();
@@ -291,7 +292,7 @@ public class AuthenticatorMakeCredential {
         }
         // Check we've got stuff like the clientDataHash
         if(dataHash == null || rp == null || user == null || params == null) {
-            UserException.throwIt(CTAP2.CTAP2_ERR_MISSING_PARAMETER);
+            UserException.throwIt(CTAP2_ERR_MISSING_PARAMETER);
         }
 
         // We're done, I guess

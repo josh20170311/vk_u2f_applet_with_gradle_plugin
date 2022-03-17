@@ -19,6 +19,7 @@ package com.josh.vku2f;
 import javacard.framework.JCSystem;
 import javacard.framework.UserException;
 import javacard.framework.Util;
+import static com.josh.vku2f.CTAP2ErrorCode.*;
 
 public class AuthenticatorGetAssertion {
     public byte[] rpId;
@@ -73,7 +74,7 @@ public class AuthenticatorGetAssertion {
                         // Read the map. It has 2 things in it.
                         vars[3] = decoder.readMajorType(CBORBase.TYPE_MAP);
                         if(vars[3] != 2) {
-                            UserException.throwIt(CTAP2.CTAP2_ERR_INVALID_CBOR);
+                            UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
                             break;
                         }
                         for(vars[5] = 0; vars[5] < (short) 2; vars[5]++) {
@@ -88,7 +89,7 @@ public class AuthenticatorGetAssertion {
                                 // It doesn't matter what it is, just check it's string and exists.
                             } else {
                                 // If it's not these two, throw an error
-                                UserException.throwIt(CTAP2.CTAP2_ERR_INVALID_CBOR);
+                                UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
                                 break;
                             }
                         }
@@ -131,7 +132,7 @@ public class AuthenticatorGetAssertion {
         }
         // We should check we have our "mandatory" options
         if(rpId == null || clientDataHash == null) {
-            UserException.throwIt(CTAP2.CTAP2_ERR_MISSING_PARAMETER);
+            UserException.throwIt(CTAP2_ERR_MISSING_PARAMETER);
         }
         // Good to go I guess
 

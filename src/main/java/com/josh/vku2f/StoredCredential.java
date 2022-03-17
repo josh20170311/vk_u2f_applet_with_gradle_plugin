@@ -23,27 +23,26 @@ import javacard.security.RandomData;
 
 // Abstract class to represent and perform actions with a stored credential
 public abstract class StoredCredential {
-    private static RandomData rng;
-    byte[] id;
-    KeyPair kp;
-    PublicKeyCredentialUserEntity user;
-    PublicKeyCredentialRpEntity rp;
-    private byte[] sigCounter;
+    private static RandomData randomData;
+    byte[] credentialId;
+    KeyPair keyPair;
+    PublicKeyCredentialUserEntity userEntity;
+    PublicKeyCredentialRpEntity rpEntity;
+    private final byte[] signingCounter;
     protected boolean initialised;
     
     protected byte[] credRandom;
     protected boolean hmacEnabled;
 
     protected StoredCredential() {
-        if(rng == null) {
-            rng = ServerKeyCrypto.getRng();
+        if(randomData == null) {
+            randomData = Random.getInstance();
         }
-        id = new byte[16];
-        rng.generateData(id, (short) 0, (short) 16);
-        sigCounter = new byte[4];
+        credentialId = new byte[16];
+        randomData.generateData(credentialId, (short) 0, (short) 16);
+        signingCounter = new byte[4];
         initialised = false;
         hmacEnabled = false;
-        
     }
     // Does the HMAC secret stuff
     public short doHmacSecret(byte[] inBuf, short inOff, short inLen) {
@@ -55,7 +54,7 @@ public abstract class StoredCredential {
     public boolean initialiseCredSecret() {
         // Generate the actual credRandom - this is the same across all credentials
         credRandom = new byte[32];
-        rng.generateData(credRandom, (short) 0, (short) 32);
+        randomData.generateData(credRandom, (short) 0, (short) 32);
         hmacEnabled = true;
         return true;
     }
@@ -66,11 +65,11 @@ public abstract class StoredCredential {
         if(inLen != (short) 16) {
             return false;
         }
-        return Util.arrayCompare(id, (short) 0, inBuf, inOff, inLen) == 0;
+        return Util.arrayCompare(credentialId, (short) 0, inBuf, inOff, inLen) == 0;
     }
 
     public boolean[] getPresentUser() {
-        return user.dataPresent;
+        return userEntity.dataPresent;
     }
     /**
      * Increment the counter.
@@ -80,20 +79,20 @@ public abstract class StoredCredential {
         JCSystem.beginTransaction();
 
         for(short i = 3; i > 1; i--) {
-            if(sigCounter[i] == 0xFF) {
-                sigCounter[(short) (i-1)]++;
-                sigCounter[i] = 0x00;
+            if(signingCounter[i] == 0xFF) {
+                signingCounter[(short) (i-1)]++;
+                signingCounter[i] = 0x00;
                 JCSystem.commitTransaction();
                 return;
             }
         }
-        if(sigCounter[0] == 0xFF && sigCounter[1] == 0xFF && sigCounter[2] == 0xFF && sigCounter[3] == 0xFF) {
+        if(signingCounter[0] == 0xFF && signingCounter[1] == 0xFF && signingCounter[2] == 0xFF && signingCounter[3] == 0xFF) {
             // Overflow, roll to 0
-            Util.arrayFillNonAtomic(sigCounter, (short) 0, (short) 4, (byte) 0x00);
+            Util.arrayFillNonAtomic(signingCounter, (short) 0, (short) 4, (byte) 0x00);
             JCSystem.commitTransaction();
             return;
         }
-        sigCounter[3]++;
+        signingCounter[3]++;
         JCSystem.commitTransaction();
     }
     /**
@@ -103,7 +102,7 @@ public abstract class StoredCredential {
      * @returns length
      */
     public short readCounter(byte[] buf, short bufOff) {
-        Util.arrayCopy(sigCounter, (short) 0, buf, bufOff, (short) 4);
+        Util.arrayCopy(signingCounter, (short) 0, buf, bufOff, (short) 4);
         return (short) 4;
     }
 
@@ -145,7 +144,7 @@ public abstract class StoredCredential {
         buf[(short) (off+16)] = 0x00;
         buf[(short) (off+17)] = 0x10;
         // Copy the credential ID
-        Util.arrayCopy(id, (short) 0, buf, (short) (off+18), (short) 16);
+        Util.arrayCopy(credentialId, (short) 0, buf, (short) (off+18), (short) 16);
 
     }
 }
