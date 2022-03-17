@@ -3,12 +3,12 @@ add gradle plugin into fido u2f applet from [vk_u2f](https://github.com/VivoKey/
 
 ## applet install
 
-1. use intelliJ to open the project
-1. build javacard
-1. install applet by cmd
-    1. open cmd by admin
-    1. change directory to the location of cap file
-    1. gp --install applet.cap
+1. open intelliJ by administrator
+1. open the project
+1. run "build/buildJavaCard" Gradle Task
+1. run "global platfrom/installJavaCard" Gradle Task
 1. put certificate
-    1. copy the command in the cert.txt
-    1. run the command
+    1. open terminal in intelliJ
+    2. change to cmd if the default terminal is PowerShell  
+    3. copy the command in the cert.txt
+    4. run the command
