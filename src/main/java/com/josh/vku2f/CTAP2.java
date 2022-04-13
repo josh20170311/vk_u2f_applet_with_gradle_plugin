@@ -24,22 +24,17 @@ import javacard.framework.ISOException;
 import javacard.framework.JCSystem;
 import javacard.framework.UserException;
 import javacard.framework.Util;
-import javacard.security.ECKey;
-import javacard.security.ECPrivateKey;
-import javacard.security.ECPublicKey;
-import javacard.security.KeyBuilder;
-import javacard.security.KeyPair;
-import javacard.security.MessageDigest;
-import javacard.security.Signature;
+import javacard.security.*;
 import javacardx.apdu.ExtendedLength;
 import static com.josh.vku2f.CTAP2ErrorCode.*;
+import static com.josh.vku2f.ClientPINSubCommand.*;
 
 public class CTAP2 extends Applet implements ExtendedLength {
 
     private final CBORDecoder cborDecoder;
     private final CBOREncoder cborEncoder;
 
-    private byte[] inputBuffer;
+    private byte[] dataBuffer;
     private byte[] scratch;
     private byte[] info;
 
@@ -52,11 +47,17 @@ public class CTAP2 extends Applet implements ExtendedLength {
     private final AttestationKeyPair attestationKeyPair;
 
     private CredentialArray credentialArray;
-    private AuthenticatorGetAssertion authenticatorGetAssertion;
     private AuthenticatorMakeCredential authenticatorMakeCredential;
+    private AuthenticatorGetAssertion authenticatorGetAssertion;
+    private final ClientPINCommand clientPINCommand;
 
-    private final KeyPair ecDhKeyPair;
-    private final boolean[] ecDhSet;
+    private byte MAX_PIN_RETRIES = (byte) 0x08;
+    private byte MAX_UV_RETRIES = (byte) 0x08;
+    private byte pinRetries;
+    private byte uvRetries;
+//    private final KeyPair ecDhKeyPair;
+//    private final boolean[] ecDhSet;
+    private PinUvAuthProtocolOne pinUvAuthProtocolOne;
     private final boolean[] isChaining;
     private final boolean[] isOutChaining;
     private boolean personalizeComplete;
@@ -96,9 +97,9 @@ public class CTAP2 extends Applet implements ExtendedLength {
         // 1210 bytes of a transient buffer for read-in and out
         // We advertise 1200 bytes supported, but 10 bytes for protocol nonsense
         try {
-            inputBuffer = JCSystem.makeTransientByteArray((short) 1210, JCSystem.CLEAR_ON_DESELECT);
+            dataBuffer = JCSystem.makeTransientByteArray((short) 1210, JCSystem.CLEAR_ON_DESELECT);
         } catch (Exception e) {
-            inputBuffer = new byte[1210];
+            dataBuffer = new byte[1210];
         }
         try {
             scratch = JCSystem.makeTransientByteArray((short) 512, JCSystem.CLEAR_ON_DESELECT);
@@ -122,8 +123,9 @@ public class CTAP2 extends Applet implements ExtendedLength {
                 JCSystem.MEMORY_TYPE_TRANSIENT_RESET, KeyBuilder.LENGTH_EC_FP_256, false);
         ECPrivateKey ecDhPriv = (ECPrivateKey) KeyBuilder.buildKey(KeyBuilder.ALG_TYPE_EC_FP_PRIVATE,
                 JCSystem.MEMORY_TYPE_TRANSIENT_RESET, KeyBuilder.LENGTH_EC_FP_256, false);
-        ecDhKeyPair = new KeyPair(ecDhPub, ecDhPriv);
-        ecDhSet = JCSystem.makeTransientBooleanArray((short) 1, JCSystem.CLEAR_ON_RESET);
+        clientPINCommand = new ClientPINCommand();
+//        ecDhKeyPair = new KeyPair(ecDhPub, ecDhPriv);
+//        ecDhSet = JCSystem.makeTransientBooleanArray((short) 1, JCSystem.CLEAR_ON_RESET);
 
     }
 
@@ -139,7 +141,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
             return;
         }
         // Need to grab the CTAP command byte
-        switch (inputBuffer[0]) {
+        switch (dataBuffer[0]) {
             case FIDO2_AUTHENTICATOR_MAKE_CREDENTIAL:
                 authMakeCredential(apdu, tempVars[3]);
                 break;
@@ -202,11 +204,11 @@ public class CTAP2 extends Applet implements ExtendedLength {
             returnError(apdu, CTAP1_ERR_INVALID_COMMAND);
             return;
         }
-        inputBuffer[0] = 0x00;
-        tempVars[0] = (short) (attestationKeyPair.getPubkey(inputBuffer, (short) 1) + 1);
+        dataBuffer[0] = 0x00;
+        tempVars[0] = (short) (attestationKeyPair.getPubkey(dataBuffer, (short) 1) + 1);
         apdu.setOutgoing();
         apdu.setOutgoingLength(tempVars[0]);
-        apdu.sendBytesLong(inputBuffer, (short) 0, tempVars[0]);
+        apdu.sendBytesLong(dataBuffer, (short) 0, tempVars[0]);
     }
 
     /** get counter's value */
@@ -214,8 +216,8 @@ public class CTAP2 extends Applet implements ExtendedLength {
         short count = credentialArray.getCount();
         apdu.setOutgoing();
         apdu.setOutgoingLength((short)2);
-        Util.setShort(inputBuffer,(short)0, count);
-        apdu.sendBytesLong(inputBuffer,(short)0,(short)2);
+        Util.setShort(dataBuffer,(short)0, count);
+        apdu.sendBytesLong(dataBuffer,(short)0,(short)2);
     }
 
     /**
@@ -229,12 +231,12 @@ public class CTAP2 extends Applet implements ExtendedLength {
             returnError(apdu, CTAP1_ERR_INVALID_COMMAND);
             return;
         }
-        Util.arrayCopy(inputBuffer, (short) 1, scratch, (short) 0, (short) (bufLen - 1));
-        inputBuffer[0] = 0x00;
-        tempVars[2] = attestationKeyPair.sign(scratch, (short) 0, tempVars[1], inputBuffer, (short) 1);
+        Util.arrayCopy(dataBuffer, (short) 1, scratch, (short) 0, (short) (bufLen - 1));
+        dataBuffer[0] = 0x00;
+        tempVars[2] = attestationKeyPair.sign(scratch, (short) 0, tempVars[1], dataBuffer, (short) 1);
         apdu.setOutgoing();
         apdu.setOutgoingLength((short) (tempVars[2] + 1));
-        apdu.sendBytesLong(inputBuffer, (short) 0, (short) (tempVars[2] + 1));
+        apdu.sendBytesLong(dataBuffer, (short) 0, (short) (tempVars[2] + 1));
     }
 
     public void attestSetCert(APDU apdu, short bufLen) {
@@ -243,19 +245,19 @@ public class CTAP2 extends Applet implements ExtendedLength {
             return;
         }
         // We don't actually use any CBOR here, simplify copying
-        attestationKeyPair.setCert(inputBuffer, (short) 1, (short) (bufLen - 1));
+        attestationKeyPair.setCert(dataBuffer, (short) 1, (short) (bufLen - 1));
         MessageDigest dig = MessageDigest.getInstance(MessageDigest.ALG_SHA_256, false);
-        short len = (short) (dig.doFinal(attestationKeyPair.x509cert, (short) 0, attestationKeyPair.x509len, inputBuffer, (short) 3) + 3);
-        inputBuffer[0] = 0x00;
-        Util.setShort(inputBuffer, (short) 1, attestationKeyPair.x509len);
+        short len = (short) (dig.doFinal(attestationKeyPair.x509cert, (short) 0, attestationKeyPair.x509len, dataBuffer, (short) 3) + 3);
+        dataBuffer[0] = 0x00;
+        Util.setShort(dataBuffer, (short) 1, attestationKeyPair.x509len);
         apdu.setOutgoing();
         apdu.setOutgoingLength(len);
-        apdu.sendBytesLong(inputBuffer, (short) 0, len);
+        apdu.sendBytesLong(dataBuffer, (short) 0, len);
     }
 
     public void authMakeCredential(APDU apdu, short bufLen) {
         // Init the decoder
-        cborDecoder.init(inputBuffer, (short) 1, bufLen);
+        cborDecoder.init(dataBuffer, (short) 1, bufLen);
         // create a credential object
         try {
             authenticatorMakeCredential = new AuthenticatorMakeCredential(cborDecoder);
@@ -293,10 +295,10 @@ public class CTAP2 extends Applet implements ExtendedLength {
 
             // Initialise the output buffer, for CBOR writing.
             // output buffer needs 0x00 as first byte as status code
-            inputBuffer[0] = 0x00;
-            cborEncoder.init(inputBuffer, (short) 1, (short) 1199);
+            dataBuffer[0] = 0x00;
+            cborEncoder.init(dataBuffer, (short) 1, (short) 1199);
             // Create a map in the buffer
-            tempVars[0] = cborEncoder.startMap((short) 3);
+            tempVars[0] = cborEncoder.startMap((short) 3); // current offset
 
             // Attestation stuff
             cborEncoder.writeRawByte((byte) 0x01);
@@ -310,14 +312,14 @@ public class CTAP2 extends Applet implements ExtendedLength {
             tempVars[7] = tempVars[0];
             // Create the SHA256 hash of the RP ID
             tempCredential.rpEntity.getRp(scratch, (short) 0);
-            tempVars[0] += sha256MessageDigest.doFinal(scratch, (short) 0, tempCredential.rpEntity.getRpLen(), inputBuffer, tempVars[0]);
+            tempVars[0] += sha256MessageDigest.doFinal(scratch, (short) 0, tempCredential.rpEntity.getRpLen(), dataBuffer, tempVars[0]);
             // Set flags - User presence, user verified, attestation present
-            inputBuffer[tempVars[0]++] = (byte) 0x45;
+            dataBuffer[tempVars[0]++] = (byte) 0x45;
             // Set the signature counter
-            tempVars[0] += tempCredential.readCounter(inputBuffer, tempVars[0]);
+            tempVars[0] += tempCredential.readCounter(dataBuffer, tempVars[0]);
             // Read the credential details in
             // Just note down where this starts for future ref
-            tempVars[0] += tempCredential.getAttestedData(inputBuffer, tempVars[0]);
+            tempVars[0] += tempCredential.getAttestedData(dataBuffer, tempVars[0]);
 
             // Generate and then attach the attestation
             cborEncoder.writeRawByte((byte) 0x03);
@@ -337,7 +339,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
             // We sign over the client data hash and the attested data.
             // AuthenticatorData is first. We noted down where it begins and know how long
             // it is.
-            attestationKeyPair.update(inputBuffer, tempVars[7], (short) (tempCredential.getAttestedLen() + 37));
+            attestationKeyPair.update(dataBuffer, tempVars[7], (short) (tempCredential.getAttestedLen() + 37));
             // The client data hash is next, which we use to finish off the signature.
             tempVars[4] = attestationKeyPair.sign(authenticatorMakeCredential.dataHash, (short) 0, (short) authenticatorMakeCredential.dataHash.length, scratch, (short) 0);
             // Create the byte string for the signature
@@ -361,7 +363,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
     public void authGetAssertion(APDU apdu, short bufLen) {
         nextAssertion[0] = (short) 0;
         // Decode the CBOR array for the assertion
-        cborDecoder.init(inputBuffer, (short) 1, bufLen);
+        cborDecoder.init(dataBuffer, (short) 1, bufLen);
         try {
             authenticatorGetAssertion = new AuthenticatorGetAssertion(cborDecoder);
         } catch (UserException e) {
@@ -391,9 +393,9 @@ public class CTAP2 extends Applet implements ExtendedLength {
         // Create the output
 
         // Status flags first
-        inputBuffer[0] = 0x00;
+        dataBuffer[0] = 0x00;
         // Create the encoder
-        cborEncoder.init(inputBuffer, (short) 1, (short) 1199);
+        cborEncoder.init(dataBuffer, (short) 1, (short) 1199);
         // Determine if we need 4 or 5 in the array
         if (assertionCredentials.length > 1) {
             doAssertionCommon(cborEncoder, (short) 5);
@@ -425,11 +427,11 @@ public class CTAP2 extends Applet implements ExtendedLength {
             // Copy the hash in
             authenticatorGetAssertion.getHash(scratch, (short) 37);
             // Create the output
-
+            String a = "adfadsfa";
             // Status flags first
-            inputBuffer[0] = 0x00;
+            dataBuffer[0] = 0x00;
             // Create the encoder
-            cborEncoder.init(inputBuffer, (short) 1, (short) 1199);
+            cborEncoder.init(dataBuffer, (short) 1, (short) 1199);
             doAssertionCommon(cborEncoder, (short) 4);
 
             nextAssertion[0]++;
@@ -440,35 +442,64 @@ public class CTAP2 extends Applet implements ExtendedLength {
 
     // Process the AuthenticatorClientPin feature
     // Note: we only implement the keyAgreement bit
-    public void clientPin(APDU apdu, short bufLen) {
+    public void clientPin(APDU apdu, short bufferLength) {
         try {
-            cborDecoder.init(inputBuffer, (short) 1, bufLen);
+            cborDecoder.init(dataBuffer, (short) 1, bufferLength);
             // Start reading
-            cborDecoder.readMajorType(CBORBase.TYPE_MAP);
-            // Read pinUvAuthProtocol
-            if (cborDecoder.readInt8() != (byte) 0x01) {
-                UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
-                return;
-            }
-            // Read subCommand
-            if (cborDecoder.readInt8() != (byte) 0x01) {
-                UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
-                return;
-            }
-            // Subcommand now
-            if (cborDecoder.readInt8() != (byte) 0x02) {
-                UserException.throwIt(CTAP2_ERR_INVALID_CBOR);
-                return;
-            }
-            // Actual subcommand
-            switch (cborDecoder.readInt8()) {
-                case 0x02:
-                    // Seems to be a Diffie-Hellman thing
-                    generateDH(apdu);
+            clientPINCommand.decodeCommand(cborDecoder);
+
+            switch(clientPINCommand.getSubCommandCode()){
+                case SUBCOMMAND_GET_PIN_RETRIES:
+                    dataBuffer[0] = 0x00;
+                    cborEncoder.init(dataBuffer, (short)1, (short)(1199));
+                    cborEncoder.startMap(ClientPINResponse.PIN_RETRIES);
+                    cborEncoder.encodeUInt8(pinRetries);
                     break;
-                default:
-                    UserException.throwIt(CTAP2_ERR_UNSUPPORTED_OPTION);
+                case SUBCOMMAND_GET_KEY_AGREEMENT:
+                    dataBuffer[0] = 0x00;
+                    cborEncoder.init(dataBuffer, (short) 1, (short) 1199);
+                    // Start a map
+                    cborEncoder.startMap((short) 1);
+                    // Encode the COSE key identifier
+                    cborEncoder.encodeUInt8((byte) 0x01);
+                    // Start the COSE map
+                    cborEncoder.startMap((short) 5);
+                    // Kty tag
+                    cborEncoder.encodeUInt8((byte) 0x01);
+                    // Kty value - EC2
+                    cborEncoder.encodeUInt8((byte) 0x02);
+                    // Alg tag
+                    cborEncoder.encodeUInt8((byte) 0x03);
+                    // Alg value - ES256 (-7, 6 in negative format)
+                    cborEncoder.encodeNegativeUInt8((byte) 0x06);
+                    // Crv tag - negative
+                    cborEncoder.encodeNegativeUInt8((byte) 0x00);
+                    // Crv value - P-256
+                    cborEncoder.encodeUInt8((byte) 0x01);
+                    // X-coord tag
+                    cborEncoder.encodeNegativeUInt8((byte) 0x01);
+                    // X-coord value
+                    cborEncoder.encodeByteString(pinUvAuthProtocolOne.getPublicKey(), (short) 1, (short) 32);
+                    // Y-coord tag
+                    cborEncoder.encodeNegativeUInt8((byte) 0x02);
+                    // Y-coord value
+                    cborEncoder.encodeByteString(pinUvAuthProtocolOne.getPublicKey(), (short) 33, (short) 32);
+                    break;
+                case SUBCOMMAND_SET_PIN:
+                    break;
+                case SUBCOMMAND_CHANGE_PIN:
+                    break;
+                case SUBCOMMAND_GET_PIN_TOKEN:
+                    break;
+                case SUBCOMMAND_GET_PIN_UV_AUTH_TOKEN_UV:
+                    break;
+                case SUBCOMMAND_GET_UV_RETRIES:
+                    break;
+                case SUBCOMMAND_GET_PIN_UV_AUTH_TOKEN_PIN:
+                    break;
             }
+            // That's it
+            sendLongChaining(apdu, cborEncoder.getCurrentOffset());
         } catch (UserException e) {
             returnError(apdu, e.getReason());
         }
@@ -483,58 +514,6 @@ public class CTAP2 extends Applet implements ExtendedLength {
         }
     }
 
-    // Generate a session-specific ECDH P-256 key for Diffie-Hellman with the
-    // platform (Used for PIN ,but we only ever do it for hmac-secret)
-    private void generateDH(APDU apdu) {
-        byte[] w;
-        try {
-            w = JCSystem.makeTransientByteArray((short) 65, JCSystem.CLEAR_ON_RESET);
-        } catch (Exception e) {
-            w = new byte[65];
-        }
-
-        
-
-        if (!ecDhSet[0]) {
-            // Grab the public key and set its parameters
-            KeyParams.sec256r1params((ECKey) ecDhKeyPair.getPublic());
-            // Generate a new key-pair
-            ecDhKeyPair.genKeyPair();
-        }
-
-        ((ECPublicKey) ecDhKeyPair.getPublic()).getW(w, (short) 0);
-        // Return the data requested
-        inputBuffer[0] = 0x00;
-        cborEncoder.init(inputBuffer, (short) 1, (short) 1199);
-        // Start a map
-        cborEncoder.startMap((short) 1);
-        // Encode the COSE key identifier
-        cborEncoder.encodeUInt8((byte) 0x01);
-        // Start the COSE map
-        cborEncoder.startMap((short) 5);
-        // Kty tag
-        cborEncoder.encodeUInt8((byte) 0x01);
-        // Kty value - EC2
-        cborEncoder.encodeUInt8((byte) 0x02);
-        // Alg tag
-        cborEncoder.encodeUInt8((byte) 0x03);
-        // Alg value - ES256 (-7, 6 in negative format) 
-        cborEncoder.encodeNegativeUInt8((byte) 0x06);
-        // Crv tag - negative
-        cborEncoder.encodeNegativeUInt8((byte) 0x00);
-        // Crv value - P-256
-        cborEncoder.encodeUInt8((byte) 0x01);
-        // X-coord tag
-        cborEncoder.encodeNegativeUInt8((byte) 0x01);
-        // X-coord value
-        cborEncoder.encodeByteString(w, (short) 1, (short) 32);
-        // Y-coord tag
-        cborEncoder.encodeNegativeUInt8((byte) 0x02);
-        // Y-coord value
-        cborEncoder.encodeByteString(w, (short) 33, (short) 32);
-        // That's it
-        sendLongChaining(apdu, cborEncoder.getCurrentOffset());
-    }   
 
     /**
      * Finds all credentials scoped to the RpId, and optionally the allowList, in
@@ -669,8 +648,8 @@ public class CTAP2 extends Applet implements ExtendedLength {
         // Create the authenticator info if not present.
         if (info == null) {
             // Create the authGetInfo - 0x00 is success
-            inputBuffer[0] = 0x00;
-            cborEncoder.init(inputBuffer, (short) 1, (short) 1199);
+            dataBuffer[0] = 0x00;
+            cborEncoder.init(dataBuffer, (short) 1, (short) 1199);
             cborEncoder.startMap((short) 4);
             // 0x01, versions
             cborEncoder.encodeUInt8((byte) 0x01);
@@ -700,11 +679,11 @@ public class CTAP2 extends Applet implements ExtendedLength {
             // Done
             JCSystem.beginTransaction();
             info = new byte[cborEncoder.getCurrentOffset()];
-            Util.arrayCopy(inputBuffer, (short) 0, info, (short) 0, cborEncoder.getCurrentOffset());
+            Util.arrayCopy(dataBuffer, (short) 0, info, (short) 0, cborEncoder.getCurrentOffset());
             JCSystem.commitTransaction();
         }
         // Send it
-        Util.arrayCopyNonAtomic(info, (short) 0, inputBuffer, (short) 0, (short) info.length);
+        Util.arrayCopyNonAtomic(info, (short) 0, dataBuffer, (short) 0, (short) info.length);
         sendLongChaining(apdu, (short) info.length);
     }
 
@@ -845,22 +824,22 @@ public class CTAP2 extends Applet implements ExtendedLength {
             // Copy buffer
             chainRam[1] = tempVars[4];
             // chainRam[0] is the current point in the buffer we start from
-            chainRam[0] = Util.arrayCopyNonAtomic(buffer, apdu.getOffsetCdata(), inputBuffer, chainRam[0], chainRam[1]);
+            chainRam[0] = Util.arrayCopyNonAtomic(buffer, apdu.getOffsetCdata(), dataBuffer, chainRam[0], chainRam[1]);
             return 0x00;
         } else if (isChaining[0]) {
             // Must be the last of the chaining - make the copy and return the length.
             chainRam[1] = tempVars[4];
-            chainRam[0] = Util.arrayCopyNonAtomic(buffer, apdu.getOffsetCdata(), inputBuffer, chainRam[0], chainRam[1]);
+            chainRam[0] = Util.arrayCopyNonAtomic(buffer, apdu.getOffsetCdata(), dataBuffer, chainRam[0], chainRam[1]);
             isChaining[0] = false;
             isChaining[1] = true;
             return chainRam[0];
         } else if (tempVars[3] == 0x01) {
-            inputBuffer[0] = buffer[apdu.getOffsetCdata()];
+            dataBuffer[0] = buffer[apdu.getOffsetCdata()];
             return 0x01;
         } else if (apdu.getCurrentState() == APDU.STATE_FULL_INCOMING) {
             // We need to do no more
             // Read the entirety of the buffer into the inBuf
-            Util.arrayCopyNonAtomic(buffer, apdu.getOffsetCdata(), inputBuffer, (short) 0, tempVars[3]);
+            Util.arrayCopyNonAtomic(buffer, apdu.getOffsetCdata(), dataBuffer, (short) 0, tempVars[3]);
             return tempVars[4];
         } else {
             // The APDU needs a multi-stage copy
@@ -871,7 +850,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
             tempVars[4] = 0;
             while (tempVars[3] > 0) {
                 // Copy data
-                tempVars[4] = Util.arrayCopyNonAtomic(buffer, apdu.getOffsetCdata(), inputBuffer, tempVars[4], tempVars[5]);
+                tempVars[4] = Util.arrayCopyNonAtomic(buffer, apdu.getOffsetCdata(), dataBuffer, tempVars[4], tempVars[5]);
                 // Decrement vars[3] by the bytes copied
                 tempVars[3] -= tempVars[5];
                 // Pull more bytes
@@ -895,7 +874,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
             // More to go after this
             outChainRam[0] -= 256;
             byte[] buf = apdu.getBuffer();
-            Util.arrayCopyNonAtomic(inputBuffer, outChainRam[1], buf, (short) 0, (short) 256);
+            Util.arrayCopyNonAtomic(dataBuffer, outChainRam[1], buf, (short) 0, (short) 256);
             apdu.setOutgoingAndSend((short) 0, (short) 256);
             outChainRam[1] += 256;
             if (outChainRam[0] > 255) {
@@ -908,7 +887,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
         } else {
             // This is the last message
             byte[] buf = apdu.getBuffer();
-            Util.arrayCopyNonAtomic(inputBuffer, outChainRam[1], buf, (short) 0, outChainRam[0]);
+            Util.arrayCopyNonAtomic(dataBuffer, outChainRam[1], buf, (short) 0, outChainRam[0]);
             apdu.setOutgoingAndSend((short) 0, outChainRam[0]);
             isOutChaining[0] = false;
             outChainRam[0] = 0;
@@ -932,7 +911,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
             outChainRam[0] = (short) (dataLen - 256);
             // Send the first 256 bytes out
             byte[] buf = apdu.getBuffer();
-            Util.arrayCopyNonAtomic(inputBuffer, (short) 0, buf, (short) 0, (short) 256);
+            Util.arrayCopyNonAtomic(dataBuffer, (short) 0, buf, (short) 0, (short) 256);
             apdu.setOutgoingAndSend((short) 0, (short) 256);
             outChainRam[1] = 256;
             // Throw the 61 xx
@@ -948,7 +927,7 @@ public class CTAP2 extends Applet implements ExtendedLength {
             isOutChaining[0] = false;
             apdu.setOutgoing();
             apdu.setOutgoingLength(dataLen);
-            apdu.sendBytesLong(inputBuffer, (short) 0, dataLen);
+            apdu.sendBytesLong(dataBuffer, (short) 0, dataLen);
             ISOException.throwIt(ISO7816.SW_NO_ERROR);
         }
     }
@@ -963,8 +942,8 @@ public class CTAP2 extends Applet implements ExtendedLength {
     }
 
     private void getCert(APDU apdu) {
-        inputBuffer[0] = 0x00;
-        tempVars[0] = (short) (attestationKeyPair.getCert(inputBuffer, (short) 1) + 1);
+        dataBuffer[0] = 0x00;
+        tempVars[0] = (short) (attestationKeyPair.getCert(dataBuffer, (short) 1) + 1);
         sendLongChaining(apdu, tempVars[0]);
     }
 
