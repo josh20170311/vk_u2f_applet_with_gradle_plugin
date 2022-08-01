@@ -17,11 +17,7 @@
 package com.josh.vku2f;
 
 import javacard.framework.Util;
-import javacard.security.ECKey;
-import javacard.security.ECPublicKey;
-import javacard.security.KeyBuilder;
-import javacard.security.KeyPair;
-import javacard.security.Signature;
+import javacard.security.*;
 
 /**
  * Attestation keypair object. 
@@ -87,5 +83,8 @@ public class AttestationKeyPair {
 
     public short getPubkey(byte[] outBuf, short outOff) {
         return ((ECPublicKey) kp.getPublic()).getW(outBuf, outOff);
+    }
+    public PrivateKey getPrivate(){
+        return kp.getPrivate();
     }
 }

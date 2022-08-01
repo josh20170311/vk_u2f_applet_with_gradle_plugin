@@ -1,6 +1,8 @@
 package com.josh.vku2f;
 
+import javacard.framework.JCSystem;
 import javacard.framework.UserException;
+import javacard.framework.Util;
 
 public class ClientPINCommand {
     public static final byte PARAMETER_PROTOCOL = 0x01;
@@ -14,19 +16,22 @@ public class ClientPINCommand {
 
     private byte protocol; // unsigned int
     private byte subCommandCode; // unsigned int
-    private byte[] keyAgreement; // COSE object
-    private byte[] pinUvAuthParam; // byte string
-    private byte[] newPinEnc; // byte string
-    private byte[] pinHashEnc; // byte string
+    private byte[] keyAgreement = new byte[65]; // COSE object or 0x04||x||y
+    private byte[] x = new byte[32]; // x-coordinate
+    private byte[] y = new byte[32]; // y-coordinate
+    private byte[] pinUvAuthParam = new byte[64]; // byte string
+    private byte[] newPinEnc = new byte[64]; // byte string
+    private byte[] pinHashEnc = new byte[16]; // byte string, aes256
     private byte permissions; // unsigned int
-    private byte[] rpId; // text string
+    private byte[] rpId = new byte[64]; // text string
+    byte[] scratch = JCSystem.makeTransientByteArray((short)64, JCSystem.CLEAR_ON_RESET);
 
     public void decodeCommand(CBORDecoder cborDecoder) throws UserException {
         short commandLength = cborDecoder.readMajorType(CBORBase.TYPE_MAP);
-        do {
-            byte commandKey = cborDecoder.readInt8();
+
+        while(commandLength > (short)0) {
             short valueLength;
-            switch (commandKey) {
+            switch (cborDecoder.readInt8()) {
                 case PARAMETER_PROTOCOL:
                     protocol = cborDecoder.readInt8();
                     break;
@@ -34,36 +39,50 @@ public class ClientPINCommand {
                     subCommandCode = cborDecoder.readInt8();
                     break;
                 case PARAMETER_KEY_AGREEMENT:
-                    valueLength = cborDecoder.readLength();
-                    keyAgreement = new byte[valueLength];
-                    cborDecoder.readRawByteArray(keyAgreement, (short) 0, valueLength);
+                    cborDecoder.readMajorType(CBORBase.TYPE_MAP);
+
+                    cborDecoder.skipEntry();
+                    cborDecoder.skipEntry();
+
+                    cborDecoder.skipEntry();
+                    cborDecoder.skipEntry();
+
+                    cborDecoder.skipEntry();
+                    cborDecoder.skipEntry();
+
+                    cborDecoder.skipEntry();
+//                    cborDecoder.skipEntry();
+                    cborDecoder.readByteString(x, (short)0);
+
+                    cborDecoder.skipEntry();
+//                    cborDecoder.skipEntry();
+                    cborDecoder.readByteString(y, (short)0);
+
+
                     break;
                 case PARAMETER_PIN_UV_AUTH_PARAM:
-                    valueLength = cborDecoder.readLength();
-                    pinUvAuthParam = new byte[valueLength];
-                    cborDecoder.readRawByteArray(pinUvAuthParam, (short) 0, valueLength);
+                    cborDecoder.readByteString(pinUvAuthParam, (short) 0);
+//                    cborDecoder.skipEntry();
                     break;
                 case PARAMETER_NEW_PIN_ENC:
-                    valueLength = cborDecoder.readLength();
-                    newPinEnc = new byte[valueLength];
-                    cborDecoder.readRawByteArray(newPinEnc, (short) 0, valueLength);
+                    cborDecoder.readByteString(newPinEnc, (short) 0);
                     break;
                 case PARAMETER_PIN_HASH_ENC:
-                    valueLength = cborDecoder.readLength();
-                    pinHashEnc = new byte[valueLength];
-                    cborDecoder.readRawByteArray(pinHashEnc, (short) 0, valueLength);
+                    cborDecoder.readByteString(pinHashEnc, (short) 0);
+//                    cborDecoder.skipEntry();
                     break;
                 case PARAMETER_PERMISSIONS:
-                    permissions = cborDecoder.readInt8();
+//                    permissions = cborDecoder.readInt8();
+                    cborDecoder.skipEntry();
                     break;
                 case PARAMETER_RP_ID:
-                    valueLength = cborDecoder.readLength();
-                    rpId = new byte[valueLength];
-                    cborDecoder.readRawByteArray(rpId, (short) 0, valueLength);
+//                    cborDecoder.readByteString(rpId, (short) 0);
+                    cborDecoder.skipEntry();
                     break;
             }
             commandLength--;
-        } while (commandLength >= 1);
+        }
+
     }
 
     public byte getProtocol() {
@@ -74,7 +93,14 @@ public class ClientPINCommand {
         return subCommandCode;
     }
 
+    /**
+     *
+     * @return 0x04 || x-coordinate || y-coordinate
+     */
     public byte[] getKeyAgreement() {
+        keyAgreement[0] = 0x04;
+        Util.arrayCopy(x, (short)0, keyAgreement, (short)1, (short)x.length);
+        Util.arrayCopy(y, (short)0, keyAgreement, (short)33, (short)y.length);
         return keyAgreement;
     }
 

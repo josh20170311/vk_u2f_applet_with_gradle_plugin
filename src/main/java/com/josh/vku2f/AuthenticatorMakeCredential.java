@@ -27,6 +27,7 @@ public class AuthenticatorMakeCredential {
     private PublicKeyCredentialUserEntity user;
     private PublicKeyCredentialParams params;
     private boolean[] options = new boolean[2];
+    private byte[] pinUvAuthParam;
 
     public PublicKeyCredentialDescriptor[] exclude;
 
@@ -275,11 +276,20 @@ public class AuthenticatorMakeCredential {
                     // Extensions
                     // We don't support any yet
                     // So check it's a map and skip
+                    // TODO implement prlab extensions
                     if(decoder.getMajorType() != CBORBase.TYPE_MAP) {
                         UserException.throwIt(CTAP2_ERR_CBOR_UNEXPECTED_TYPE);
                         break;
                     }
                     decoder.skipEntry();
+                    break;
+                case (short)8: // pinUvAuthToken
+                    pinUvAuthParam = new byte[16];
+                    if(decoder.readByteString(pinUvAuthParam, (short)0 ) < (short)16)
+                        UserException.throwIt(CTAP2_ERR_PIN_INVALID);
+                    break;
+                case (short)9: // pinProtocol
+                    short pinProtocol = decoder.readInt8();
                     break;
                 default:
                     // Skip it transparently
@@ -290,10 +300,14 @@ public class AuthenticatorMakeCredential {
             
 
         }
+        if(pinUvAuthParam == null){
+            UserException.throwIt(CTAP2_ERR_PIN_INVALID);
+        }
         // Check we've got stuff like the clientDataHash
         if(dataHash == null || rp == null || user == null || params == null) {
             UserException.throwIt(CTAP2_ERR_MISSING_PARAMETER);
         }
+
 
         // We're done, I guess
     }
@@ -319,15 +333,22 @@ public class AuthenticatorMakeCredential {
     }
 
     /**
+     *
+     * @return pinUvAuthToken
+     */
+    public byte[] getPinUvAuthParam(){
+        return pinUvAuthParam;
+    }
+
+    /**
      * Reads the clientDataHash into a buffer.
      * 
      * @param outBuf The buffer to read into.
      * @param outOff the offset to begin at.
      * @return the length of the data read out.
      */
-    public short getDataHash(byte[] outBuf, short outOff) {
-        Util.arrayCopy(dataHash, (short) 0, outBuf, outOff, (short) dataHash.length);
-        return (short) dataHash.length;
+    public byte[] getDataHash() {
+        return dataHash;
     }
 
 }

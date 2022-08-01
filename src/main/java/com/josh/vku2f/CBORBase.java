@@ -87,7 +87,7 @@ public abstract class CBORBase {
     /**
      * Initializes the encoder/decoder without buffer (use the APDU buffer instead).
      * 
-     * @param offset Offset in APDU buffer where content should be read
+     * @ param offset Offset in APDU buffer where content should be read
      * @param length Length in the APDU buffer
      */
     final public void init(short off, short length) {
@@ -98,7 +98,7 @@ public abstract class CBORBase {
     /**
      * Initializes with a given array and the given offset.
      * @param buffer Buffer with CBOR content
-     * @param offset Offset in buffer where content should be read/written
+     * @ param offset Offset in buffer where content should be read/written
      */
     final public void init(byte[] buffer, short off, short length) {
         if (buffer != APDU.getCurrentAPDUBuffer()) { // do not store the APDU buffer

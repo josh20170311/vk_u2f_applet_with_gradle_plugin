@@ -66,8 +66,9 @@ public class StoredES256Credential extends StoredCredential {
         }
 
         ((ECPublicKey) keyPair.getPublic()).getW(w, (short) 0);
-        // Form the common params
+        // Form the common params (AAGUID||key handle Length||key handle)
         doAttestationCommon(buf, off);
+
         enc.init(buf, (short) (off + 34), (short) 1000);
         enc.startMap((short) 5);
         // We had to kinda hack the map labels - this is kty

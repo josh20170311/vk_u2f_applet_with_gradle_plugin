@@ -54,8 +54,32 @@ javacard{
             apdu "801000000144"
         }
         script{
+            name "getCount"
+            apdu "801000000145"
+        }
+        script{
+            name "reset"
+            apdu "801000000107"
+        }
+        script{
             name "getCertificate"
             apdu "80100000014A"
+        }
+        script{
+            name "getFreeSpace"
+            apdu "80CAFF21"
+        }
+        script{
+            name "dumpIDSecret"
+            apdu "80100000015F"
+        }
+        script{
+            name "getPuKxRx"
+            apdu "80100000065050524C4142"
+        }
+        script{
+            name "getCx"
+            apdu "801000000151"
         }
         task{
             name "getFidoInfo"
@@ -66,8 +90,28 @@ javacard{
             scripts "select applet", "getPublicKey"
         }
         task{
+            name "getCount"
+            scripts "select applet", "getCount"
+        }
+        task{
             name "getCertificate"
             scripts "select applet", "getCertificate"
+        }
+        task{
+            name 'reset'
+            scripts 'select applet', 'reset'
+        }
+        task{
+            name 'getFreeSpace'
+            scripts 'getFreeSpace'
+        }
+        task{
+            name 'dumpIDSecret'
+            scripts 'select applet', 'dumpIDSecret'
+        }
+        task{
+            name 'getPuKxRx'
+            scripts 'select applet', 'getPuKxRx'
         }
     }
 }

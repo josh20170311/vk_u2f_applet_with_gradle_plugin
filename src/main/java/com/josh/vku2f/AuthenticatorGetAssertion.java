@@ -26,6 +26,7 @@ public class AuthenticatorGetAssertion {
     byte[] clientDataHash;
     boolean[] options;
     PublicKeyCredentialDescriptor[] allow;
+    private byte[] pinUvAuthParam;
 
     public AuthenticatorGetAssertion(CBORDecoder decoder) throws UserException {
 
@@ -117,8 +118,10 @@ public class AuthenticatorGetAssertion {
                     decoder.skipEntry();
                     break;
                 case 0x06:
-                    // Pin stuff
-                    decoder.skipEntry();
+                    // Pin UV Auth Param // 0x06
+                    pinUvAuthParam = new byte[16];
+                    if(decoder.readByteString(pinUvAuthParam, (short)0 ) < (short)16)
+                        UserException.throwIt(CTAP2_ERR_PIN_INVALID);
                     break;
                 case 0x07:
                     // Pin protocol

@@ -9,6 +9,6 @@ public abstract class PinUvAuthProtocol {
     public abstract void resetPinUvAuthToken();
     public abstract byte[] getPublicKey();
     public abstract byte[] decapsulate(COSEKey peerCoseKey);
-    public abstract void decrypt(byte[] sharedSecret, byte[] cipherText);
-    public abstract void verify(byte[] key, byte[] message, byte[] signature);
+    public abstract byte[] decrypt(byte[] sharedSecret, byte[] cipherText);
+    public abstract boolean verify(byte[] key, byte[] message, byte[] signature);
 }
